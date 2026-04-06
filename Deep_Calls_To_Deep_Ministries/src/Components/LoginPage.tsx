@@ -1,9 +1,4 @@
 import { useState } from 'react';
-import {
-  pageStyle, pageInnerStyle, logoStyle, headingStyle, fieldStyle, labelStyle,
-  inputStyle, captchaStyle, checkboxStyle, captchaTextStyle,
-  submitBtnStyle, bottomTextStyle, linkStyle,
-} from './authStyles';
 
 interface LoginPageProps {
   onBack: () => void;
@@ -14,18 +9,23 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
   const [email, setEmail] = useState('');
 
   return (
-    <div style={pageStyle}>
-      <div style={pageInnerStyle}>
-        <div style={logoStyle} onClick={onBack}>
+    <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
+      <div className="flex flex-col items-center gap-8 w-full max-w-xl">
+        <div
+          className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-[155px] cursor-pointer"
+          onClick={onBack}
+        >
           DEANA BRINGOLF
         </div>
 
-        <h1 style={headingStyle}>Log in to your account</h1>
+        <h1 className="font-bold text-[28px] text-white self-start w-full mt-4">
+          Log in to your account
+        </h1>
 
-        <div style={fieldStyle}>
-          <label style={labelStyle}>Email address</label>
+        <div className="flex flex-col gap-2 w-full">
+          <label className="font-semibold text-sm text-gray-300">Email address</label>
           <input
-            style={inputStyle}
+            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
             type="email"
             placeholder="name@gmail.com"
             value={email}
@@ -33,16 +33,18 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
           />
         </div>
 
-        <div style={captchaStyle}>
-          <div style={checkboxStyle} />
-          <span style={captchaTextStyle}>Verify you are human</span>
+        <div className="flex items-center gap-3 px-4 py-3.5 rounded-lg border border-gray-600 bg-[#2a2d3e]">
+          <div className="w-6 h-6 rounded border-2 border-gray-500 bg-[#1a1d2e] shrink-0" />
+          <span className="text-sm text-white">Verify you are human</span>
         </div>
 
-        <button style={submitBtnStyle}>Log in</button>
+        <button className="w-full py-5 rounded-xl border-none bg-gray-200 text-lg font-semibold text-gray-700 cursor-pointer">
+          Log in
+        </button>
 
-        <p style={bottomTextStyle}>
+        <p className="text-sm text-gray-400 text-center mt-2">
           Need an account?{' '}
-          <a style={linkStyle} onClick={onGoToSignup}>
+          <a className="text-[#e88a4a] cursor-pointer no-underline font-semibold" onClick={onGoToSignup}>
             Create an account
           </a>
         </p>

@@ -1,58 +1,3 @@
-const topBarStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: '18px 10px',
-  width: '100%',
-  overflow: 'hidden',
-};
-
-const logoStyle: React.CSSProperties = {
-  fontFamily: "'Roboto Condensed', sans-serif",
-  fontWeight: 900,
-  fontStyle: 'italic',
-  fontSize: 36,
-  lineHeight: 0.8,
-  color: 'white',
-  width: 155,
-};
-
-const rightGroupStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 10,
-};
-
-const searchStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 5,
-  padding: '8px 18px',
-  borderRadius: 21,
-  border: '1px solid white',
-  backgroundColor: 'rgba(170, 170, 170, 0.5)',
-  cursor: 'pointer',
-};
-
-const searchTextStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 500,
-  fontSize: 16,
-  lineHeight: 0.8,
-  color: 'white',
-  whiteSpace: 'nowrap',
-};
-
-const loginStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 500,
-  fontSize: 16,
-  lineHeight: 0.8,
-  color: 'white',
-  whiteSpace: 'nowrap',
-  cursor: 'pointer',
-};
-
 interface TopBarProps {
   onSearchClick: () => void;
   onLoginClick: () => void;
@@ -69,14 +14,26 @@ function SearchIcon() {
 
 export default function TopBar({ onSearchClick, onLoginClick }: TopBarProps) {
   return (
-    <header style={topBarStyle}>
-      <span style={logoStyle}>DEANA BRINGOLF</span>
-      <div style={rightGroupStyle}>
-        <div style={searchStyle} onClick={onSearchClick}>
+    <header className="flex items-center justify-between w-full overflow-hidden px-2.5 py-4">
+      <span className="font-condensed font-black italic text-4xl leading-[0.8] text-white w-[155px]">
+        DEANA BRINGOLF
+      </span>
+      <div className="flex items-center gap-2.5">
+        <div
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-white bg-white/30 cursor-pointer"
+          onClick={onSearchClick}
+        >
           <SearchIcon />
-          <span style={searchTextStyle}>Search</span>
+          <span className="font-medium text-base leading-[0.8] text-white whitespace-nowrap">
+            Search
+          </span>
         </div>
-        <span style={loginStyle} onClick={onLoginClick}>Login</span>
+        <span
+          className="font-medium text-base leading-[0.8] text-white whitespace-nowrap cursor-pointer"
+          onClick={onLoginClick}
+        >
+          Login
+        </span>
       </div>
     </header>
   );

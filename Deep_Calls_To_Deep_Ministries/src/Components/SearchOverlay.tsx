@@ -4,102 +4,40 @@ interface SearchOverlayProps {
   onClose: () => void;
 }
 
-const backdropStyle: React.CSSProperties = {
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.6)',
-  backdropFilter: 'blur(8px)',
-  WebkitBackdropFilter: 'blur(8px)',
-  zIndex: 200,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
-
-const cardStyle: React.CSSProperties = {
-  backgroundColor: '#2c3e50',
-  width: '100%',
-  maxWidth: 393,
-  padding: '20px 16px 24px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-};
-
-const headerStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-};
-
-const titleStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 500,
-  fontSize: 16,
-  color: 'white',
-};
-
-const closeBtnStyle: React.CSSProperties = {
-  background: 'none',
-  border: 'none',
-  color: 'white',
-  fontSize: 20,
-  cursor: 'pointer',
-  padding: 4,
-  lineHeight: 1,
-};
-
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  padding: '12px 14px',
-  borderRadius: 6,
-  border: '1px solid #ccc',
-  fontSize: 14,
-  fontFamily: "'Roboto', sans-serif",
-  outline: 'none',
-  backgroundColor: 'white',
-  color: '#333',
-};
-
-const searchBtnRowStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'flex-end',
-};
-
-const searchBtnStyle: React.CSSProperties = {
-  backgroundColor: '#3c3c3c',
-  color: 'white',
-  border: '1px solid #888',
-  borderRadius: 6,
-  padding: '10px 24px',
-  fontSize: 14,
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 500,
-  cursor: 'pointer',
-};
-
 export default function SearchOverlay({ onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState('');
 
   return (
-    <div style={backdropStyle} onClick={onClose}>
-      <div style={cardStyle} onClick={(e) => e.stopPropagation()}>
-        <div style={headerStyle}>
-          <span style={titleStyle}>Search</span>
-          <button style={closeBtnStyle} onClick={onClose} aria-label="Close search">
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-lg z-[200] flex flex-col items-center"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#2c3e50] w-full max-w-[393px] px-4 pt-5 pb-6 flex flex-col gap-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between">
+          <span className="font-medium text-base text-white">Search</span>
+          <button
+            className="bg-transparent border-none text-white text-xl cursor-pointer p-1 leading-none"
+            onClick={onClose}
+            aria-label="Close search"
+          >
             &times;
           </button>
         </div>
         <input
-          style={inputStyle}
+          className="w-full px-3.5 py-3 rounded-md border border-gray-300 text-sm outline-none bg-white text-gray-800"
           type="text"
           placeholder="Search Wild at Heart..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           autoFocus
         />
-        <div style={searchBtnRowStyle}>
-          <button style={searchBtnStyle}>Search</button>
+        <div className="flex justify-end">
+          <button className="bg-[#3c3c3c] text-white border border-gray-500 rounded-md px-6 py-2.5 text-sm font-medium cursor-pointer">
+            Search
+          </button>
         </div>
       </div>
     </div>

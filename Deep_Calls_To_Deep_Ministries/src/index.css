@@ -1,25 +1,16 @@
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,900&family=Roboto:wght@400;500;600;700;900&family=Open+Sans:wght@600;700;800&family=Inter:wght@400&display=swap');
 
-:root {
-  font-family: 'Roboto', system-ui, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: white;
-  background-color: #272626;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@theme {
+  --font-sans: 'Roboto', system-ui, sans-serif;
+  --font-condensed: 'Roboto Condensed', sans-serif;
+  --font-open-sans: 'Open Sans', sans-serif;
+  --font-inter: 'Inter', sans-serif;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #272626;
 }

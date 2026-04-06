@@ -1,121 +1,3 @@
-const sectionStyle: React.CSSProperties = {
-  backgroundColor: '#272626',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '40px 10px 100px',
-  gap: 32,
-};
-
-const headingStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 400,
-  fontSize: 24,
-  lineHeight: 1.2,
-  color: 'white',
-  width: 283,
-  alignSelf: 'flex-start',
-  marginLeft: 6,
-};
-
-const carouselWrapperStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: 13,
-  alignItems: 'stretch',
-  width: '100%',
-  overflowX: 'auto',
-  padding: '4px 0',
-};
-
-const cardStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  width: 300,
-  minWidth: 300,
-  borderRadius: 20,
-  overflow: 'hidden',
-};
-
-const thumbStyle: React.CSSProperties = {
-  width: '100%',
-  aspectRatio: '691 / 388',
-  objectFit: 'cover',
-  display: 'block',
-};
-
-const cardBodyStyle: React.CSSProperties = {
-  backgroundColor: '#6e6e6e',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  padding: 16,
-  flex: 1,
-  color: 'white',
-};
-
-const cardTitleStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 700,
-  fontSize: 20,
-  lineHeight: 1.2,
-};
-
-const cardDescStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: 1.4,
-};
-
-const buttonsContainerStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  width: '100%',
-  maxWidth: 333,
-  marginTop: 8,
-};
-
-const primaryBtnStyle: React.CSSProperties = {
-  backgroundColor: 'white',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: 20,
-  borderRadius: 8,
-  border: 'none',
-  cursor: 'pointer',
-  width: '100%',
-};
-
-const primaryBtnTextStyle: React.CSSProperties = {
-  fontFamily: "'Open Sans', sans-serif",
-  fontWeight: 700,
-  fontSize: 20,
-  color: 'black',
-  textAlign: 'center',
-};
-
-const secondaryBtnStyle: React.CSSProperties = {
-  backgroundColor: '#5c5c5c',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: 20,
-  borderRadius: 8,
-  border: '1px solid white',
-  cursor: 'pointer',
-  width: '100%',
-};
-
-const secondaryBtnTextStyle: React.CSSProperties = {
-  fontFamily: "'Open Sans', sans-serif",
-  fontWeight: 700,
-  fontSize: 20,
-  color: 'white',
-  textAlign: 'center',
-};
-
 const episodes = [
   {
     id: 1,
@@ -139,27 +21,37 @@ const episodes = [
 
 export default function MediaSection() {
   return (
-    <section style={sectionStyle}>
-      <p style={headingStyle}>Latest Videos, Podcasts, and More</p>
+    <section className="bg-[#272626] flex flex-col items-center pt-10 pb-[100px] px-2.5 gap-8">
+      <p className="text-2xl leading-[1.2] text-white w-[283px] self-start ml-1.5">
+        Latest Videos, Podcasts, and More
+      </p>
 
-      <div style={carouselWrapperStyle}>
+      <div className="flex gap-3 items-stretch w-full overflow-x-auto py-1">
         {episodes.map((ep) => (
-          <div key={ep.id} style={cardStyle}>
-            <img src="/assets/video-thumb.jpg" alt={ep.title} style={thumbStyle} />
-            <div style={cardBodyStyle}>
-              <p style={cardTitleStyle}>{ep.title}</p>
-              <p style={cardDescStyle}>{ep.description}</p>
+          <div key={ep.id} className="flex flex-col w-[300px] min-w-[300px] rounded-[20px] overflow-hidden">
+            <img
+              src="/assets/video-thumb.jpg"
+              alt={ep.title}
+              className="w-full aspect-[691/388] object-cover"
+            />
+            <div className="bg-[#6e6e6e] flex flex-col gap-4 p-4 flex-1 text-white">
+              <p className="font-bold text-xl leading-[1.2]">{ep.title}</p>
+              <p className="font-semibold text-sm leading-[1.4]">{ep.description}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div style={buttonsContainerStyle}>
-        <button style={primaryBtnStyle}>
-          <span style={primaryBtnTextStyle}>Support DCTDM</span>
+      <div className="flex flex-col gap-4 w-full max-w-[333px] mt-2">
+        <button className="bg-white flex items-center justify-center py-5 rounded-lg border-none cursor-pointer w-full">
+          <span className="font-open-sans font-bold text-xl text-black text-center">
+            Support DCTDM
+          </span>
         </button>
-        <button style={secondaryBtnStyle}>
-          <span style={secondaryBtnTextStyle}>Find an Event or Host One</span>
+        <button className="bg-[#5c5c5c] flex items-center justify-center py-5 rounded-lg border border-white cursor-pointer w-full">
+          <span className="font-open-sans font-bold text-xl text-white text-center">
+            Find an Event or Host One
+          </span>
         </button>
       </div>
     </section>

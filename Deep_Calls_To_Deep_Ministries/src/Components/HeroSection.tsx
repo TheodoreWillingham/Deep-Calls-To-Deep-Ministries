@@ -5,32 +5,13 @@ interface HeroSectionProps {
   onLoginClick: () => void;
 }
 
-const sectionStyle: React.CSSProperties = {
-  backgroundColor: '#272626',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  minHeight: '100svh',
-  padding: '10px 10px 90px',
-  overflow: 'hidden',
-};
-
-const titleStyle: React.CSSProperties = {
-  fontFamily: "'Roboto', sans-serif",
-  fontWeight: 900,
-  fontSize: 40,
-  lineHeight: 1,
-  textAlign: 'center',
-  color: 'white',
-  maxWidth: 381,
-};
-
 export default function HeroSection({ onSearchClick, onLoginClick }: HeroSectionProps) {
   return (
-    <section style={sectionStyle}>
+    <section className="bg-[#272626] flex flex-col items-center justify-between min-h-svh p-2.5 pb-[90px] overflow-hidden">
       <TopBar onSearchClick={onSearchClick} onLoginClick={onLoginClick} />
-      <h1 style={titleStyle}>DEEP CALLS TO DEEP MINISTRIES</h1>
+      <h1 className="font-black text-[40px] leading-none text-center text-white max-w-[381px]">
+        DEEP CALLS TO DEEP MINISTRIES
+      </h1>
       <div />
     </section>
   );
