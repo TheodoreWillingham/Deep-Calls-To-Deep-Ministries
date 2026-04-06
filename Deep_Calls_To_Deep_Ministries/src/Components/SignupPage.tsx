@@ -15,7 +15,7 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
     <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
       <div className="flex flex-col items-center gap-8 w-full max-w-xl">
         <div
-          className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-[155px] cursor-pointer"
+          className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
           onClick={onBack}
         >
           DEANA BRINGOLF
@@ -61,7 +61,7 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
         <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">Phone number</label>
           <div className="flex gap-2 w-full">
-            <select className="w-[70px] shrink-0 p-4 px-2 text-center rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none">
+            <select className="w-18 shrink-0 p-4 px-2 text-center rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none">
               <option value="US">US</option>
             </select>
             <input

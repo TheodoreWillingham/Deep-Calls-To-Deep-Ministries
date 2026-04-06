@@ -45,25 +45,25 @@ function MenuIcon() {
 
 export default function BottomNav() {
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[393px] p-2 z-50">
-      <nav className="bg-[#314137] flex h-[61px] items-center justify-between px-4 py-2 rounded-2xl w-full">
-        <div className="flex flex-col items-center gap-[7px] cursor-pointer">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm p-2 z-50">
+      <nav className="bg-[#314137] flex h-16 items-center justify-between px-4 py-2 rounded-2xl w-full">
+        <div className="flex flex-col items-center gap-2 cursor-pointer">
           <PlayIcon />
           <span className="text-xs text-white text-center">Media</span>
         </div>
-        <div className="flex flex-col items-center gap-[7px] cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer">
           <BookIcon />
           <span className="text-xs text-white text-center">Books</span>
         </div>
-        <div className="flex flex-col items-center gap-[7px] cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer">
           <LocationIcon />
           <span className="text-xs text-white text-center">Events</span>
         </div>
-        <div className="flex flex-col items-center gap-[7px] cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer">
           <PrayerIcon />
           <span className="text-xs text-white text-center">Prayer</span>
         </div>
-        <div className="flex flex-col items-center gap-[7px] cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer">
           <MenuIcon />
           <span className="text-xs text-white text-center">More</span>
         </div>

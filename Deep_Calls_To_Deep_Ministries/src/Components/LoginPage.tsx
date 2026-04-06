@@ -12,7 +12,7 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
     <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
       <div className="flex flex-col items-center gap-8 w-full max-w-xl">
         <div
-          className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-[155px] cursor-pointer"
+          className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
           onClick={onBack}
         >
           DEANA BRINGOLF

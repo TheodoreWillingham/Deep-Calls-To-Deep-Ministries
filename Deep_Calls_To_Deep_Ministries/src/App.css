@@ -1,5 +1,5 @@
 #root {
   width: 100%;
-  max-width: 393px;
+  max-width: 24rem; /* 384px = max-w-sm */
   margin: 0 auto;
 }

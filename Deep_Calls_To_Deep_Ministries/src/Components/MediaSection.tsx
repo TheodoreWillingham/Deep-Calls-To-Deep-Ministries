@@ -21,14 +21,14 @@ const episodes = [
 
 export default function MediaSection() {
   return (
-    <section className="bg-[#272626] flex flex-col items-center pt-10 pb-[100px] px-2.5 gap-8">
-      <p className="text-2xl leading-[1.2] text-white w-[283px] self-start ml-1.5">
+    <section className="bg-[#272626] flex flex-col items-center pt-10 pb-25 px-2.5 gap-8">
+      <p className="text-2xl leading-[1.2] text-white w-72 self-start ml-1.5">
         Latest Videos, Podcasts, and More
       </p>
 
       <div className="flex gap-3 items-stretch w-full overflow-x-auto py-1">
         {episodes.map((ep) => (
-          <div key={ep.id} className="flex flex-col w-[300px] min-w-[300px] rounded-[20px] overflow-hidden">
+          <div key={ep.id} className="flex flex-col w-75 min-w-75 rounded-[20px] overflow-hidden">
             <img
               src="/assets/video-thumb.jpg"
               alt={ep.title}
@@ -42,7 +42,7 @@ export default function MediaSection() {
         ))}
       </div>
 
-      <div className="flex flex-col gap-4 w-full max-w-[333px] mt-2">
+      <div className="flex flex-col gap-4 w-full max-w-84 mt-2">
         <button className="bg-white flex items-center justify-center py-5 rounded-lg border-none cursor-pointer w-full">
           <span className="font-open-sans font-bold text-xl text-black text-center">
             Support DCTDM

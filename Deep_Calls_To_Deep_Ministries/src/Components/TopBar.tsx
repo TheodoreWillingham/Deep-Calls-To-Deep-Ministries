@@ -15,7 +15,7 @@ function SearchIcon() {
 export default function TopBar({ onSearchClick, onLoginClick }: TopBarProps) {
   return (
     <header className="flex items-center justify-between w-full overflow-hidden px-2.5 py-4">
-      <span className="font-condensed font-black italic text-4xl leading-[0.8] text-white w-[155px]">
+      <span className="font-condensed font-black italic text-3xl leading-[0.8] text-white w-40">
         DEANA BRINGOLF
       </span>
       <div className="flex items-center gap-2.5">

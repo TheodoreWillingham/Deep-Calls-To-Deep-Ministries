@@ -12,7 +12,7 @@ function LocationPinIcon() {
 export default function ResourcesSection() {
   return (
     <section className="bg-[#3c3c3c] flex flex-col items-center justify-center gap-20 py-16 px-4">
-      <p className="font-inter text-[32px] leading-[1.2] text-center text-white max-w-[351px]">
+      <p className="font-inter text-[32px] leading-[1.2] text-center text-white max-w-sm">
         Resources to help grow your relationship with God.
       </p>
 
@@ -44,12 +44,12 @@ export default function ResourcesSection() {
         </div>
 
         {/* Events CTA */}
-        <div className="bg-[#ffad6a] flex flex-col items-center justify-center gap-10 py-8 px-8 w-full max-w-[361px]">
+        <div className="bg-[#ffad6a] flex flex-col items-center justify-center gap-10 py-8 px-8 w-full max-w-90">
           <LocationPinIcon />
           <p className="font-semibold text-[32px] text-center text-black">
             Don't do it alone.
           </p>
-          <button className="bg-white flex items-center justify-center py-6 rounded-lg w-[333px] max-w-full shadow-[0px_4px_4px_rgba(0,0,0,0.25),2px_6px_4px_rgba(0,0,0,0.25)] border-none cursor-pointer">
+          <button className="bg-white flex items-center justify-center py-6 rounded-lg w-84 max-w-full shadow-[0px_4px_4px_rgba(0,0,0,0.25),2px_6px_4px_rgba(0,0,0,0.25)] border-none cursor-pointer">
             <span className="font-open-sans font-bold text-xl text-black text-center">
               Find an Event or Host One
             </span>
