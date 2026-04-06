@@ -1,3 +1,14 @@
+const navWrapperStyle: React.CSSProperties = {
+  position: 'fixed',
+  bottom: 0,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  width: '100%',
+  maxWidth: 393,
+  padding: '8px 10px',
+  zIndex: 100,
+};
+
 const navStyle: React.CSSProperties = {
   backgroundColor: '#314137',
   display: 'flex',
@@ -81,6 +92,7 @@ function MenuIcon() {
 
 export default function BottomNav() {
   return (
+    <div style={navWrapperStyle}>
     <nav style={navStyle}>
       <div style={navItemStyle}>
         <PlayIcon />
@@ -103,5 +115,6 @@ export default function BottomNav() {
         <span style={navLabelStyle}>More</span>
       </div>
     </nav>
+    </div>
   );
 }

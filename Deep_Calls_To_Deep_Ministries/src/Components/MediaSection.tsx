@@ -1,22 +1,17 @@
-import BottomNav from './BottomNav';
-
 const sectionStyle: React.CSSProperties = {
   backgroundColor: '#272626',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'space-between',
-  minHeight: 852,
-  padding: '16px 10px',
-  overflow: 'hidden',
-  gap: 24,
+  padding: '40px 10px 100px',
+  gap: 32,
 };
 
 const headingStyle: React.CSSProperties = {
   fontFamily: "'Roboto', sans-serif",
   fontWeight: 400,
   fontSize: 24,
-  lineHeight: 0.8,
+  lineHeight: 1.2,
   color: 'white',
   width: 283,
   alignSelf: 'flex-start',
@@ -26,20 +21,17 @@ const headingStyle: React.CSSProperties = {
 const carouselWrapperStyle: React.CSSProperties = {
   display: 'flex',
   gap: 13,
-  alignItems: 'center',
+  alignItems: 'stretch',
   width: '100%',
   overflowX: 'auto',
-  border: '2px solid white',
-  padding: 4,
+  padding: '4px 0',
 };
 
 const cardStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 340,
-  minWidth: 340,
+  width: 300,
+  minWidth: 300,
   borderRadius: 20,
   overflow: 'hidden',
 };
@@ -48,8 +40,6 @@ const thumbStyle: React.CSSProperties = {
   width: '100%',
   aspectRatio: '691 / 388',
   objectFit: 'cover',
-  borderTopLeftRadius: 20,
-  borderTopRightRadius: 20,
   display: 'block',
 };
 
@@ -59,32 +49,31 @@ const cardBodyStyle: React.CSSProperties = {
   flexDirection: 'column',
   gap: 16,
   padding: 16,
-  width: '100%',
+  flex: 1,
   color: 'white',
-  borderBottomLeftRadius: 20,
-  borderBottomRightRadius: 20,
 };
 
 const cardTitleStyle: React.CSSProperties = {
   fontFamily: "'Roboto', sans-serif",
   fontWeight: 700,
   fontSize: 20,
-  lineHeight: 0.8,
+  lineHeight: 1.2,
 };
 
 const cardDescStyle: React.CSSProperties = {
   fontFamily: "'Roboto', sans-serif",
   fontWeight: 600,
   fontSize: 14,
-  lineHeight: 1.2,
+  lineHeight: 1.4,
 };
 
 const buttonsContainerStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  gap: 23,
-  width: 333,
-  maxWidth: '100%',
+  gap: 16,
+  width: '100%',
+  maxWidth: 333,
+  marginTop: 8,
 };
 
 const primaryBtnStyle: React.CSSProperties = {
@@ -92,7 +81,7 @@ const primaryBtnStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: 24,
+  padding: 20,
   borderRadius: 8,
   border: 'none',
   cursor: 'pointer',
@@ -112,7 +101,7 @@ const secondaryBtnStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: 24,
+  padding: 20,
   borderRadius: 8,
   border: '1px solid white',
   cursor: 'pointer',
@@ -173,8 +162,6 @@ export default function MediaSection() {
           <span style={secondaryBtnTextStyle}>Find an Event or Host One</span>
         </button>
       </div>
-
-      <BottomNav />
     </section>
   );
 }

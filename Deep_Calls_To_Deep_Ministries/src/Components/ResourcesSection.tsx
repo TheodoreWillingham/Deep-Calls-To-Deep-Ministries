@@ -12,7 +12,7 @@ const headingStyle: React.CSSProperties = {
   fontFamily: "'Inter', sans-serif",
   fontWeight: 400,
   fontSize: 32,
-  lineHeight: 0.8,
+  lineHeight: 1.2,
   textAlign: 'center',
   color: 'white',
   maxWidth: 351,
@@ -50,9 +50,9 @@ const cardOverlayStyle: React.CSSProperties = {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  gap: 12,
-  lineHeight: 0.8,
+  gap: 8,
   color: 'white',
+  textShadow: '0 1px 4px rgba(0,0,0,0.6)',
 };
 
 const cardTitleStyle: React.CSSProperties = {

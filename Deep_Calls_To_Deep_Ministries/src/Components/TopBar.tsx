@@ -53,6 +53,11 @@ const loginStyle: React.CSSProperties = {
   cursor: 'pointer',
 };
 
+interface TopBarProps {
+  onSearchClick: () => void;
+  onLoginClick: () => void;
+}
+
 function SearchIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,16 +67,16 @@ function SearchIcon() {
   );
 }
 
-export default function TopBar() {
+export default function TopBar({ onSearchClick, onLoginClick }: TopBarProps) {
   return (
     <header style={topBarStyle}>
       <span style={logoStyle}>DEANA BRINGOLF</span>
       <div style={rightGroupStyle}>
-        <div style={searchStyle}>
+        <div style={searchStyle} onClick={onSearchClick}>
           <SearchIcon />
           <span style={searchTextStyle}>Search</span>
         </div>
-        <span style={loginStyle}>Login</span>
+        <span style={loginStyle} onClick={onLoginClick}>Login</span>
       </div>
     </header>
   );

@@ -1,5 +1,9 @@
 import TopBar from './TopBar';
-import BottomNav from './BottomNav';
+
+interface HeroSectionProps {
+  onSearchClick: () => void;
+  onLoginClick: () => void;
+}
 
 const sectionStyle: React.CSSProperties = {
   backgroundColor: '#272626',
@@ -7,8 +11,8 @@ const sectionStyle: React.CSSProperties = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'space-between',
-  height: 852,
-  padding: 10,
+  minHeight: '100svh',
+  padding: '10px 10px 90px',
   overflow: 'hidden',
 };
 
@@ -19,16 +23,15 @@ const titleStyle: React.CSSProperties = {
   lineHeight: 1,
   textAlign: 'center',
   color: 'white',
-  width: 381,
-  maxWidth: '100%',
+  maxWidth: 381,
 };
 
-export default function HeroSection() {
+export default function HeroSection({ onSearchClick, onLoginClick }: HeroSectionProps) {
   return (
     <section style={sectionStyle}>
-      <TopBar />
+      <TopBar onSearchClick={onSearchClick} onLoginClick={onLoginClick} />
       <h1 style={titleStyle}>DEEP CALLS TO DEEP MINISTRIES</h1>
-      <BottomNav />
+      <div />
     </section>
   );
 }
