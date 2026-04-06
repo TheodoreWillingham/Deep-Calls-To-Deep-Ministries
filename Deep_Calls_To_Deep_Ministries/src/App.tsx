@@ -7,11 +7,13 @@ import BottomNav from './Components/BottomNav'
 import SearchOverlay from './Components/SearchOverlay'
 import LoginPage from './Components/LoginPage'
 import SignupPage from './Components/SignupPage'
+import MoreMenu from './Components/MoreMenu'
 
 type Page = 'home' | 'login' | 'signup';
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
   const [page, setPage] = useState<Page>('home')
 
   if (page === 'login') {
@@ -40,7 +42,8 @@ function App() {
       />
       <ResourcesSection />
       <MediaSection />
-      <BottomNav />
+      <BottomNav onMoreClick={() => setMoreOpen(true)} />
+      <MoreMenu open={moreOpen} onClose={() => setMoreOpen(false)} />
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </>
   )

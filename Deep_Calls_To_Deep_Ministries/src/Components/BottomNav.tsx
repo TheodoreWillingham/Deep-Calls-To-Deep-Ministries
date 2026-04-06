@@ -43,7 +43,11 @@ function MenuIcon() {
   );
 }
 
-export default function BottomNav() {
+interface BottomNavProps {
+  onMoreClick?: () => void;
+}
+
+export default function BottomNav({ onMoreClick }: BottomNavProps) {
   return (
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm p-2 z-50">
       <nav className="bg-[#314137] flex h-16 items-center justify-between px-4 py-2 rounded-2xl w-full">
@@ -63,7 +67,7 @@ export default function BottomNav() {
           <PrayerIcon />
           <span className="text-xs text-white text-center">Prayer</span>
         </div>
-        <div className="flex flex-col items-center gap-2 cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onMoreClick}>
           <MenuIcon />
           <span className="text-xs text-white text-center">More</span>
         </div>
