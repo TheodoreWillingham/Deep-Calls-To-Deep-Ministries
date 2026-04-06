@@ -1,16 +1,14 @@
 import './App.css'
-import EventSchedule from './Components/EventSchedule'
-import PrayerRequests from './Components/PrayerRequests'
-import Testimonials from './Components/Testimonials'
+import HeroSection from './Components/HeroSection'
+import ResourcesSection from './Components/ResourcesSection'
+import MediaSection from './Components/MediaSection'
 
 function App() {
-
-
   return (
     <>
-      <EventSchedule />
-      <PrayerRequests />
-      <Testimonials />
+      <HeroSection />
+      <ResourcesSection />
+      <MediaSection />
     </>
   )
 }

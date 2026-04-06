@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Figma__get_design_context",
+      "Bash(curl -sL -o prayers-bg.jpg \"https://www.figma.com/api/mcp/asset/5f87cf09-a158-4fb0-81be-6479cabc433b\")",
+      "Bash(curl -sL -o media-bg.jpg \"https://www.figma.com/api/mcp/asset/2ed745b4-69ee-4447-95ab-a2a1a01cf3e4\")",
+      "Bash(curl -sL -o video-thumb.jpg \"https://www.figma.com/api/mcp/asset/444c2854-2e92-4170-923a-e8eb14c7f7f6\")",
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

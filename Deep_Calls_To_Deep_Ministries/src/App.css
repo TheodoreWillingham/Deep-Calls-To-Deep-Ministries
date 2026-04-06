@@ -1,8 +1,5 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
+  max-width: 393px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
-
-/* Use this as the CSS File for the entire app
