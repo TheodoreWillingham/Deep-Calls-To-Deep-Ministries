@@ -46,9 +46,10 @@ function MenuIcon() {
 interface BottomNavProps {
   onMoreClick?: () => void;
   onPrayerClick?: () => void;
+  onBooksClick?: () => void;
 }
 
-export default function BottomNav({ onMoreClick, onPrayerClick }: BottomNavProps) {
+export default function BottomNav({ onMoreClick, onPrayerClick, onBooksClick }: BottomNavProps) {
   return (
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm p-2 z-50">
       <nav className="bg-[#314137] flex h-16 items-center justify-between px-4 py-2 rounded-2xl w-full">
@@ -56,7 +57,7 @@ export default function BottomNav({ onMoreClick, onPrayerClick }: BottomNavProps
           <PlayIcon />
           <span className="text-xs text-white text-center">Media</span>
         </div>
-        <div className="flex flex-col items-center gap-2 cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onBooksClick}>
           <BookIcon />
           <span className="text-xs text-white text-center">Books</span>
         </div>

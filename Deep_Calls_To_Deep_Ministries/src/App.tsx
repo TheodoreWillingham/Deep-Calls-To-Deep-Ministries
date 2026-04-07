@@ -1,23 +1,76 @@
-import { Book } from "./Components/Book";
-import "./index.css";
+import { useState } from 'react'
+import './App.css'
+import HeroSection from './Components/HeroSection'
+import ResourcesSection from './Components/ResourcesSection'
+import MediaSection from './Components/MediaSection'
+import BottomNav from './Components/BottomNav'
+import SearchOverlay from './Components/SearchOverlay'
+import LoginPage from './Components/LoginPage'
+import SignupPage from './Components/SignupPage'
+import MoreMenu from './Components/MoreMenu'
+import BooksPage from './Components/BooksPage'
+import PrayerPage from './Components/PrayerPage'
+import EncouragementPage from './Components/EncouragementPage'
 
-const bookUrls = [
-  "/bookcover1.jpg",
-  "/bookcover2.jpg",
-];
+type Page = 'home' | 'login' | 'signup' | 'books' | 'prayer' | 'encouragement';
 
 function App() {
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
+  const [page, setPage] = useState<Page>('home')
+
+  if (page === 'login') {
+    return (
+      <LoginPage
+        onBack={() => setPage('home')}
+        onGoToSignup={() => setPage('signup')}
+      />
+    )
+  }
+
+  if (page === 'signup') {
+    return (
+      <SignupPage
+        onBack={() => setPage('home')}
+        onGoToLogin={() => setPage('login')}
+      />
+    )
+  }
+
+  if (page === 'books') {
+    return <BooksPage onBack={() => setPage('home')} />
+  }
+
+  if (page === 'prayer') {
+    return <PrayerPage onBack={() => setPage('home')} />
+  }
+
+  if (page === 'encouragement') {
+    return <EncouragementPage onBack={() => setPage('home')} />
+  }
+
   return (
-    <main className="flex flex-col items-center justify-center py-16 min-h-screen w-full bg-[#4a4a4a]">
-      <div className="grid grid-cols-2 gap-10">
-        {bookUrls.map((url, i) => (
-          <li key={i}>
-            <Book href={url} />
-          </li>
-        ))}
-      </div>
-    </main>
-  );
+    <>
+      <HeroSection
+        onSearchClick={() => setSearchOpen(true)}
+        onLoginClick={() => setPage('login')}
+      />
+      <ResourcesSection />
+      <MediaSection />
+      <BottomNav
+        onMoreClick={() => setMoreOpen(true)}
+        onBooksClick={() => setPage('books')}
+        onPrayerClick={() => setPage('prayer')}
+      />
+      <MoreMenu
+        open={moreOpen}
+        onClose={() => setMoreOpen(false)}
+        onEncouragementClick={() => setPage('encouragement')}
+        onPrayersClick={() => setPage('prayer')}
+      />
+      {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
+    </>
+  )
 }
 
 export default App

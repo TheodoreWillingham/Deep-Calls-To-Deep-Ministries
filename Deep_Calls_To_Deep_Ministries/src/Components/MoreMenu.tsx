@@ -2,6 +2,7 @@ interface MoreMenuProps {
   open: boolean;
   onClose: () => void;
   onEncouragementClick?: () => void;
+  onPrayersClick?: () => void;
 }
 
 function EncouragementIcon() {
@@ -99,7 +100,7 @@ function HeartIcon() {
   );
 }
 
-export default function MoreMenu({ open, onClose, onEncouragementClick }: MoreMenuProps) {
+export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick }: MoreMenuProps) {
   return (
     <>
       {/* Backdrop */}
@@ -119,7 +120,11 @@ export default function MoreMenu({ open, onClose, onEncouragementClick }: MoreMe
               <div key={item.label}>
                 <div
                   className="flex items-center gap-4 py-4 cursor-pointer"
-                  onClick={item.label === 'Encouragement' ? () => { onClose(); onEncouragementClick?.(); } : undefined}
+                  onClick={
+                    item.label === 'Encouragement' ? () => { onClose(); onEncouragementClick?.(); } :
+                    item.label === 'Prayers' ? () => { onClose(); onPrayersClick?.(); } :
+                    undefined
+                  }
                 >
                   {item.icon}
                   <span className="text-white font-medium text-lg">{item.label}</span>

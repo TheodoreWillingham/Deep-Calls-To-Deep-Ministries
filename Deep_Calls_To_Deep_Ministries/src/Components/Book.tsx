@@ -1,24 +1,19 @@
-export function Book({ href }: { href: string }) {
+export function Book({ href, link }: { href: string; link?: string }) {
   return (
-    <div className="BookContainer w-[200px] h-[260px] m-[30px] flex items-center justify-center perspective-800">
-      <div
-        className="Book w-[200px] h-[280px] relative preserve-3d rotate-y-30 transition-transform-075s"
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.transform = "rotateY(0deg)")
-        }
-        onMouseLeave={(e) =>
-          (e.currentTarget.style.transform = "rotateY(-30deg)")
-        }
-      >
+    <a
+      className="book-container inline-flex items-center justify-center w-fit h-fit"
+      href={link || "#"}
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <div className="book relative w-[200px] h-[300px]">
         <img
-          src={href}
           alt="Book Cover"
-          className="FrontCover w-full h-full absolute rounded-r rounded-l-[3px] shadow-book-shadow object-cover"
-          style={{ transform: "translateZ(25px)" }}
+          src={href}
+          className="absolute top-0 left-0 w-[200px] h-[300px] rounded-r-sm object-cover"
+          style={{ transform: "translateZ(15px)", boxShadow: "5px 5px 20px #666" }}
         />
-        <div className="Pages bg-white h-[calc(260px-2*6px)] w-[50px] top-[3px] absolute page-transform" />
-        <div className="BackCover rounded-r bg-[#01060f] h-[260px] w-[200px] left-0 absolute back-cover-transform back-cover-shadow" />
       </div>
-    </div>
+    </a>
   );
 }
