@@ -7,7 +7,8 @@
       "Bash(curl -sL -o video-thumb.jpg \"https://www.figma.com/api/mcp/asset/444c2854-2e92-4170-923a-e8eb14c7f7f6\")",
       "Bash(npm run:*)",
       "Bash(npx tsc:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "WebFetch(domain:www.figma.com)"
     ]
   }
 }
