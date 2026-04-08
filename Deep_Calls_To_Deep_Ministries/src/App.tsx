@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+
+//Components
 import HeroSection from './Components/HeroSection'
 import ResourcesSection from './Components/ResourcesSection'
 import MediaSection from './Components/MediaSection'
@@ -11,8 +13,10 @@ import MoreMenu from './Components/MoreMenu'
 import BooksPage from './Components/BooksPage'
 import PrayerPage from './Components/PrayerPage'
 import EncouragementPage from './Components/EncouragementPage'
+import Events from './Pages/EventPage'
 
-type Page = 'home' | 'login' | 'signup' | 'books' | 'prayer' | 'encouragement';
+
+type Page = 'home' | 'login' | 'signup' | 'books' | 'prayer' | 'encouragement' | 'events';
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -49,6 +53,10 @@ function App() {
     return <EncouragementPage onBack={() => setPage('home')} />
   }
 
+  if (page === 'events') {
+    return <Events onBack={() => setPage('home')} />;
+  }
+
   return (
     <>
       <HeroSection
@@ -61,12 +69,14 @@ function App() {
         onMoreClick={() => setMoreOpen(true)}
         onBooksClick={() => setPage('books')}
         onPrayerClick={() => setPage('prayer')}
+        onEventsClick={() => setPage('events')}
       />
       <MoreMenu
         open={moreOpen}
         onClose={() => setMoreOpen(false)}
         onEncouragementClick={() => setPage('encouragement')}
         onPrayersClick={() => setPage('prayer')}
+        onEventsClick={() => setPage('events')}
       />
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </>
