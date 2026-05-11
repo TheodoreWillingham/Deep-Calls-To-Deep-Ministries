@@ -3,6 +3,7 @@ interface MoreMenuProps {
   onClose: () => void;
   onEncouragementClick?: () => void;
   onPrayersClick?: () => void;
+  onEventsClick?: () => void;
 }
 
 function EncouragementIcon() {
@@ -100,7 +101,7 @@ function HeartIcon() {
   );
 }
 
-export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick }: MoreMenuProps) {
+export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick }: MoreMenuProps) {
   return (
     <>
       {/* Backdrop */}
@@ -123,6 +124,7 @@ export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayer
                   onClick={
                     item.label === 'Encouragement' ? () => { onClose(); onEncouragementClick?.(); } :
                     item.label === 'Prayers' ? () => { onClose(); onPrayersClick?.(); } :
+                    item.label === 'Events' ? () => { onClose(); onEventsClick?.(); } :
                     undefined
                   }
                 >

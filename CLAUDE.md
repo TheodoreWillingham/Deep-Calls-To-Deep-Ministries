@@ -8,10 +8,7 @@ Website for Deep Calls To Deep Ministries (Deana Bringolf). React + TypeScript f
 
 ## Development Commands
 
-All commands must be run from the `Deep_Calls_To_Deep_Ministries/` subdirectory (the actual Vite project root):
-
 ```bash
-cd Deep_Calls_To_Deep_Ministries
 npm run dev      # Start dev server (Vite)
 npm run build    # Type-check (tsc -b) then build for production
 npm run lint     # ESLint
@@ -26,7 +23,7 @@ No test framework is configured yet.
 - **Supabase** — backend-as-a-service; client initialized in `src/Components/supabaseClient.tsx`
 - **No CSS framework** — inline styles used throughout components
 
-### Key paths (relative to `Deep_Calls_To_Deep_Ministries/`)
+### Key paths
 
 | Path | Purpose |
 |------|---------|
