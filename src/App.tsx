@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+
+//Components
 import HeroSection from './Components/HeroSection'
 import ResourcesSection from './Components/ResourcesSection'
 import MediaSection from './Components/MediaSection'

@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,900&family=Roboto:wght@400;500;600;700;900&family=Open+Sans:wght@600;700;800&family=Inter:wght@400&display=swap');
+@import "tailwindcss";
 
 @theme {
   --font-sans: 'Roboto', system-ui, sans-serif;
