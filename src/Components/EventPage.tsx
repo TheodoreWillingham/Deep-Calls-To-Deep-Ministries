@@ -1,4 +1,4 @@
-import EventSchedule from '../Components/EventSchedule';
+import EventSchedule from './EventSchedule';
 
 type EventPageProps = {
   onBack?: () => void;
