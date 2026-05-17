@@ -105,7 +105,7 @@ export default function EventsPage({ onBack }: EventsPageProps) {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-[#1a1a1a] flex flex-col items-center z-[200] overflow-hidden">
+    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
         <button
@@ -130,7 +130,7 @@ export default function EventsPage({ onBack }: EventsPageProps) {
       </div>
 
       {/* Scrollable content */}
-      <div className="w-full max-w-md flex-1 overflow-y-auto px-6 pb-28">
+      <div className="w-full max-w-md px-6 pb-28">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-8 h-8 border-2 border-gray-600 border-t-white rounded-full animate-spin" />

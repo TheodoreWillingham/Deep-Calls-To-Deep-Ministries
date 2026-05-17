@@ -10,6 +10,17 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
 
   return (
     <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
+      <button
+        type="button"
+        onClick={onBack}
+        aria-label="Go back"
+        className="absolute top-5 left-5 flex items-center justify-center w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white cursor-pointer transition-colors"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M12.5 4L6.5 10L12.5 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
       <div className="flex flex-col items-center gap-8 w-full max-w-xl">
         <div
           className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"

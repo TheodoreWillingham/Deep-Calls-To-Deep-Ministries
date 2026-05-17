@@ -14,8 +14,21 @@ import BooksPage from './Components/BooksPage'
 import PrayerPage from './Components/PrayerPage'
 import EncouragementPage from './Components/EncouragementPage'
 import EventsPage from './Components/EventsPage'
+import ComingSoonPage from './Components/ComingSoonPage'
+import MediaPage from './Components/MediaPage'
+import TopBar from './Components/TopBar'
 
-type Page = 'home' | 'login' | 'signup' | 'books' | 'prayer' | 'encouragement' | 'events';
+export type Page =
+  | 'home'
+  | 'login'
+  | 'signup'
+  | 'books'
+  | 'prayer'
+  | 'encouragement'
+  | 'events'
+  | 'media'
+  | 'daily-practices'
+  | 'give';
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -40,43 +53,46 @@ function App() {
     )
   }
 
-  if (page === 'books') {
-    return <BooksPage onBack={() => setPage('home')} />
-  }
+  const renderPage = () => {
+    if (page === 'books') return <BooksPage onBack={() => setPage('home')} />
+    if (page === 'prayer') return <PrayerPage onBack={() => setPage('home')} />
+    if (page === 'encouragement') return <EncouragementPage onBack={() => setPage('home')} />
+    if (page === 'events') return <EventsPage onBack={() => setPage('home')} />
+    if (page === 'media') return <MediaPage onBack={() => setPage('home')} />
+    if (page === 'daily-practices') return <ComingSoonPage title="Daily Practices" onBack={() => setPage('home')} />
+    if (page === 'give') return <ComingSoonPage title="Give" onBack={() => setPage('home')} />
 
-  if (page === 'prayer') {
-    return <PrayerPage onBack={() => setPage('home')} />
-  }
-
-  if (page === 'encouragement') {
-    return <EncouragementPage onBack={() => setPage('home')} />
-  }
-
-  if (page === 'events') {
-    return <EventsPage onBack={() => setPage('home')} />
+    // Home
+    return (
+      <>
+        <HeroSection />
+        <ResourcesSection onPrayersClick={() => setPage('prayer')} />
+        <MediaSection />
+        <BottomNav
+          onMoreClick={() => setMoreOpen(true)}
+          onBooksClick={() => setPage('books')}
+          onPrayerClick={() => setPage('prayer')}
+          onEventsClick={() => setPage('events')}
+        />
+        <MoreMenu
+          open={moreOpen}
+          onClose={() => setMoreOpen(false)}
+          onEncouragementClick={() => setPage('encouragement')}
+          onPrayersClick={() => setPage('prayer')}
+          onEventsClick={() => setPage('events')}
+        />
+      </>
+    )
   }
 
   return (
     <>
-      <HeroSection
+      <TopBar
         onSearchClick={() => setSearchOpen(true)}
         onLoginClick={() => setPage('login')}
+        onNavClick={setPage}
       />
-      <ResourcesSection />
-      <MediaSection />
-      <BottomNav
-        onMoreClick={() => setMoreOpen(true)}
-        onBooksClick={() => setPage('books')}
-        onPrayerClick={() => setPage('prayer')}
-        onEventsClick={() => setPage('events')}
-      />
-      <MoreMenu
-        open={moreOpen}
-        onClose={() => setMoreOpen(false)}
-        onEncouragementClick={() => setPage('encouragement')}
-        onPrayersClick={() => setPage('prayer')}
-        onEventsClick={() => setPage('events')}
-      />
+      {renderPage()}
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </>
   )

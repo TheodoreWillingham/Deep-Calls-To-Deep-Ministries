@@ -11,7 +11,7 @@ const bookUrls = [
 
 export default function BooksPage({ onBack }: BooksPageProps) {
   return (
-    <div className="fixed inset-0 bg-[#4a4a4a] flex flex-col items-center z-[200] overflow-hidden">
+    <div className="min-h-screen bg-[#4a4a4a] flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
         <button
@@ -27,7 +27,7 @@ export default function BooksPage({ onBack }: BooksPageProps) {
       </div>
 
       {/* Book grid */}
-      <div className="flex-1 overflow-y-auto w-full flex justify-center">
+      <div className="w-full flex justify-center">
         <div className="grid grid-cols-2 gap-10 py-8">
           {bookUrls.map((url, i) => (
             <Book key={i} href={url} />

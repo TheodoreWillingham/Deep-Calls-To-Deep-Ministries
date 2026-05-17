@@ -68,7 +68,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#1a1a1a] flex flex-col items-center z-[200] overflow-hidden">
+    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
         <button
@@ -110,7 +110,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
       </div>
 
       {/* Scrollable content area */}
-      <div className="w-full max-w-md flex-1 overflow-y-auto px-6 pt-4 pb-28">
+      <div className="w-full max-w-md px-6 pt-4 pb-28">
         {/* Description box */}
         <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
           <p className="text-white text-sm leading-relaxed m-0">{description}</p>

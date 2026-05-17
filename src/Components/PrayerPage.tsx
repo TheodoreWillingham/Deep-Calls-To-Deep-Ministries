@@ -69,23 +69,23 @@ export default function PrayerPage({ onBack }: PrayerPageProps) {
   const [tab, setTab] = useState<Tab>('requests');
 
   return (
-    <div className="fixed inset-0 bg-[#1a1a1a] flex flex-col items-center z-[200] overflow-hidden">
+    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
-      <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center gap-4 shrink-0">
         <button
           onClick={onBack}
           className="text-white bg-transparent border-none cursor-pointer p-0"
           aria-label="Go back"
         >
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <h1 className="font-bold text-2xl text-white tracking-wide">Prayer</h1>
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide">Prayer</h1>
       </div>
 
       {/* Tab switcher */}
-      <div className="w-full max-w-md px-6 flex gap-2 shrink-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 flex gap-2 md:gap-4 shrink-0">
         {([
           ['requests', 'Requests'],
           ['bestill', 'Be Still'],
@@ -94,10 +94,10 @@ export default function PrayerPage({ onBack }: PrayerPageProps) {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`flex-1 py-3 rounded-xl font-semibold text-sm border-none cursor-pointer transition-colors ${
+            className={`flex-1 py-3 md:py-4 rounded-xl font-semibold text-sm md:text-base border-none cursor-pointer transition-colors ${
               tab === key
                 ? 'bg-white text-black'
-                : 'bg-[#2a2a2a] text-gray-400'
+                : 'bg-[#2a2a2a] text-gray-400 hover:bg-[#333]'
             }`}
           >
             {label}
@@ -105,8 +105,8 @@ export default function PrayerPage({ onBack }: PrayerPageProps) {
         ))}
       </div>
 
-      {/* Scrollable content */}
-      <div className="w-full max-w-md flex-1 overflow-y-auto px-6 pt-4 pb-28">
+      {/* Content */}
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-4 md:pt-8 pb-28">
         {tab === 'requests' && <PrayerRequestsTab />}
         {tab === 'bestill' && <BeStillTab />}
         {tab === 'gospel' && <GospelTab />}
@@ -148,8 +148,8 @@ function PrayerRequestsTab() {
   return (
     <>
       {/* Description */}
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
-        <p className="text-white text-sm leading-relaxed m-0">
+      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+        <p className="text-white text-sm md:text-base leading-relaxed m-0">
           Need prayer? We've got you covered. Submit your prayer request below and our ministry will lift you up. You can also pray for others — tap the prayer hands to let them know someone is praying.
         </p>
       </div>
@@ -158,12 +158,12 @@ function PrayerRequestsTab() {
       {!showForm ? (
         <button
           onClick={() => setShowForm(true)}
-          className="w-full py-4 rounded-xl bg-[#3d4f3e] text-white text-base font-semibold border-none cursor-pointer mb-5"
+          className="w-full md:max-w-md md:mx-auto md:block py-4 md:py-5 rounded-xl bg-[#3d4f3e] hover:bg-[#4a5f4b] text-white text-base md:text-lg font-semibold border-none cursor-pointer mb-5 md:mb-8 transition-colors"
         >
           Submit a Prayer Request
         </button>
       ) : (
-        <div className="bg-[#252525] rounded-xl p-5 flex flex-col gap-4 mb-5">
+        <div className="bg-[#252525] rounded-xl p-5 md:p-7 flex flex-col gap-4 mb-5 md:mb-8 md:max-w-3xl md:mx-auto">
           <h3 className="text-white font-semibold text-lg m-0">Your Prayer Request</h3>
 
           <input
@@ -224,12 +224,12 @@ function PrayerRequestsTab() {
       )}
 
       {/* Prayer request cards */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
         {sampleRequests.map(pr => {
           const hasPrayed = prayedIds.has(pr.id);
           return (
-            <div key={pr.id} className="bg-[#252525] rounded-xl p-5">
-              <p className="text-white text-sm leading-relaxed m-0 mb-3">{pr.request}</p>
+            <div key={pr.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex flex-col">
+              <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1">{pr.request}</p>
               <div className="flex items-center justify-between">
                 <p className="text-gray-400 text-xs m-0 italic">{pr.name}</p>
                 <button
@@ -263,16 +263,16 @@ function BeStillTab() {
   return (
     <>
       {/* Description */}
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
-        <p className="text-white text-sm leading-relaxed m-0">
+      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+        <p className="text-white text-sm md:text-base leading-relaxed m-0">
           Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." — Psalm 46:10
         </p>
       </div>
 
       {/* Moments list */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
         {sampleMoments.map(moment => (
-          <div key={moment.id} className="bg-[#252525] rounded-xl p-5 flex gap-4 items-start">
+          <div key={moment.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex gap-4 items-start">
             {/* Play/Listen icon */}
             <button className="shrink-0 bg-transparent border-none cursor-pointer p-0 mt-1">
               {moment.type === 'video' ? <PlayCircleIcon /> : <HeadphonesIcon />}
@@ -308,16 +308,17 @@ function BeStillTab() {
 function GospelTab() {
   return (
     <>
+      <div className="md:max-w-3xl md:mx-auto">
       {/* Description */}
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
-        <p className="text-white text-sm leading-relaxed m-0">
+      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+        <p className="text-white text-sm md:text-base leading-relaxed m-0">
           The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us — and can change everything for you too.
         </p>
       </div>
 
       {/* Gospel content */}
-      <div className="bg-[#252525] rounded-xl p-6 mb-5">
-        <h3 className="text-white font-bold text-xl m-0 mb-4 text-center">The Good News</h3>
+      <div className="bg-[#252525] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+        <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-4 md:mb-6 text-center">The Good News</h3>
 
         <div className="flex flex-col gap-5">
           <div>
@@ -357,34 +358,35 @@ function GospelTab() {
       </div>
 
       {/* Prayer of salvation */}
-      <div className="bg-[#3d4f3e] rounded-xl p-6 mb-5">
-        <h3 className="text-white font-bold text-lg m-0 mb-3 text-center">A Prayer to Begin</h3>
-        <p className="text-white text-sm leading-relaxed m-0 italic text-center">
+      <div className="bg-[#3d4f3e] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+        <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3 text-center">A Prayer to Begin</h3>
+        <p className="text-white text-sm md:text-base leading-relaxed m-0 italic text-center">
           "Lord Jesus, I believe You are the Son of God. I believe You died for my sins and rose again. I ask You to forgive me and come into my heart. I surrender my life to You. Thank You for saving me. In Jesus' name, Amen."
         </p>
       </div>
 
       {/* Next steps */}
-      <div className="bg-[#252525] rounded-xl p-6">
-        <h3 className="text-white font-bold text-lg m-0 mb-3">What's Next?</h3>
-        <p className="text-gray-300 text-sm leading-relaxed m-0 mb-4">
+      <div className="bg-[#252525] rounded-xl p-6 md:p-8">
+        <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3">What's Next?</h3>
+        <p className="text-gray-300 text-sm md:text-base leading-relaxed m-0 mb-4">
           If you've made the decision to follow Jesus — welcome to the family! Here are some important next steps:
         </p>
-        <ul className="text-gray-300 text-sm leading-relaxed m-0 pl-5 flex flex-col gap-3">
+        <ul className="text-gray-300 text-sm md:text-base leading-relaxed m-0 pl-5 flex flex-col gap-3">
           <li><span className="text-white font-medium">Find a local church</span> — Surround yourself with other believers who can encourage you and help you grow in your faith.</li>
           <li><span className="text-white font-medium">Read the Bible</span> — Start with the book of John to learn more about who Jesus is.</li>
           <li><span className="text-white font-medium">Pray daily</span> — Talk to God like you would a friend. He wants to hear from you.</li>
           <li><span className="text-white font-medium">Get baptized</span> — Baptism is an outward expression of your inward decision to follow Jesus.</li>
         </ul>
 
-        <div className="mt-5 p-4 bg-[#1a1a1a] rounded-xl">
-          <p className="text-gray-300 text-sm m-0 mb-2">
+        <div className="mt-5 p-4 md:p-5 bg-[#1a1a1a] rounded-xl">
+          <p className="text-gray-300 text-sm md:text-base m-0 mb-2">
             Need help finding a church or want to talk to someone?
           </p>
-          <p className="text-white text-sm font-medium m-0">
+          <p className="text-white text-sm md:text-base font-medium m-0">
             Reach out to us — we'd love to help you on your journey.
           </p>
         </div>
+      </div>
       </div>
     </>
   );

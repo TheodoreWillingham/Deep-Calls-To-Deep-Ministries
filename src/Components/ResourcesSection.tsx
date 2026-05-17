@@ -1,3 +1,7 @@
+interface ResourcesSectionProps {
+  onPrayersClick: () => void;
+}
+
 function LocationPinIcon() {
   return (
     <svg width="105" height="105" viewBox="0 0 105 105" fill="none">
@@ -9,7 +13,7 @@ function LocationPinIcon() {
   );
 }
 
-export default function ResourcesSection() {
+export default function ResourcesSection({ onPrayersClick }: ResourcesSectionProps) {
   return (
     <section className="bg-[#3c3c3c] flex flex-col items-center justify-center gap-20 pb-16 px-4 md:px-10 lg:px-20 md:pb-24">
       {/* Black band with gradient fades on top and bottom for a smooth transition from the hero */}
@@ -27,7 +31,10 @@ export default function ResourcesSection() {
 
       <div className="flex flex-col items-center gap-10 w-full md:grid md:grid-cols-2 md:gap-8 md:max-w-7xl">
         {/* Prayers Card */}
-        <div className="relative w-full aspect-[676/379] rounded-[32px] overflow-hidden flex flex-col justify-end p-6 md:p-10 md:aspect-[16/10] cursor-pointer group">
+        <div
+          onClick={onPrayersClick}
+          className="relative w-full aspect-[676/379] rounded-[32px] overflow-hidden flex flex-col justify-end p-6 md:p-10 md:aspect-[16/10] cursor-pointer group"
+        >
           <img
             src="/assets/prayers-bg.jpg"
             alt="Prayers"
