@@ -1,12 +1,48 @@
 import { useState } from 'react';
+import { supabase } from './supabaseClient';
 
 interface LoginPageProps {
   onBack: () => void;
   onGoToSignup: () => void;
+  onLoggedIn: (isAdmin: boolean) => void;
 }
 
-export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
+export default function LoginPage({ onBack, onGoToSignup, onLoggedIn }: LoginPageProps) {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (!email || !password) {
+      setError('Please enter your email and password.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (signInError) throw signInError;
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .single();
+
+      onLoggedIn(Boolean(profile?.is_admin));
+    } catch (err: any) {
+      console.error('Login error:', err.message);
+      setError(err.message || 'Failed to log in.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
@@ -21,7 +57,7 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
         </svg>
       </button>
 
-      <div className="flex flex-col items-center gap-8 w-full max-w-xl">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl">
         <div
           className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
           onClick={onBack}
@@ -41,16 +77,34 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
             placeholder="name@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+            required
           />
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-3.5 rounded-lg border border-gray-600 bg-[#2a2d3e]">
-          <div className="w-6 h-6 rounded border-2 border-gray-500 bg-[#1a1d2e] shrink-0" />
-          <span className="text-sm text-white">Verify you are human</span>
+        <div className="flex flex-col gap-2 w-full">
+          <label className="font-semibold text-sm text-gray-300">Password</label>
+          <input
+            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            required
+          />
         </div>
 
-        <button className="w-full py-5 rounded-xl border-none bg-gray-200 text-lg font-semibold text-gray-700 cursor-pointer">
-          Log in
+        {error && (
+          <p className="text-red-400 text-sm self-start w-full m-0">{error}</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full py-5 rounded-xl border-none bg-gray-200 text-lg font-semibold text-gray-700 cursor-pointer disabled:opacity-60"
+        >
+          {submitting ? 'Logging in...' : 'Log in'}
         </button>
 
         <p className="text-sm text-gray-400 text-center mt-2">
@@ -59,7 +113,7 @@ export default function LoginPage({ onBack, onGoToSignup }: LoginPageProps) {
             Create an account
           </a>
         </p>
-      </div>
+      </form>
     </div>
   );
 }

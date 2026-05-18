@@ -3,6 +3,8 @@ import type { Page } from '../App';
 interface TopBarProps {
   onSearchClick: () => void;
   onLoginClick: () => void;
+  onLogoutClick: () => void;
+  isLoggedIn: boolean;
   onNavClick: (page: Page) => void;
 }
 
@@ -32,7 +34,7 @@ const NAV_ITEMS: { label: string; page: Page }[] = [
   { label: 'Give', page: 'give' },
 ];
 
-export default function TopBar({ onSearchClick, onLoginClick, onNavClick }: TopBarProps) {
+export default function TopBar({ onSearchClick, onLoginClick, onLogoutClick, isLoggedIn, onNavClick }: TopBarProps) {
   return (
     <header className="absolute top-0 left-0 right-0 z-[400] flex items-center justify-between w-full overflow-hidden px-2.5 py-4 md:px-10 md:py-6 bg-transparent">
       <span
@@ -67,9 +69,9 @@ export default function TopBar({ onSearchClick, onLoginClick, onNavClick }: TopB
         </div>
         <span
           className="font-medium text-base leading-[0.8] text-white whitespace-nowrap cursor-pointer hover:text-white/70 transition-colors"
-          onClick={onLoginClick}
+          onClick={isLoggedIn ? onLogoutClick : onLoginClick}
         >
-          Login
+          {isLoggedIn ? 'Logout' : 'Login'}
         </span>
       </div>
     </header>

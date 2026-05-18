@@ -1,15 +1,66 @@
 import { useState } from 'react';
+import { supabase } from './supabaseClient';
 
 interface SignupPageProps {
   onBack: () => void;
   onGoToLogin: () => void;
+  onLoggedIn: (isAdmin: boolean) => void;
 }
 
-export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
+export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPageProps) {
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setInfo(null);
+
+    if (!email || !password ) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        // options: {
+        //   data: {
+        //     first_name: firstName.trim(),
+        //     last_name: lastName.trim(),
+        //   },
+        // },
+      });
+      if (signUpError) throw signUpError;
+
+      if (data.session) {
+        onLoggedIn(false);
+      } else {
+        setInfo('Account created. Please check your email to confirm your address, then log in.');
+      }
+    } catch (err: any) {
+      console.error('Signup error:', err.message);
+      setError(err.message || 'Failed to create account.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
@@ -24,7 +75,7 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
         </svg>
       </button>
 
-      <div className="flex flex-col items-center gap-8 w-full max-w-xl">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl">
         <div
           className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
           onClick={onBack}
@@ -44,10 +95,12 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
             placeholder="name@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+            required
           />
         </div>
 
-        <div className="flex flex-col gap-2 w-full">
+        {/* <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">First name</label>
           <input
             className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
@@ -55,6 +108,8 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
             placeholder="First"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            autoComplete="given-name"
+            required
           />
         </div>
 
@@ -66,32 +121,50 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
             placeholder="Last"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            autoComplete="family-name"
+            required
+          />
+        </div> */}
+
+        <div className="flex flex-col gap-2 w-full">
+          <label className="font-semibold text-sm text-gray-300">Password</label>
+          <input
+            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            type="password"
+            placeholder="At least 6 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+            required
           />
         </div>
 
         <div className="flex flex-col gap-2 w-full">
-          <label className="font-semibold text-sm text-gray-300">Phone number</label>
-          <div className="flex gap-2 w-full">
-            <select className="w-18 shrink-0 p-4 px-2 text-center rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none">
-              <option value="US">US</option>
-            </select>
-            <input
-              className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
-              type="tel"
-              placeholder="201 555 0123"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
+          <label className="font-semibold text-sm text-gray-300">Confirm password</label>
+          <input
+            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            type="password"
+            placeholder="Re-enter password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
+            required
+          />
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-3.5 rounded-lg border border-gray-600 bg-[#2a2d3e]">
-          <div className="w-6 h-6 rounded border-2 border-gray-500 bg-[#1a1d2e] shrink-0" />
-          <span className="text-sm text-white">Verify you are human</span>
-        </div>
+        {error && (
+          <p className="text-red-400 text-sm self-start w-full m-0">{error}</p>
+        )}
+        {info && (
+          <p className="text-green-400 text-sm self-start w-full m-0">{info}</p>
+        )}
 
-        <button className="w-full py-5 rounded-xl border-none bg-gray-200 text-lg font-semibold text-gray-700 cursor-pointer">
-          Sign up
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full py-5 rounded-xl border-none bg-gray-200 text-lg font-semibold text-gray-700 cursor-pointer disabled:opacity-60"
+        >
+          {submitting ? 'Creating account...' : 'Sign up'}
         </button>
 
         <p className="text-sm text-gray-400 text-center mt-2">
@@ -100,7 +173,7 @@ export default function SignupPage({ onBack, onGoToLogin }: SignupPageProps) {
             Log in
           </a>
         </p>
-      </div>
+      </form>
     </div>
   );
 }

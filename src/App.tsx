@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { supabase } from './Components/supabaseClient'
 
 //Components
 import HeroSection from './Components/HeroSection'
@@ -34,12 +35,51 @@ function App() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const [page, setPage] = useState<Page>('home')
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    async function loadAdmin() {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .single()
+      setIsAdmin(Boolean(profile?.is_admin))
+    }
+
+    supabase.auth.getSession().then(({ data }) => {
+      const loggedIn = Boolean(data.session)
+      setIsLoggedIn(loggedIn)
+      if (loggedIn) loadAdmin()
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const loggedIn = Boolean(session)
+      setIsLoggedIn(loggedIn)
+      if (loggedIn) {
+        loadAdmin()
+      } else {
+        setIsAdmin(false)
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    setPage('home')
+  }
 
   if (page === 'login') {
     return (
       <LoginPage
         onBack={() => setPage('home')}
         onGoToSignup={() => setPage('signup')}
+        onLoggedIn={(admin) => {
+          setIsAdmin(admin)
+          setPage('home')
+        }}
       />
     )
   }
@@ -49,6 +89,10 @@ function App() {
       <SignupPage
         onBack={() => setPage('home')}
         onGoToLogin={() => setPage('login')}
+        onLoggedIn={(admin) => {
+          setIsAdmin(admin)
+          setPage('home')
+        }}
       />
     )
   }
@@ -57,7 +101,7 @@ function App() {
     if (page === 'books') return <BooksPage onBack={() => setPage('home')} />
     if (page === 'prayer') return <PrayerPage onBack={() => setPage('home')} />
     if (page === 'encouragement') return <EncouragementPage onBack={() => setPage('home')} />
-    if (page === 'events') return <EventsPage onBack={() => setPage('home')} />
+    if (page === 'events') return <EventsPage onBack={() => setPage('home')} isAdmin={isAdmin} />
     if (page === 'media') return <MediaPage onBack={() => setPage('home')} />
     if (page === 'daily-practices') return <ComingSoonPage title="Daily Practices" onBack={() => setPage('home')} />
     if (page === 'give') return <ComingSoonPage title="Give" onBack={() => setPage('home')} />
@@ -90,6 +134,8 @@ function App() {
       <TopBar
         onSearchClick={() => setSearchOpen(true)}
         onLoginClick={() => setPage('login')}
+        onLogoutClick={handleLogout}
+        isLoggedIn={isLoggedIn}
         onNavClick={setPage}
       />
       {renderPage()}

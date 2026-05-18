@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
+import EventFormModal from './EventFormModal';
 
 interface EventsPageProps {
   onBack: () => void;
+  isAdmin: boolean;
 }
 
 interface Event {
@@ -80,29 +82,64 @@ function formatTime(timeStr: string): string {
   return `${h}:${minutes.toString().padStart(2, '0')} ${ampm}`;
 }
 
-export default function EventsPage({ onBack }: EventsPageProps) {
+export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+
+  async function fetchEvents() {
+    try {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('event_date', { ascending: true });
+
+      if (error) throw error;
+      setEvents((data as Event[]) || []);
+    } catch (error: any) {
+      console.error('Error fetching events:', error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    async function fetchEvents() {
-      try {
-        const { data, error } = await supabase
-          .from('events')
-          .select('*')
-          .order('event_date', { ascending: true });
-
-        if (error) throw error;
-        setEvents((data as Event[]) || []);
-      } catch (error: any) {
-        console.error('Error fetching events:', error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchEvents();
   }, []);
+
+  function openAddForm() {
+    setEditingEvent(null);
+    setShowForm(true);
+  }
+
+  function openEditForm(event: Event) {
+    setEditingEvent(event);
+    setShowForm(true);
+  }
+
+  function closeForm() {
+    setShowForm(false);
+    setEditingEvent(null);
+  }
+
+  async function handleDelete(event: Event) {
+    const confirmed = window.confirm(`Delete "${event.name}"? This cannot be undone.`);
+    if (!confirmed) return;
+
+    setDeletingId(event.id);
+    try {
+      const { error } = await supabase.from('events').delete().eq('id', event.id);
+      if (error) throw error;
+      setEvents((prev) => prev.filter((e) => e.id !== event.id));
+    } catch (err: any) {
+      console.error('Error deleting event:', err.message);
+      window.alert('Failed to delete event.');
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
@@ -118,6 +155,19 @@ export default function EventsPage({ onBack }: EventsPageProps) {
           </svg>
         </button>
         <h1 className="font-bold text-2xl text-white tracking-wide">Events</h1>
+        {isAdmin && (
+          <button
+            onClick={openAddForm}
+            className="ml-auto flex items-center gap-1 bg-[#3d4f3e] text-white border-none rounded-full px-3 py-1.5 text-sm cursor-pointer"
+            aria-label="Add event"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <span>Add Event</span>
+          </button>
+        )}
       </div>
 
       {/* Description */}
@@ -128,6 +178,7 @@ export default function EventsPage({ onBack }: EventsPageProps) {
           </p>
         </div>
       </div>
+ 
 
       {/* Scrollable content */}
       <div className="w-full max-w-md px-6 pb-28">
@@ -144,8 +195,27 @@ export default function EventsPage({ onBack }: EventsPageProps) {
             {events.map((event) => (
               <div key={event.id} className="bg-[#252525] rounded-xl overflow-hidden">
                 {/* Event header */}
-                <div className="bg-[#3d4f3e] px-5 py-4">
-                  <h3 className="text-white font-bold text-lg m-0">{event.name}</h3>
+                <div className="bg-[#3d4f3e] px-5 py-4 flex items-center gap-2">
+                  <h3 className="text-white font-bold text-lg m-0 flex-1">{event.name}</h3>
+                  {isAdmin && (
+                    <>
+                      <button
+                        onClick={() => openEditForm(event)}
+                        className="text-white bg-transparent border border-white/40 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-white/10"
+                        aria-label={`Edit ${event.name}`}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(event)}
+                        disabled={deletingId === event.id}
+                        className="text-white bg-transparent border border-red-400/60 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-red-500/20 disabled:opacity-50"
+                        aria-label={`Delete ${event.name}`}
+                      >
+                        {deletingId === event.id ? '...' : 'Delete'}
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 <div className="px-5 py-4 flex flex-col gap-3">
@@ -207,6 +277,18 @@ export default function EventsPage({ onBack }: EventsPageProps) {
           </div>
         )}
       </div>
+
+      {showForm && (
+        <EventFormModal
+          event={editingEvent}
+          onClose={closeForm}
+          onSaved={() => {
+            closeForm();
+            setLoading(true);
+            fetchEvents();
+          }}
+        />
+      )}
     </div>
   );
 }
