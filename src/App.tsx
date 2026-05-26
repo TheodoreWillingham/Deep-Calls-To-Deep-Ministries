@@ -28,7 +28,6 @@ export type Page =
   | 'encouragement'
   | 'events'
   | 'media'
-  | 'Encouragement Corner'
   | 'give';
 
 function App() {
