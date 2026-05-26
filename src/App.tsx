@@ -28,7 +28,7 @@ export type Page =
   | 'encouragement'
   | 'events'
   | 'media'
-  | 'daily-practices'
+  | 'Encouragement Corner'
   | 'give';
 
 function App() {
@@ -103,7 +103,6 @@ function App() {
     if (page === 'encouragement') return <EncouragementPage onBack={() => setPage('home')} />
     if (page === 'events') return <EventsPage onBack={() => setPage('home')} isAdmin={isAdmin} />
     if (page === 'media') return <MediaPage onBack={() => setPage('home')} />
-    if (page === 'daily-practices') return <ComingSoonPage title="Daily Practices" onBack={() => setPage('home')} />
     if (page === 'give') return <ComingSoonPage title="Give" onBack={() => setPage('home')} />
 
     // Home

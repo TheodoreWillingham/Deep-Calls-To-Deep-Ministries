@@ -29,9 +29,9 @@ function PlusIcon() {
 const NAV_ITEMS: { label: string; page: Page }[] = [
   { label: 'Media', page: 'media' },
   { label: 'Events', page: 'events' },
-  { label: 'Daily Practices', page: 'daily-practices' },
+  { label: 'Prayer', page: 'prayer' },
   { label: 'Books', page: 'books' },
-  { label: 'Give', page: 'give' },
+  { label: 'Encouragement Corner', page: 'encouragement' },
 ];
 
 export default function TopBar({ onSearchClick, onLoginClick, onLogoutClick, isLoggedIn, onNavClick }: TopBarProps) {
