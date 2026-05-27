@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from './supabaseClient';
 
 interface PrayerPageProps {
   onBack: () => void;
@@ -6,20 +7,33 @@ interface PrayerPageProps {
 
 type Tab = 'requests' | 'bestill' | 'gospel';
 
-/* ── Placeholder data (will be replaced with Supabase) ── */
-
-interface PrayerRequest {
-  id: number;
-  name: string;
-  request: string;
-  prayerCount: number;
+interface PrayerRequestRow {
+  id: string;
+  name: string | null;
+  request_text: string;
+  is_anonymous: boolean;
+  has_been_prayed_for: boolean;
+  created_at: string;
 }
 
-const sampleRequests: PrayerRequest[] = [
-  { id: 1, name: 'Angela R.', request: 'Please pray for my mother who is going through cancer treatment. We believe God is our healer.', prayerCount: 12 },
-  { id: 2, name: 'Marcus D.', request: 'Praying for a breakthrough in my finances. God has always been faithful and I trust Him.', prayerCount: 8 },
-  { id: 3, name: 'Lisa P.', request: 'Please lift up my marriage. We need restoration and the peace of God in our home.', prayerCount: 15 },
-];
+const PRAYED_KEY = 'dcdt_prayed_requests';
+
+function getPrayedIds(): Set<string> {
+  try {
+    const raw = localStorage.getItem(PRAYED_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function savePrayedId(id: string) {
+  try {
+    const ids = getPrayedIds();
+    ids.add(id);
+    localStorage.setItem(PRAYED_KEY, JSON.stringify([...ids]));
+  } catch { /* storage unavailable */ }
+}
 
 interface BeStillMoment {
   id: number;
@@ -36,13 +50,6 @@ const sampleMoments: BeStillMoment[] = [
 
 /* ── Icons ── */
 
-function PrayingHandsIcon({ className = 'w-5 h-5' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2L8 12l4 10M12 2l4 10-4 10" />
-    </svg>
-  );
-}
 
 function PlayCircleIcon() {
   return (
@@ -119,30 +126,101 @@ export default function PrayerPage({ onBack }: PrayerPageProps) {
    Tab 1 — Prayer Requests
    ════════════════════════════════════════════════════════ */
 
+function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
+  return (
+    <label className="flex items-start gap-3 cursor-pointer" onClick={onChange}>
+      <div className={`w-5 h-5 mt-0.5 rounded shrink-0 border-2 flex items-center justify-center ${checked ? 'bg-white border-white' : 'bg-transparent border-gray-500'}`}>
+        {checked && (
+          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6l3 3 5-6" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </div>
+      <span className="text-gray-300 text-sm leading-snug">{label}</span>
+    </label>
+  );
+}
+
 function PrayerRequestsTab() {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
-  const [request, setRequest] = useState('');
-  const [consent, setConsent] = useState(false);
-  const [prayedIds, setPrayedIds] = useState<Set<number>>(new Set());
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [requestText, setRequestText] = useState('');
+  const [showOnWebsite, setShowOnWebsite] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
-  const handleSubmit = () => {
-    if (!name.trim() || !request.trim()) return;
-    // TODO: submit to Supabase + email notification
+  const [requests, setRequests] = useState<PrayerRequestRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [prayedIds, setPrayedIds] = useState<Set<string>>(() => getPrayedIds());
+
+  useEffect(() => {
+    supabase
+      .from('prayer_requests')
+      .select('id, name, request_text, is_anonymous, has_been_prayed_for, created_at')
+      .eq('is_approved', true)
+      .eq('show_on_website', true)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setRequests(data ?? []);
+        setLoading(false);
+      });
+  }, []);
+
+  const resetForm = () => {
     setName('');
-    setRequest('');
-    setConsent(false);
+    setIsAnonymous(false);
+    setRequestText('');
+    setShowOnWebsite(false);
+    setSubmitError(false);
     setShowForm(false);
   };
 
-  const handlePray = (id: number) => {
-    setPrayedIds(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-    // TODO: increment prayer count in Supabase
+  const handleSubmit = async () => {
+    if (!requestText.trim() || submitting) return;
+    setSubmitting(true);
+    setSubmitError(false);
+
+    const { data: inserted, error } = await supabase
+      .from('prayer_requests')
+      .insert({
+        name: name.trim() || null,
+        request_text: requestText.trim(),
+        is_anonymous: isAnonymous,
+        show_on_website: showOnWebsite,
+      })
+      .select('id')
+      .single();
+
+    if (error || !inserted) {
+      setSubmitting(false);
+      setSubmitError(true);
+      return;
+    }
+
+    // Fire-and-forget email notification — don't block the user on email delivery
+    supabase.functions.invoke('notify-prayer-request', {
+      body: {
+        id: inserted.id,
+        name: name.trim() || null,
+        request_text: requestText.trim(),
+        is_anonymous: isAnonymous,
+        show_on_website: showOnWebsite,
+      },
+    }).catch(() => {});
+
+    setSubmitting(false);
+    setSubmitSuccess(true);
+    resetForm();
+  };
+
+  const handlePray = async (id: string) => {
+    if (prayedIds.has(id)) return;
+    savePrayedId(id);
+    setPrayedIds(prev => new Set([...prev, id]));
+    setRequests(prev => prev.map(r => r.id === id ? { ...r, has_been_prayed_for: true } : r));
+    void supabase.rpc('mark_prayer_prayed_for', { request_id: id });
   };
 
   return (
@@ -153,6 +231,21 @@ function PrayerRequestsTab() {
           Need prayer? We've got you covered. Submit your prayer request below and our ministry will lift you up. You can also pray for others — tap the prayer hands to let them know someone is praying.
         </p>
       </div>
+
+      {/* Success banner */}
+      {submitSuccess && (
+        <div className="bg-[#3d4f3e] rounded-xl px-5 py-4 mb-5 flex items-center justify-between gap-4">
+          <p className="text-white text-sm m-0">Your prayer request has been received. We'll be lifting you up!</p>
+          <button onClick={() => setSubmitSuccess(false)} className="text-white bg-transparent border-none cursor-pointer text-xl leading-none p-0 shrink-0">×</button>
+        </div>
+      )}
+
+      {/* Error banner */}
+      {submitError && (
+        <div className="bg-red-900/40 rounded-xl px-5 py-4 mb-5">
+          <p className="text-red-300 text-sm m-0">Something went wrong. Please try again.</p>
+        </div>
+      )}
 
       {/* Submit form toggle */}
       {!showForm ? (
@@ -168,89 +261,94 @@ function PrayerRequestsTab() {
 
           <input
             type="text"
-            placeholder="Name *"
+            placeholder="Your name (optional)"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+          />
+
+          <Checkbox
+            checked={isAnonymous}
+            onChange={() => setIsAnonymous(v => !v)}
+            label="Post anonymously — your name won't appear publicly, but the ministry will still see it"
           />
 
           <textarea
             placeholder="How can we pray for you? *"
-            value={request}
-            onChange={(e) => setRequest(e.target.value)}
+            value={requestText}
+            onChange={e => setRequestText(e.target.value)}
             rows={4}
             className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 resize-none box-border"
           />
 
-          {/* Consent checkbox */}
-          <label className="flex items-start gap-3 cursor-pointer">
-            <div
-              className={`w-5 h-5 mt-0.5 rounded shrink-0 border-2 flex items-center justify-center ${
-                consent ? 'bg-white border-white' : 'bg-transparent border-gray-500'
-              }`}
-              onClick={() => setConsent(!consent)}
-            >
-              {consent && (
-                <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7l4 4 6-7" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              )}
-            </div>
-            <span className="text-gray-300 text-sm">
-              I consent to this prayer request being shared online.
-            </span>
-          </label>
+          <Checkbox
+            checked={showOnWebsite}
+            onChange={() => setShowOnWebsite(v => !v)}
+            label="Allow this prayer to be shared on the website (reviewed by the ministry before posting)"
+          />
 
           <div className="flex gap-3">
             <button
-              onClick={() => { setShowForm(false); setName(''); setRequest(''); setConsent(false); }}
+              onClick={resetForm}
               className="flex-1 py-3 rounded-xl bg-[#2a2a2a] text-gray-300 text-base font-semibold border-none cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
-              className={`flex-1 py-3 rounded-xl text-base font-semibold border-none cursor-pointer ${
-                name.trim() && request.trim()
-                  ? 'bg-white text-black'
+              disabled={!requestText.trim() || submitting}
+              className={`flex-1 py-3 rounded-xl text-base font-semibold border-none transition-colors ${
+                requestText.trim() && !submitting
+                  ? 'bg-white text-black cursor-pointer'
                   : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'
               }`}
-              disabled={!name.trim() || !request.trim()}
             >
-              Submit
+              {submitting ? 'Sending…' : 'Submit'}
             </button>
           </div>
         </div>
       )}
 
       {/* Prayer request cards */}
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
-        {sampleRequests.map(pr => {
-          const hasPrayed = prayedIds.has(pr.id);
-          return (
-            <div key={pr.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex flex-col">
-              <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1">{pr.request}</p>
-              <div className="flex items-center justify-between">
-                <p className="text-gray-400 text-xs m-0 italic">{pr.name}</p>
-                <button
-                  onClick={() => handlePray(pr.id)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-none cursor-pointer text-sm font-medium transition-colors ${
-                    hasPrayed
-                      ? 'bg-[#3d4f3e] text-white'
-                      : 'bg-[#2a2a2a] text-gray-300 hover:bg-[#3a3a3a]'
-                  }`}
-                >
-                  <PrayingHandsIcon className="w-4 h-4" />
-                  <span>{hasPrayed ? 'Praying' : 'Pray'}</span>
-                  <span className="text-gray-400 text-xs">
-                    {pr.prayerCount + (hasPrayed ? 1 : 0)}
-                  </span>
-                </button>
+      {loading ? (
+        <p className="text-gray-500 text-sm text-center py-8">Loading prayer requests…</p>
+      ) : requests.length === 0 ? (
+        <p className="text-gray-500 text-sm text-center py-8">No public prayer requests yet. Be the first to submit one.</p>
+      ) : (
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
+          {requests.map(r => {
+            const userPrayed = prayedIds.has(r.id);
+            const someonePrayed = r.has_been_prayed_for || userPrayed;
+            const displayName = r.is_anonymous ? 'Anonymous' : (r.name || 'Anonymous');
+            return (
+              <div key={r.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex flex-col gap-3">
+                <p className="text-white text-sm md:text-base leading-relaxed m-0 flex-1">{r.request_text}</p>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-gray-500 text-xs m-0 italic">{displayName}</p>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {someonePrayed && (
+                      <span className={`text-xs ${userPrayed ? 'text-[#a8d4a8]' : 'text-gray-500'}`}>
+                        {userPrayed ? 'You prayed' : 'Someone is praying'}
+                      </span>
+                    )}
+                    <button
+                      onClick={() => handlePray(r.id)}
+                      disabled={userPrayed}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border-none text-sm font-medium transition-colors ${
+                        userPrayed
+                          ? 'bg-[#3d4f3e] text-[#a8d4a8] cursor-default'
+                          : 'bg-[#2a2a2a] text-gray-300 hover:bg-[#3a3a3a] cursor-pointer'
+                      }`}
+                    >
+                      🙏 {userPrayed ? 'Praying' : 'Pray'}
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }
