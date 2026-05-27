@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
+import { useState, useEffect } from 'react';
+import { supabase } from './supabaseClient';
 
 interface PrayerPageProps {
   onBack: () => void;
@@ -142,6 +144,21 @@ function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: ()
   );
 }
 
+function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
+  return (
+    <label className="flex items-start gap-3 cursor-pointer" onClick={onChange}>
+      <div className={`w-5 h-5 mt-0.5 rounded shrink-0 border-2 flex items-center justify-center ${checked ? 'bg-white border-white' : 'bg-transparent border-gray-500'}`}>
+        {checked && (
+          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6l3 3 5-6" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </div>
+      <span className="text-gray-300 text-sm leading-snug">{label}</span>
+    </label>
+  );
+}
+
 function PrayerRequestsTab() {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
@@ -170,7 +187,36 @@ function PrayerRequestsTab() {
   }, []);
 
   const resetForm = () => {
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [requestText, setRequestText] = useState('');
+  const [showOnWebsite, setShowOnWebsite] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+
+  const [requests, setRequests] = useState<PrayerRequestRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [prayedIds, setPrayedIds] = useState<Set<string>>(() => getPrayedIds());
+
+  useEffect(() => {
+    supabase
+      .from('prayer_requests')
+      .select('id, name, request_text, is_anonymous, has_been_prayed_for, created_at')
+      .eq('is_approved', true)
+      .eq('show_on_website', true)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setRequests(data ?? []);
+        setLoading(false);
+      });
+  }, []);
+
+  const resetForm = () => {
     setName('');
+    setIsAnonymous(false);
+    setRequestText('');
+    setShowOnWebsite(false);
+    setSubmitError(false);
     setIsAnonymous(false);
     setRequestText('');
     setShowOnWebsite(false);
@@ -270,9 +316,17 @@ function PrayerRequestsTab() {
           <input
             type="text"
             placeholder="Your name (optional)"
+            placeholder="Your name (optional)"
             value={name}
             onChange={e => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+          />
+
+          <Checkbox
+            checked={isAnonymous}
+            onChange={() => setIsAnonymous(v => !v)}
+            label="Post anonymously — your name won't appear publicly, but the ministry will still see it"
           />
 
           <Checkbox
@@ -285,6 +339,8 @@ function PrayerRequestsTab() {
             placeholder="How can we pray for you? *"
             value={requestText}
             onChange={e => setRequestText(e.target.value)}
+            value={requestText}
+            onChange={e => setRequestText(e.target.value)}
             rows={4}
             className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 resize-none box-border"
           />
@@ -294,9 +350,15 @@ function PrayerRequestsTab() {
             onChange={() => setShowOnWebsite(v => !v)}
             label="Allow this prayer to be shared on the website (reviewed by the ministry before posting)"
           />
+          <Checkbox
+            checked={showOnWebsite}
+            onChange={() => setShowOnWebsite(v => !v)}
+            label="Allow this prayer to be shared on the website (reviewed by the ministry before posting)"
+          />
 
           <div className="flex gap-3">
             <button
+              onClick={resetForm}
               onClick={resetForm}
               className="flex-1 py-3 rounded-xl bg-[#2a2a2a] text-gray-300 text-base font-semibold border-none cursor-pointer"
             >
@@ -308,9 +370,14 @@ function PrayerRequestsTab() {
               className={`flex-1 py-3 rounded-xl text-base font-semibold border-none transition-colors ${
                 requestText.trim() && !submitting
                   ? 'bg-white text-black cursor-pointer'
+              disabled={!requestText.trim() || submitting}
+              className={`flex-1 py-3 rounded-xl text-base font-semibold border-none transition-colors ${
+                requestText.trim() && !submitting
+                  ? 'bg-white text-black cursor-pointer'
                   : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'
               }`}
             >
+              {submitting ? 'Sending…' : 'Submit'}
               {submitting ? 'Sending…' : 'Submit'}
             </button>
           </div>
