@@ -16,8 +16,12 @@ async function verifyToken(
       false,
       ["verify"],
     );
-    // Convert URL-safe base64 back to standard base64
-    const padded = token.replace(/-/g, "+").replace(/_/g, "/") + "==";
+    
+    // FIX: Calculate exact padding needed instead of hardcoding "=="
+    let padded = token.replace(/-/g, "+").replace(/_/g, "/");
+    const padLength = (4 - (padded.length % 4)) % 4;
+    padded += "=".repeat(padLength);
+    
     const sigBytes = Uint8Array.from(atob(padded), (c) => c.charCodeAt(0));
     return await crypto.subtle.verify(
       "HMAC",
@@ -25,7 +29,9 @@ async function verifyToken(
       sigBytes,
       encoder.encode(id),
     );
-  } catch {
+  } catch (err) {
+    // FIX: Log the error so we can see it in Supabase if it fails again
+    console.error("Token Verification Error:", err);
     return false;
   }
 }

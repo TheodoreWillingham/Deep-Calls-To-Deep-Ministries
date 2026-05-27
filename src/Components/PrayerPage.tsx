@@ -183,26 +183,31 @@ function PrayerRequestsTab() {
     setSubmitting(true);
     setSubmitError(false);
 
-    const { data: inserted, error } = await supabase
+    // 1. Generate the ID in the browser so we don't have to ask the database for it
+    const newRequestId = crypto.randomUUID();
+
+    // 2. Insert the row without calling .select() at the end
+    const { error } = await supabase
       .from('prayer_requests')
       .insert({
+        id: newRequestId,
         name: name.trim() || null,
         request_text: requestText.trim(),
         is_anonymous: isAnonymous,
         show_on_website: showOnWebsite,
-      })
-      .select('id')
-      .single();
+      }); 
 
-    if (error || !inserted) {
+    if (error) {
+      console.error('Prayer request insert error:', error);
       setSubmitting(false);
       setSubmitError(true);
       return;
     }
 
+    // 3. Pass the ID we generated to the email function
     supabase.functions.invoke('notify-prayer-request', {
       body: {
-        id: inserted.id,
+        id: newRequestId,
         name: name.trim() || null,
         request_text: requestText.trim(),
         is_anonymous: isAnonymous,
@@ -217,12 +222,21 @@ function PrayerRequestsTab() {
 
   const handlePray = async (id: string) => {
     if (prayedIds.has(id)) return;
+    
+    // 1. Optimistically update the UI so it feels snappy
     savePrayedId(id);
     setPrayedIds(prev => new Set([...prev, id]));
     setRequests(prev =>
       prev.map(r => r.id === id ? { ...r, has_been_prayed_for: true } : r),
     );
-    void supabase.rpc('mark_prayer_prayed_for', { request_id: id });
+    
+    // 2. Wait for the database response and catch any errors
+    const { error } = await supabase.rpc('mark_prayer_prayed_for', { request_id: id });
+    
+    if (error) {
+      console.error("Failed to update prayer status in Supabase:", error);
+      // If you want, you could revert the UI state here, but for now let's just log the error.
+    }
   };
 
   return (
@@ -281,7 +295,7 @@ function PrayerRequestsTab() {
           />
 
           <textarea
-            placeholder="How can we pray for you? *"
+            placeholder="How can we pray for you?"
             value={requestText}
             onChange={e => setRequestText(e.target.value)}
             rows={4}
