@@ -90,7 +90,7 @@ export default {
           : "New Prayer Request Received",
         html,
       }),
-    });oka
+    });
 
     if (!res.ok) {
       console.error("Resend error:", await res.text());
