@@ -424,15 +424,112 @@ function BeStillTab() {
    Tab 3 — Do You Know Jesus?
    ════════════════════════════════════════════════════════ */
 
-function GospelTab() {
-  return (
-    <>
-      <div className="md:max-w-3xl md:mx-auto">
-        <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
-          <p className="text-white text-sm md:text-base leading-relaxed m-0">
-            The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us — and can change everything for you too.
-          </p>
-        </div>
+   function GospelTab() {
+    const [name, setName] = useState('');
+    const [knowsJesus, setKnowsJesus] = useState<'yes' | 'no' | null>(null);
+    const [contact, setContact] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
+  
+    const handleSubmit = async () => {
+      if (!name.trim() || !contact.trim() || !knowsJesus || submitting) return;
+      setSubmitting(true);
+      setSubmitError(false);
+  
+      const { error: invokeError } = await supabase.functions.invoke('notify-gospel-contact', {
+        body: {
+          name: name.trim(),
+          knowsJesus,
+          contact: contact.trim()
+        },
+      });
+  
+      if (invokeError) {
+        console.error("Error sending connection request:", invokeError);
+        setSubmitError(true);
+        setSubmitting(false);
+        return;
+      }
+  
+      setSubmitSuccess(true);
+      setSubmitting(false);
+      setName('');
+      setContact('');
+      setKnowsJesus(null);
+    };
+  
+    return (
+      <>
+        <div className="md:max-w-3xl md:mx-auto">
+          <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+            <p className="text-white text-sm md:text-base leading-relaxed m-0">
+              The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us — and can change everything for you too.
+            </p>
+          </div>
+  
+          {/* --- NEW FORM SECTION --- */}
+          <div className="bg-[#252525] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+            <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-2">Let's Connect</h3>
+            <p className="text-gray-300 text-sm leading-relaxed m-0 mb-5">
+              Whether you have questions about faith or just made a decision to follow Jesus, we'd love to hear from you and support you on your journey.
+            </p>
+  
+            {submitSuccess ? (
+              <div className="bg-[#3d4f3e] rounded-xl px-5 py-4 flex items-center justify-between">
+                <p className="text-white text-sm m-0">Message sent! We'll be in touch soon.</p>
+                <button onClick={() => setSubmitSuccess(false)} className="text-white bg-transparent border-none cursor-pointer text-xl p-0">×</button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {submitError && (
+                  <div className="bg-red-900/40 rounded-xl px-5 py-4"><p className="text-red-300 text-sm m-0">Something went wrong. Please try again.</p></div>
+                )}
+                
+                <input
+                  type="text"
+                  placeholder="Your Name *"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+                />
+  
+                <div className="flex flex-col gap-2">
+                  <span className="text-gray-300 text-sm ml-1">Do you know Jesus? *</span>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setKnowsJesus('yes')}
+                      className={`flex-1 py-3 rounded-xl text-sm font-semibold border-none cursor-pointer transition-colors ${knowsJesus === 'yes' ? 'bg-[#3d4f3e] text-white' : 'bg-[#1a1a1a] text-gray-400 border border-gray-700'}`}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => setKnowsJesus('no')}
+                      className={`flex-1 py-3 rounded-xl text-sm font-semibold border-none cursor-pointer transition-colors ${knowsJesus === 'no' ? 'bg-[#3d4f3e] text-white' : 'bg-[#1a1a1a] text-gray-400 border border-gray-700'}`}
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+  
+                <input
+                  type="text"
+                  placeholder="Email or Phone Number *"
+                  value={contact}
+                  onChange={e => setContact(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+                />
+  
+                <button
+                  onClick={handleSubmit}
+                  disabled={!name.trim() || !contact.trim() || !knowsJesus || submitting}
+                  className={`w-full mt-2 py-3 rounded-xl text-base font-semibold border-none transition-colors ${name.trim() && contact.trim() && knowsJesus && !submitting ? 'bg-white text-black cursor-pointer' : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'}`}
+                >
+                  {submitting ? 'Sending…' : 'Send Message'}
+                </button>
+              </div>
+            )}
+          </div>
 
         <div className="bg-[#252525] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
           <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-4 md:mb-6 text-center">The Good News</h3>
