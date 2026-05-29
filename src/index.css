@@ -97,17 +97,35 @@ body {
   }
 }
 
-/* Staggered entrance for About page sections. */
-@keyframes about-rise {
+/* Staggered "rise in" entrance used across pages. */
+@keyframes rise {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .about-rise {
   opacity: 0;
-  animation: about-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* Add to a container to fade its direct children in, top to bottom. */
+.stagger-rise > * {
+  opacity: 0;
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stagger-rise > *:nth-child(1) { animation-delay: 0s; }
+.stagger-rise > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger-rise > *:nth-child(3) { animation-delay: 0.16s; }
+.stagger-rise > *:nth-child(4) { animation-delay: 0.24s; }
+.stagger-rise > *:nth-child(5) { animation-delay: 0.32s; }
+.stagger-rise > *:nth-child(6) { animation-delay: 0.40s; }
+.stagger-rise > *:nth-child(7) { animation-delay: 0.48s; }
+.stagger-rise > *:nth-child(8) { animation-delay: 0.56s; }
+.stagger-rise > *:nth-child(9) { animation-delay: 0.64s; }
+.stagger-rise > *:nth-child(10) { animation-delay: 0.72s; }
+
 @media (prefers-reduced-motion: reduce) {
-  .about-rise {
+  .about-rise,
+  .stagger-rise > * {
     opacity: 1;
     animation: none;
   }

@@ -81,7 +81,7 @@ export default function PrayerPage() {
   const [tab, setTab] = useState<Tab>('requests');
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24 stagger-rise">
       {/* Header */}
       <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center justify-center shrink-0">
         <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">Prayer</h1>

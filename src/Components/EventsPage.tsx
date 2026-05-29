@@ -141,7 +141,7 @@ export default function EventsPage({ isAdmin }: EventsPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24 stagger-rise">
       {/* Header */}
       <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 grid grid-cols-[1fr_auto_1fr] items-center shrink-0">
         <span aria-hidden />

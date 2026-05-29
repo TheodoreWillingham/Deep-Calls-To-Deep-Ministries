@@ -57,7 +57,7 @@ export default function LoginPage({ onBack, onGoToSignup, onLoggedIn }: LoginPag
         </svg>
       </button>
 
-      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl stagger-rise">
         <div
           className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
           onClick={onBack}

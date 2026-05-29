@@ -7,7 +7,7 @@ const bookUrls = [
 
 export default function BooksPage() {
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24 stagger-rise">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center justify-center shrink-0">
         <h1 className="font-bold text-2xl text-white tracking-wide text-center">Books</h1>

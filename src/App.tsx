@@ -108,9 +108,11 @@ function App() {
     // Home
     return (
       <>
-        <HeroSection />
-        <ResourcesSection onPrayersClick={() => setPage('prayer')} />
-        <MediaSection />
+        <div className="stagger-rise">
+          <HeroSection />
+          <ResourcesSection onPrayersClick={() => setPage('prayer')} />
+          <MediaSection />
+        </div>
         <BottomNav
           onMoreClick={() => setMoreOpen(true)}
           onBooksClick={() => setPage('books')}
