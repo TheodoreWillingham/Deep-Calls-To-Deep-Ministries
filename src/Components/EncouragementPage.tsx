@@ -68,7 +68,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
         <button
@@ -92,7 +92,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
           className={`flex-1 py-3 rounded-xl font-semibold text-base border-none cursor-pointer transition-colors ${
             tab === 'testimonies'
               ? 'bg-white text-black'
-              : 'bg-[#2a2a2a] text-gray-400'
+              : 'bg-slate-800 text-gray-400'
           }`}
         >
           Testimonies
@@ -102,7 +102,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
           className={`flex-1 py-3 rounded-xl font-semibold text-base border-none cursor-pointer transition-colors ${
             tab === 'praise'
               ? 'bg-white text-black'
-              : 'bg-[#2a2a2a] text-gray-400'
+              : 'bg-slate-800 text-gray-400'
           }`}
         >
           Praise
@@ -112,7 +112,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
       {/* Scrollable content area */}
       <div className="w-full max-w-md px-6 pt-4 pb-28">
         {/* Description box */}
-        <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
+        <div className="bg-accent/20 rounded-xl px-5 py-4 mb-5">
           <p className="text-white text-sm leading-relaxed m-0">{description}</p>
         </div>
 
@@ -125,7 +125,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
               className={`px-4 py-2 rounded-full text-sm font-medium border-none cursor-pointer transition-colors ${
                 selectedTopic === topic
                   ? 'bg-white text-black'
-                  : 'bg-[#2a2a2a] text-gray-300 hover:bg-[#3a3a3a]'
+                  : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
               }`}
             >
               {topic}
@@ -141,8 +141,8 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
             </p>
           ) : (
             filtered.map((entry, i) => (
-              <div key={i} className="bg-[#252525] rounded-xl p-5">
-                <span className="inline-block bg-[#3d4f3e] text-white text-xs font-medium px-3 py-1 rounded-full mb-3">
+              <div key={i} className="bg-slate-800 rounded-xl p-5">
+                <span className="inline-block bg-accent text-white text-xs font-medium px-3 py-1 rounded-full mb-3">
                   {entry.topic}
                 </span>
                 <p className="text-white text-sm leading-relaxed m-0 mb-3">{entry.body}</p>
@@ -156,12 +156,12 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
         {!showForm ? (
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-4 rounded-xl bg-[#3d4f3e] text-white text-base font-semibold border-none cursor-pointer"
+            className="w-full py-4 rounded-xl bg-accent text-white text-base font-semibold border-none cursor-pointer"
           >
             Share Your {tab === 'testimonies' ? 'Testimony' : 'Praise'}
           </button>
         ) : (
-          <div className="bg-[#252525] rounded-xl p-5 flex flex-col gap-4">
+          <div className="bg-slate-800 rounded-xl p-5 flex flex-col gap-4">
             <h3 className="text-white font-semibold text-lg m-0">
               Submit Your {tab === 'testimonies' ? 'Testimony' : 'Praise'}
             </h3>
@@ -171,7 +171,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
               placeholder="Name *"
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+              className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 box-border"
             />
 
             <textarea
@@ -179,7 +179,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
               value={formBody}
               onChange={(e) => setFormBody(e.target.value)}
               rows={4}
-              className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 resize-none box-border"
+              className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 resize-none box-border"
             />
 
             {/* Consent checkbox */}
@@ -209,7 +209,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
                   setFormBody('');
                   setFormConsent(false);
                 }}
-                className="flex-1 py-3 rounded-xl bg-[#2a2a2a] text-gray-300 text-base font-semibold border-none cursor-pointer"
+                className="flex-1 py-3 rounded-xl bg-slate-800 text-gray-300 text-base font-semibold border-none cursor-pointer"
               >
                 Cancel
               </button>
@@ -218,7 +218,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
                 className={`flex-1 py-3 rounded-xl text-base font-semibold border-none cursor-pointer ${
                   formName.trim() && formBody.trim()
                     ? 'bg-white text-black'
-                    : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'
+                    : 'bg-slate-700 text-gray-500 cursor-not-allowed'
                 }`}
                 disabled={!formName.trim() || !formBody.trim()}
               >

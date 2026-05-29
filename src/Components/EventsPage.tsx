@@ -142,7 +142,7 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
         <button
@@ -158,7 +158,7 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
         {isAdmin && (
           <button
             onClick={openAddForm}
-            className="ml-auto flex items-center gap-1 bg-[#3d4f3e] text-white border-none rounded-full px-3 py-1.5 text-sm cursor-pointer"
+            className="ml-auto flex items-center gap-1 bg-accent hover:bg-accent-hover text-white border-none rounded-full px-3 py-1.5 text-sm cursor-pointer transition-colors"
             aria-label="Add event"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -172,7 +172,7 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
 
       {/* Description */}
       <div className="w-full max-w-md px-6 shrink-0">
-        <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
+        <div className="bg-accent/20 rounded-xl px-5 py-4 mb-5">
           <p className="text-white text-sm leading-relaxed m-0">
             Join us for worship, fellowship, and community. Browse upcoming events from Deep Calls To Deep Ministries below.
           </p>
@@ -193,9 +193,9 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
         ) : (
           <div className="flex flex-col gap-4">
             {events.map((event) => (
-              <div key={event.id} className="bg-[#252525] rounded-xl overflow-hidden">
+              <div key={event.id} className="bg-slate-800 rounded-xl overflow-hidden">
                 {/* Event header */}
-                <div className="bg-[#3d4f3e] px-5 py-4 flex items-center gap-2">
+                <div className="bg-accent px-5 py-4 flex items-center gap-2">
                   <h3 className="text-white font-bold text-lg m-0 flex-1">{event.name}</h3>
                   {isAdmin && (
                     <>
@@ -245,7 +245,7 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
 
                   {/* Contact info */}
                   {(event.contact_name || event.contact_email || event.contact_phone) && (
-                    <div className="bg-[#1a1a1a] rounded-xl p-4 mt-1 flex flex-col gap-2">
+                    <div className="bg-slate-900 rounded-xl p-4 mt-1 flex flex-col gap-2">
                       <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Contact</span>
                       {event.contact_name && (
                         <div className="flex items-center gap-3 text-white text-sm">

@@ -63,7 +63,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
   }
 
   return (
-    <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
+    <div className="fixed inset-0 bg-slate-900 flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
       <button
         type="button"
         onClick={onBack}
@@ -90,7 +90,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
         <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">Email address</label>
           <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            className="w-full p-4 rounded-lg border border-gray-600 bg-slate-800 text-white text-base outline-none"
             type="email"
             placeholder="name@gmail.com"
             value={email}
@@ -103,7 +103,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
         {/* <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">First name</label>
           <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            className="w-full p-4 rounded-lg border border-gray-600 bg-slate-800 text-white text-base outline-none"
             type="text"
             placeholder="First"
             value={firstName}
@@ -116,7 +116,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
         <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">Last name</label>
           <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            className="w-full p-4 rounded-lg border border-gray-600 bg-slate-800 text-white text-base outline-none"
             type="text"
             placeholder="Last"
             value={lastName}
@@ -129,7 +129,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
         <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">Password</label>
           <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            className="w-full p-4 rounded-lg border border-gray-600 bg-slate-800 text-white text-base outline-none"
             type="password"
             placeholder="At least 6 characters"
             value={password}
@@ -142,7 +142,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
         <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">Confirm password</label>
           <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            className="w-full p-4 rounded-lg border border-gray-600 bg-slate-800 text-white text-base outline-none"
             type="password"
             placeholder="Re-enter password"
             value={confirmPassword}
@@ -169,7 +169,7 @@ export default function SignupPage({ onBack, onGoToLogin, onLoggedIn }: SignupPa
 
         <p className="text-sm text-gray-400 text-center mt-2">
           Have an account?{' '}
-          <a className="text-[#e88a4a] cursor-pointer no-underline font-semibold" onClick={onGoToLogin}>
+          <a className="text-link cursor-pointer no-underline font-semibold" onClick={onGoToLogin}>
             Log in
           </a>
         </p>

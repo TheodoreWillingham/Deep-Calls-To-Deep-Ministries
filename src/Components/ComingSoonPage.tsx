@@ -5,7 +5,7 @@ interface ComingSoonPageProps {
 
 export default function ComingSoonPage({ title, onBack }: ComingSoonPageProps) {
   return (
-    <div className="relative min-h-screen bg-[#272626] flex flex-col items-center px-6 pt-32 md:pt-36 pb-10 gap-8">
+    <div className="relative min-h-screen bg-slate-900 flex flex-col items-center px-6 pt-32 md:pt-36 pb-10 gap-8">
       <button
         type="button"
         onClick={onBack}

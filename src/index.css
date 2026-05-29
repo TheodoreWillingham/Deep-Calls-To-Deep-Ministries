@@ -6,13 +6,19 @@
   --font-condensed: 'Roboto Condensed', sans-serif;
   --font-open-sans: 'Open Sans', sans-serif;
   --font-inter: 'Inter', sans-serif;
+
+  /* Site palette — navy + white. Backgrounds use Tailwind's slate-900/800/700.
+     Tune these accents to re-skin buttons, badges, and links site-wide. */
+  --color-accent: #3b5e8c;
+  --color-accent-hover: #4a72a6;
+  --color-link: #7aa2d6;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #272626;
+  background-color: #0f172a;
 }
 
 /* ── 3D Book Effect ── */

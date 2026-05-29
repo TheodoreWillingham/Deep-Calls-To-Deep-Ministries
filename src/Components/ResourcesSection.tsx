@@ -7,7 +7,7 @@ function LocationPinIcon() {
     <svg width="105" height="105" viewBox="0 0 105 105" fill="none">
       <path
         d="M52.5 8.75C37.3 8.75 25 21.05 25 36.25c0 22.5 27.5 60 27.5 60s27.5-37.5 27.5-60c0-15.2-12.3-27.5-27.5-27.5zm0 37.5c-5.52 0-10-4.48-10-10s4.48-10 10-10 10 4.48 10 10-4.48 10-10 10z"
-        fill="black"
+        fill="white"
       />
     </svg>
   );
@@ -15,7 +15,7 @@ function LocationPinIcon() {
 
 export default function ResourcesSection({ onPrayersClick }: ResourcesSectionProps) {
   return (
-    <section className="bg-[#3c3c3c] flex flex-col items-center justify-center gap-20 pb-16 px-4 md:px-10 lg:px-20 md:pb-24">
+    <section className="bg-slate-900 flex flex-col items-center justify-center gap-20 pb-16 px-4 md:px-10 lg:px-20 md:pb-24">
       {/* Black band with gradient fades on top and bottom for a smooth transition from the hero */}
       <div
         className="relative -mx-4 md:-mx-10 lg:-mx-20 -mt-24 md:-mt-32 w-screen self-stretch pt-44 pb-20 md:pt-60 md:pb-28 flex items-center justify-center z-10"
@@ -62,9 +62,9 @@ export default function ResourcesSection({ onPrayersClick }: ResourcesSectionPro
         </div>
 
         {/* Events CTA — spans both columns on desktop */}
-        <div className="bg-[#ffad6a] flex flex-col items-center justify-center gap-10 py-8 px-8 w-full max-w-90 md:max-w-none md:col-span-2 md:flex-row md:justify-between md:px-16 md:py-12 rounded-2xl">
+        <div className="bg-accent flex flex-col items-center justify-center gap-10 py-8 px-8 w-full max-w-90 md:max-w-none md:col-span-2 md:flex-row md:justify-between md:px-16 md:py-12 rounded-2xl">
           <LocationPinIcon />
-          <p className="font-semibold text-[32px] text-center text-black md:text-5xl md:text-left md:flex-1 md:px-10">
+          <p className="font-semibold text-[32px] text-center text-white md:text-5xl md:text-left md:flex-1 md:px-10">
             Don't do it alone.
           </p>
           <button className="bg-white flex items-center justify-center py-6 px-8 rounded-lg w-84 max-w-full md:w-auto shadow-[0px_4px_4px_rgba(0,0,0,0.25),2px_6px_4px_rgba(0,0,0,0.25)] border-none cursor-pointer hover:bg-gray-50 transition-colors">

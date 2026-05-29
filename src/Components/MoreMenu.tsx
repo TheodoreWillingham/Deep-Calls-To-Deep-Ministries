@@ -112,7 +112,7 @@ export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayer
 
       {/* Sliding panel */}
       <div
-        className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-[#1a1a1a] rounded-t-2xl z-[160] transition-transform duration-300 ease-out ${open ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-slate-900 rounded-t-2xl z-[160] transition-transform duration-300 ease-out ${open ? 'translate-y-0' : 'translate-y-full'}`}
       >
         <div className="px-6 pt-8 pb-6">
           {/* Menu items */}

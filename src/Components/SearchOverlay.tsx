@@ -13,7 +13,7 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
       onClick={onClose}
     >
       <div
-        className="bg-[#2c3e50] w-full max-w-sm px-4 pt-5 pb-6 flex flex-col gap-4"
+        className="bg-slate-800 w-full max-w-sm px-4 pt-5 pb-6 flex flex-col gap-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
@@ -35,7 +35,7 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
           autoFocus
         />
         <div className="flex justify-end">
-          <button className="bg-[#3c3c3c] text-white border border-gray-500 rounded-md px-6 py-2.5 text-sm font-medium cursor-pointer">
+          <button className="bg-accent hover:bg-accent-hover text-white border-none rounded-md px-6 py-2.5 text-sm font-medium cursor-pointer transition-colors">
             Search
           </button>
         </div>

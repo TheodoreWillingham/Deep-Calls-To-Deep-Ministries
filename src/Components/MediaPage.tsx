@@ -132,7 +132,7 @@ function ChevronRightIcon() {
 
 function MediaCard({ item }: { item: MediaItem }) {
   return (
-    <div className="shrink-0 w-72 md:w-80 lg:w-96 rounded-xl overflow-hidden bg-[#1f1f1f] cursor-pointer group">
+    <div className="shrink-0 w-72 md:w-80 lg:w-96 rounded-xl overflow-hidden bg-slate-800 cursor-pointer group">
       <div className="relative aspect-[16/9] overflow-hidden">
         <img
           src={item.imageUrl}
@@ -142,7 +142,7 @@ function MediaCard({ item }: { item: MediaItem }) {
         {item.overlayTitle && (
           <div className="absolute inset-0 flex items-center justify-center p-4">
             {item.overlayAccent === 'orange' ? (
-              <span className="bg-[#e88a4a] text-white font-bold text-base md:text-lg px-3 py-2 rounded leading-tight max-w-[80%] text-center">
+              <span className="bg-accent text-white font-bold text-base md:text-lg px-3 py-2 rounded leading-tight max-w-[80%] text-center">
                 {item.overlayTitle}
               </span>
             ) : (
@@ -153,7 +153,7 @@ function MediaCard({ item }: { item: MediaItem }) {
           </div>
         )}
       </div>
-      <div className="bg-[#2a2a2a] p-4 md:p-5 flex flex-col gap-2">
+      <div className="bg-slate-800 p-4 md:p-5 flex flex-col gap-2">
         <h3 className="text-white font-bold text-sm md:text-base m-0 leading-snug truncate">
           {item.title}
         </h3>
@@ -196,7 +196,7 @@ function MediaRow({ section }: { section: MediaSection }) {
 
 export default function MediaPage(_props: MediaPageProps) {
   return (
-    <div className="relative min-h-screen bg-black flex flex-col items-stretch pt-20 md:pt-24 pb-20 gap-12 md:gap-16">
+    <div className="relative min-h-screen bg-slate-900 flex flex-col items-stretch pt-20 md:pt-24 pb-20 gap-12 md:gap-16">
       <h1 className="font-bold text-3xl md:text-5xl text-white tracking-wide m-0 text-center">
         Media
       </h1>

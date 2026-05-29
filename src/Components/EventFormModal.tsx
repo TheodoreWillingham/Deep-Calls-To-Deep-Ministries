@@ -84,9 +84,9 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-start justify-center overflow-y-auto pt-20 md:pt-28 pb-10 px-4">
-      <div className="w-full max-w-md bg-[#1a1a1a] rounded-2xl overflow-hidden">
+      <div className="w-full max-w-md bg-slate-900 rounded-2xl overflow-hidden">
         {/* Header */}
-        <div className="bg-[#3d4f3e] px-5 py-4 flex items-center justify-between">
+        <div className="bg-accent px-5 py-4 flex items-center justify-between">
           <h2 className="text-white font-bold text-lg m-0">
             {isEdit ? 'Edit Event' : 'Add Event'}
           </h2>
@@ -108,7 +108,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+              className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
               required
             />
           </Field>
@@ -118,7 +118,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm resize-y"
+              className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm resize-y"
             />
           </Field>
 
@@ -127,7 +127,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+              className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
             />
           </Field>
 
@@ -137,7 +137,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
                 type="date"
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
-                className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+                className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
                 required
               />
             </Field>
@@ -146,7 +146,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
                 type="time"
                 value={eventTime}
                 onChange={(e) => setEventTime(e.target.value)}
-                className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+                className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
               />
             </Field>
           </div>
@@ -159,7 +159,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
                 type="text"
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
-                className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+                className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
               />
             </Field>
 
@@ -168,7 +168,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
                 type="email"
                 value={contactEmail}
                 onChange={(e) => setContactEmail(e.target.value)}
-                className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+                className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
               />
             </Field>
 
@@ -177,7 +177,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
                 type="tel"
                 value={contactPhone}
                 onChange={(e) => setContactPhone(e.target.value)}
-                className="w-full bg-[#252525] text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
+                className="w-full bg-slate-800 text-white rounded-lg px-3 py-2 border border-gray-700 focus:border-white outline-none text-sm"
               />
             </Field>
           </div>
@@ -198,7 +198,7 @@ export default function EventFormModal({ event, onClose, onSaved }: EventFormMod
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 bg-[#3d4f3e] border-none text-white rounded-lg py-2 text-sm cursor-pointer disabled:opacity-50"
+              className="flex-1 bg-accent hover:bg-accent-hover border-none text-white rounded-lg py-2 text-sm cursor-pointer disabled:opacity-50 transition-colors"
             >
               {saving ? 'Saving...' : isEdit ? 'Save Changes' : 'Add Event'}
             </button>

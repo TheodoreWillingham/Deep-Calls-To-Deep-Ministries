@@ -2,7 +2,7 @@ export default function HeroSection() {
   return (
     <section
       className="
-        relative bg-[#272626] flex flex-col items-center justify-center
+        relative bg-slate-900 flex flex-col items-center justify-center
         min-h-svh p-2.5 pb-24 overflow-hidden
         md:min-h-screen md:p-0 md:pb-0
       "

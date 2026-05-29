@@ -11,7 +11,7 @@ const bookUrls = [
 
 export default function BooksPage({ onBack }: BooksPageProps) {
   return (
-    <div className="min-h-screen bg-[#4a4a4a] flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
       <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
         <button
