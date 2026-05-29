@@ -15,7 +15,7 @@ export default function BooksPage() {
 
       {/* Book grid */}
       <div className="w-full flex justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-8 pb-28 md:pb-8">
           {bookUrls.map((url, i) => (
             <Book key={i} href={url} />
           ))}

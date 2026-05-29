@@ -14,7 +14,7 @@ import BooksPage from './Components/BooksPage'
 import PrayerPage from './Components/PrayerPage'
 import EncouragementPage from './Components/EncouragementPage'
 import EventsPage from './Components/EventsPage'
-import ComingSoonPage from './Components/ComingSoonPage'
+import GivePage from './Components/GivePage'
 import MediaPage from './Components/MediaPage'
 import AboutPage from './Components/AboutPage'
 import TopBar from './Components/TopBar'
@@ -103,31 +103,15 @@ function App() {
     if (page === 'events') return <EventsPage isAdmin={isAdmin} />
     if (page === 'media') return <MediaPage />
     if (page === 'about') return <AboutPage />
-    if (page === 'give') return <ComingSoonPage title="Give" />
+    if (page === 'give') return <GivePage />
 
     // Home
     return (
-      <>
-        <div className="stagger-rise">
-          <HeroSection />
-          <ResourcesSection onPrayersClick={() => setPage('prayer')} />
-          <MediaSection />
-        </div>
-        <BottomNav
-          onMoreClick={() => setMoreOpen(true)}
-          onBooksClick={() => setPage('books')}
-          onPrayerClick={() => setPage('prayer')}
-          onEventsClick={() => setPage('events')}
-        />
-        <MoreMenu
-          open={moreOpen}
-          onClose={() => setMoreOpen(false)}
-          onEncouragementClick={() => setPage('encouragement')}
-          onPrayersClick={() => setPage('prayer')}
-          onEventsClick={() => setPage('events')}
-          onAboutClick={() => setPage('about')}
-        />
-      </>
+      <div className="stagger-rise">
+        <HeroSection />
+        <ResourcesSection onPrayersClick={() => setPage('prayer')} />
+        <MediaSection />
+      </div>
     )
   }
 
@@ -138,8 +122,25 @@ function App() {
         onLogoutClick={handleLogout}
         isLoggedIn={isLoggedIn}
         onNavClick={setPage}
+        onGiveClick={() => setPage('give')}
       />
       {renderPage()}
+      <BottomNav
+        onMoreClick={() => setMoreOpen(true)}
+        onMediaClick={() => setPage('media')}
+        onBooksClick={() => setPage('books')}
+        onPrayerClick={() => setPage('prayer')}
+        onEventsClick={() => setPage('events')}
+      />
+      <MoreMenu
+        open={moreOpen}
+        onClose={() => setMoreOpen(false)}
+        onEncouragementClick={() => setPage('encouragement')}
+        onPrayersClick={() => setPage('prayer')}
+        onEventsClick={() => setPage('events')}
+        onAboutClick={() => setPage('about')}
+        onGiveClick={() => setPage('give')}
+      />
     </>
   )
 }

@@ -173,7 +173,7 @@ function MediaRow({ section }: { section: MediaSection }) {
 
 export default function MediaPage(_props: MediaPageProps) {
   return (
-    <div className="relative min-h-screen bg-slate-900 flex flex-col items-stretch pt-20 md:pt-24 pb-20 gap-12 md:gap-16 stagger-rise">
+    <div className="relative min-h-screen bg-slate-900 flex flex-col items-stretch pt-20 md:pt-24 pb-28 gap-12 md:gap-16 stagger-rise">
       <h1 className="font-bold text-3xl md:text-5xl text-white tracking-wide m-0 text-center">
         Media
       </h1>

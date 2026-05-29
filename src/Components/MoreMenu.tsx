@@ -5,6 +5,7 @@ interface MoreMenuProps {
   onPrayersClick?: () => void;
   onEventsClick?: () => void;
   onAboutClick?: () => void;
+  onGiveClick?: () => void;
 }
 
 function EncouragementIcon() {
@@ -80,7 +81,7 @@ function HeartIcon() {
   );
 }
 
-export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick, onAboutClick }: MoreMenuProps) {
+export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick, onAboutClick, onGiveClick }: MoreMenuProps) {
   return (
     <>
       {/* Backdrop */}
@@ -129,7 +130,10 @@ export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayer
           </div>
 
           {/* Give button */}
-          <button className="mt-8 w-full bg-gray-100 rounded-xl py-4 flex items-center justify-center gap-3 cursor-pointer border-none">
+          <button
+            onClick={() => { onClose(); onGiveClick?.(); }}
+            className="mt-8 w-full bg-gray-100 rounded-xl py-4 flex items-center justify-center gap-3 cursor-pointer border-none"
+          >
             <HeartIcon />
             <span className="font-bold text-lg text-black">Give to DCTDM</span>
           </button>

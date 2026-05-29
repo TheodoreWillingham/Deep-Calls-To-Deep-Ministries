@@ -6,6 +6,7 @@ interface TopBarProps {
   onLogoutClick: () => void;
   isLoggedIn: boolean;
   onNavClick: (page: Page) => void;
+  onGiveClick: () => void;
 }
 
 function SearchIcon() {
@@ -35,7 +36,7 @@ const NAV_ITEMS: { label: string; page: Page }[] = [
   { label: 'About', page: 'about' },
 ];
 
-export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavClick }: TopBarProps) {
+export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavClick, onGiveClick }: TopBarProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
 
@@ -55,7 +56,7 @@ export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavC
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Escape') closeSearch(); }}
-            placeholder="Search Wild at Heart..."
+            placeholder="Search DCTDM..."
             className="flex-1 min-w-0 bg-transparent border-none outline-none text-white placeholder:text-white/60 text-base md:text-lg"
           />
           <button
@@ -107,6 +108,13 @@ export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavC
             >
               {isLoggedIn ? 'Logout' : 'Login'}
             </span>
+            <button
+              type="button"
+              onClick={onGiveClick}
+              className="hidden md:inline-flex items-center px-4 py-2 rounded-full bg-accent hover:bg-accent-hover text-white font-semibold text-base leading-[0.8] whitespace-nowrap border-none cursor-pointer transition-colors"
+            >
+              Give
+            </button>
           </div>
         </>
       )}

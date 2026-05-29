@@ -48,13 +48,14 @@ interface BottomNavProps {
   onPrayerClick?: () => void;
   onBooksClick?: () => void;
   onEventsClick?: () => void;
+  onMediaClick?: () => void;
 }
 
-export default function BottomNav({ onMoreClick, onPrayerClick, onBooksClick, onEventsClick }: BottomNavProps) {
+export default function BottomNav({ onMoreClick, onPrayerClick, onBooksClick, onEventsClick, onMediaClick }: BottomNavProps) {
   return (
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm p-2 z-50 md:hidden">
       <nav className="bg-slate-800 flex h-16 items-center justify-between px-4 py-2 rounded-2xl w-full">
-        <div className="flex flex-col items-center gap-2 cursor-pointer">
+        <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onMediaClick}>
           <PlayIcon />
           <span className="text-xs text-white text-center">Media</span>
         </div>
