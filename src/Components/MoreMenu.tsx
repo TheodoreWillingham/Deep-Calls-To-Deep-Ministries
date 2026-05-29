@@ -17,22 +17,12 @@ function EncouragementIcon() {
 }
 
 const menuItems = [
-  { label: 'Daily Readings', icon: <BookOpenIcon /> },
   { label: 'Events', icon: <PinIcon /> },
   { label: 'Encouragement', icon: <EncouragementIcon /> },
   { label: 'Prayers', icon: <PrayerBookIcon /> },
   { label: 'Articles', icon: <ArticleIcon /> },
   { label: 'Podcasts', icon: <MicIcon /> },
 ];
-
-function BookOpenIcon() {
-  return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-      <path d="M2 4h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2V4z" />
-      <path d="M22 4h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7V4z" />
-    </svg>
-  );
-}
 
 function PinIcon() {
   return (

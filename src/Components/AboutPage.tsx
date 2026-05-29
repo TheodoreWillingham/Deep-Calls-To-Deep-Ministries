@@ -24,9 +24,6 @@ export default function AboutPage() {
             <h2 className="font-condensed italic text-5xl md:text-7xl lg:text-8xl text-white leading-[0.88]">
               CALLED<br />FROM THE DEEP
             </h2>
-            <p className="font-inter text-base md:text-xl text-white/80 max-w-xl leading-relaxed">
-              God is calling from His depths into the deepest parts of who we are.
-            </p>
           </div>
         </section>
 
@@ -64,11 +61,13 @@ export default function AboutPage() {
         {/* Deana Bringolf */}
         <section className="about-rise w-full max-w-4xl mx-auto" style={{ animationDelay: '0.3s' }}>
           <div className="grid gap-8 md:gap-12 md:grid-cols-[300px_1fr] md:items-start">
-            {/* Monogram panel */}
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] md:aspect-[3/4] bg-gradient-to-br from-accent via-[#24405f] to-slate-950 flex items-center justify-center">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.18),transparent_60%)]" />
-              <div className="absolute inset-4 rounded-xl border border-white/15" />
-              <span className="relative font-condensed italic text-7xl md:text-8xl text-white">DB</span>
+            {/* Portrait */}
+            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] md:aspect-[3/4]">
+              <img
+                src="/assets/Deana.png"
+                alt="Deana Bringolf"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
 
             {/* Bio */}

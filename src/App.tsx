@@ -108,9 +108,9 @@ function App() {
     // Home
     return (
       <div className="stagger-rise">
-        <HeroSection />
-        <ResourcesSection onPrayersClick={() => setPage('prayer')} />
-        <MediaSection />
+        <HeroSection onGiveClick={() => setPage('give')} onMediaClick={() => setPage('media')} />
+        <ResourcesSection onPrayersClick={() => setPage('prayer')} onEventsClick={() => setPage('events')} />
+        <MediaSection onGiveClick={() => setPage('give')} onEventsClick={() => setPage('events')} />
       </div>
     )
   }
