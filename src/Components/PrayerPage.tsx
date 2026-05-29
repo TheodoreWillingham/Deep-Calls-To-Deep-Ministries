@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 
-interface PrayerPageProps {
-  onBack: () => void;
-}
-
 type Tab = 'requests' | 'bestill' | 'gospel';
 
 interface PrayerRequestRow {
@@ -81,23 +77,14 @@ function PrayingHandsIcon({ className = 'w-5 h-5' }: { className?: string }) {
 
 /* ── Main Component ── */
 
-export default function PrayerPage({ onBack }: PrayerPageProps) {
+export default function PrayerPage() {
   const [tab, setTab] = useState<Tab>('requests');
 
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
-      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center gap-4 shrink-0">
-        <button
-          onClick={onBack}
-          className="text-white bg-transparent border-none cursor-pointer p-0"
-          aria-label="Go back"
-        >
-          <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide">Prayer</h1>
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center justify-center shrink-0">
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">Prayer</h1>
       </div>
 
       {/* Tab switcher */}

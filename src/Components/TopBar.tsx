@@ -32,6 +32,7 @@ const NAV_ITEMS: { label: string; page: Page }[] = [
   { label: 'Prayer', page: 'prayer' },
   { label: 'Books', page: 'books' },
   { label: 'Encouragement Corner', page: 'encouragement' },
+  { label: 'About', page: 'about' },
 ];
 
 export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavClick }: TopBarProps) {

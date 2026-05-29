@@ -3,7 +3,6 @@ import { supabase } from './supabaseClient';
 import EventFormModal from './EventFormModal';
 
 interface EventsPageProps {
-  onBack: () => void;
   isAdmin: boolean;
 }
 
@@ -82,7 +81,7 @@ function formatTime(timeStr: string): string {
   return `${h}:${minutes.toString().padStart(2, '0')} ${ampm}`;
 }
 
-export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
+export default function EventsPage({ isAdmin }: EventsPageProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -144,30 +143,24 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
-      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center gap-4 shrink-0">
-        <button
-          onClick={onBack}
-          className="text-white bg-transparent border-none cursor-pointer p-0"
-          aria-label="Go back"
-        >
-          <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide">Events</h1>
-        {isAdmin && (
-          <button
-            onClick={openAddForm}
-            className="ml-auto flex items-center gap-1 bg-accent hover:bg-accent-hover text-white border-none rounded-full px-3 md:px-4 py-1.5 md:py-2 text-sm md:text-base cursor-pointer transition-colors"
-            aria-label="Add event"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            <span>Add Event</span>
-          </button>
-        )}
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 grid grid-cols-[1fr_auto_1fr] items-center shrink-0">
+        <span aria-hidden />
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">Events</h1>
+        <div className="flex justify-end">
+          {isAdmin && (
+            <button
+              onClick={openAddForm}
+              className="flex items-center gap-1 bg-accent hover:bg-accent-hover text-white border-none rounded-full px-3 md:px-4 py-1.5 md:py-2 text-sm md:text-base cursor-pointer transition-colors"
+              aria-label="Add event"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Add Event</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Description */}

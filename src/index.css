@@ -96,3 +96,19 @@ body {
     animation: none;
   }
 }
+
+/* Staggered entrance for About page sections. */
+@keyframes about-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.about-rise {
+  opacity: 0;
+  animation: about-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-rise {
+    opacity: 1;
+    animation: none;
+  }
+}

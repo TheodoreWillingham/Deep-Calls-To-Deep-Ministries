@@ -4,6 +4,7 @@ interface MoreMenuProps {
   onEncouragementClick?: () => void;
   onPrayersClick?: () => void;
   onEventsClick?: () => void;
+  onAboutClick?: () => void;
 }
 
 function EncouragementIcon() {
@@ -79,7 +80,7 @@ function HeartIcon() {
   );
 }
 
-export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick }: MoreMenuProps) {
+export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick, onAboutClick }: MoreMenuProps) {
   return (
     <>
       {/* Backdrop */}
@@ -118,7 +119,12 @@ export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayer
 
           {/* Secondary links */}
           <div className="mt-6 flex flex-col gap-4">
-            <span className="text-gray-300 text-base cursor-pointer">About Us</span>
+            <span
+              className="text-gray-300 text-base cursor-pointer"
+              onClick={() => { onClose(); onAboutClick?.(); }}
+            >
+              About Us
+            </span>
             <span className="text-gray-300 text-base cursor-pointer">Help</span>
           </div>
 

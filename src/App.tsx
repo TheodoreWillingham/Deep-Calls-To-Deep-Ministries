@@ -16,6 +16,7 @@ import EncouragementPage from './Components/EncouragementPage'
 import EventsPage from './Components/EventsPage'
 import ComingSoonPage from './Components/ComingSoonPage'
 import MediaPage from './Components/MediaPage'
+import AboutPage from './Components/AboutPage'
 import TopBar from './Components/TopBar'
 
 export type Page =
@@ -27,6 +28,7 @@ export type Page =
   | 'encouragement'
   | 'events'
   | 'media'
+  | 'about'
   | 'give';
 
 function App() {
@@ -95,12 +97,13 @@ function App() {
   }
 
   const renderPage = () => {
-    if (page === 'books') return <BooksPage onBack={() => setPage('home')} />
-    if (page === 'prayer') return <PrayerPage onBack={() => setPage('home')} />
-    if (page === 'encouragement') return <EncouragementPage onBack={() => setPage('home')} />
-    if (page === 'events') return <EventsPage onBack={() => setPage('home')} isAdmin={isAdmin} />
-    if (page === 'media') return <MediaPage onBack={() => setPage('home')} />
-    if (page === 'give') return <ComingSoonPage title="Give" onBack={() => setPage('home')} />
+    if (page === 'books') return <BooksPage />
+    if (page === 'prayer') return <PrayerPage />
+    if (page === 'encouragement') return <EncouragementPage />
+    if (page === 'events') return <EventsPage isAdmin={isAdmin} />
+    if (page === 'media') return <MediaPage />
+    if (page === 'about') return <AboutPage />
+    if (page === 'give') return <ComingSoonPage title="Give" />
 
     // Home
     return (
@@ -120,6 +123,7 @@ function App() {
           onEncouragementClick={() => setPage('encouragement')}
           onPrayersClick={() => setPage('prayer')}
           onEventsClick={() => setPage('events')}
+          onAboutClick={() => setPage('about')}
         />
       </>
     )
