@@ -5,8 +5,6 @@ interface MediaPageProps {
 interface MediaItem {
   id: number;
   imageUrl: string;
-  overlayTitle?: string;
-  overlayAccent?: 'orange' | 'plain';
   title: string;
   description: string;
 }
@@ -25,24 +23,18 @@ const sections: MediaSection[] = [
       {
         id: 1,
         imageUrl: placeholderImg,
-        overlayTitle: 'Asking, Listening, And Following',
-        overlayAccent: 'orange',
         title: 'Video Update: Asking, Listening, And…',
         description: 'Friends, I want to circle back to something I shared a couple weeks ago about asking God…',
       },
       {
         id: 2,
         imageUrl: placeholderImg,
-        overlayTitle: '"Love is the invitation"',
-        overlayAccent: 'plain',
         title: 'E121 | Fueling Intimacy: When You Dra…',
         description: "Intimacy with Jesus isn't reserved for the spiritually polished—it's an open invitation.",
       },
       {
         id: 3,
         imageUrl: placeholderImg,
-        overlayTitle: '"How do we align our thought life with Jesus?"',
-        overlayAccent: 'plain',
         title: 'E875 | Ruling Your Domain – Part 2',
         description: 'As this series progresses, John, Blaine, and Allen discuss ways to govern one\'s internal reality.',
       },
@@ -66,14 +58,12 @@ const sections: MediaSection[] = [
       {
         id: 11,
         imageUrl: placeholderImg,
-        overlayTitle: 'EXPERIENCE JESUS',
         title: 'Experience Jesus',
         description: 'A 6-session video journey for small groups exploring intimacy with Jesus.',
       },
       {
         id: 12,
         imageUrl: placeholderImg,
-        overlayTitle: 'THE RESILIENT',
         title: 'The Resilient',
         description: 'A series for groups on building a faith that can weather any storm.',
       },
@@ -139,19 +129,6 @@ function MediaCard({ item }: { item: MediaItem }) {
           alt={item.title}
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        {item.overlayTitle && (
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            {item.overlayAccent === 'orange' ? (
-              <span className="bg-accent text-white font-bold text-base md:text-lg px-3 py-2 rounded leading-tight max-w-[80%] text-center">
-                {item.overlayTitle}
-              </span>
-            ) : (
-              <span className="font-serif italic text-white text-lg md:text-xl font-semibold text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] max-w-[80%] leading-tight">
-                {item.overlayTitle}
-              </span>
-            )}
-          </div>
-        )}
       </div>
       <div className="bg-slate-800 p-4 md:p-5 flex flex-col gap-2">
         <h3 className="text-white font-bold text-sm md:text-base m-0 leading-snug truncate">
@@ -178,7 +155,7 @@ function MediaRow({ section }: { section: MediaSection }) {
       </div>
 
       <div className="relative">
-        <div className="flex gap-4 md:gap-6 px-6 md:px-10 lg:px-16 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth">
+        <div className="flex gap-4 md:gap-6 px-6 md:px-10 lg:px-16 scroll-px-6 md:scroll-px-10 lg:scroll-px-16 overflow-x-auto scrollbar-hide pb-2 snap-x snap-mandatory scroll-smooth">
           {section.items.map((item) => (
             <div key={item.id} className="snap-start">
               <MediaCard item={item} />

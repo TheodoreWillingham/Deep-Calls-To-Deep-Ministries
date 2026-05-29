@@ -18,7 +18,7 @@ export default function ResourcesSection({ onPrayersClick }: ResourcesSectionPro
     <section className="bg-slate-900 flex flex-col items-center justify-center gap-20 pb-16 px-4 md:px-10 lg:px-20 md:pb-24">
       {/* Black band with gradient fades on top and bottom for a smooth transition from the hero */}
       <div
-        className="relative -mx-4 md:-mx-10 lg:-mx-20 -mt-24 md:-mt-32 w-screen self-stretch pt-44 pb-20 md:pt-60 md:pb-28 flex items-center justify-center z-10"
+        className="relative -mx-4 md:-mx-10 lg:-mx-20 -mt-24 md:-mt-32 self-stretch pt-44 pb-20 md:pt-60 md:pb-28 flex items-center justify-center z-10"
         style={{
           background:
             'linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 40%, #000 78%, rgba(0,0,0,0) 100%)',

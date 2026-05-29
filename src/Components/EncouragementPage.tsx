@@ -70,26 +70,26 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
-      <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center gap-4 shrink-0">
         <button
           onClick={onBack}
           className="text-white bg-transparent border-none cursor-pointer p-0"
           aria-label="Go back"
         >
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <h1 className="font-bold text-2xl text-white tracking-wide">
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide">
           Encouragement Center
         </h1>
       </div>
 
       {/* Tab switcher */}
-      <div className="w-full max-w-md px-6 flex gap-3 shrink-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 flex gap-3 md:gap-4 md:justify-center shrink-0">
         <button
           onClick={() => resetFormAndSwitch('testimonies')}
-          className={`flex-1 py-3 rounded-xl font-semibold text-base border-none cursor-pointer transition-colors ${
+          className={`flex-1 md:flex-none md:min-w-[200px] py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg border-none cursor-pointer transition-colors ${
             tab === 'testimonies'
               ? 'bg-white text-black'
               : 'bg-slate-800 text-gray-400'
@@ -99,7 +99,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
         </button>
         <button
           onClick={() => resetFormAndSwitch('praise')}
-          className={`flex-1 py-3 rounded-xl font-semibold text-base border-none cursor-pointer transition-colors ${
+          className={`flex-1 md:flex-none md:min-w-[200px] py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg border-none cursor-pointer transition-colors ${
             tab === 'praise'
               ? 'bg-white text-black'
               : 'bg-slate-800 text-gray-400'
@@ -110,14 +110,14 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
       </div>
 
       {/* Scrollable content area */}
-      <div className="w-full max-w-md px-6 pt-4 pb-28">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-4 md:pt-8 pb-28">
         {/* Description box */}
-        <div className="bg-accent/20 rounded-xl px-5 py-4 mb-5">
-          <p className="text-white text-sm leading-relaxed m-0">{description}</p>
+        <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+          <p className="text-white text-sm md:text-base leading-relaxed m-0">{description}</p>
         </div>
 
         {/* Topic filters */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="flex flex-wrap gap-2 md:gap-3 mb-5 md:mb-8">
           {topics.map(topic => (
             <button
               key={topic}
@@ -134,14 +134,14 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
         </div>
 
         {/* Entries */}
-        <div className="flex flex-col gap-4 mb-6">
+        <div className="flex flex-col gap-4 mb-6 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:mb-8 md:items-start">
           {filtered.length === 0 ? (
-            <p className="text-gray-400 text-center text-sm py-8">
+            <p className="text-gray-400 text-center text-sm py-8 md:col-span-full">
               No {tab === 'testimonies' ? 'testimonies' : 'praises'} in this topic yet.
             </p>
           ) : (
             filtered.map((entry, i) => (
-              <div key={i} className="bg-slate-800 rounded-xl p-5">
+              <div key={i} className="bg-slate-800 rounded-xl p-5 md:p-6">
                 <span className="inline-block bg-accent text-white text-xs font-medium px-3 py-1 rounded-full mb-3">
                   {entry.topic}
                 </span>
@@ -156,12 +156,12 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
         {!showForm ? (
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-4 rounded-xl bg-accent text-white text-base font-semibold border-none cursor-pointer"
+            className="w-full md:max-w-md md:mx-auto md:block py-4 md:py-5 rounded-xl bg-accent hover:bg-accent-hover text-white text-base md:text-lg font-semibold border-none cursor-pointer transition-colors"
           >
             Share Your {tab === 'testimonies' ? 'Testimony' : 'Praise'}
           </button>
         ) : (
-          <div className="bg-slate-800 rounded-xl p-5 flex flex-col gap-4">
+          <div className="bg-slate-800 rounded-xl p-5 md:p-7 flex flex-col gap-4 md:max-w-2xl md:mx-auto">
             <h3 className="text-white font-semibold text-lg m-0">
               Submit Your {tab === 'testimonies' ? 'Testimony' : 'Praise'}
             </h3>

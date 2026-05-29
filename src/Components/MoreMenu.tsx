@@ -17,10 +17,8 @@ function EncouragementIcon() {
 const menuItems = [
   { label: 'Daily Readings', icon: <BookOpenIcon /> },
   { label: 'Events', icon: <PinIcon /> },
-  { label: 'Courses', icon: <CourseIcon /> },
   { label: 'Encouragement', icon: <EncouragementIcon /> },
   { label: 'Prayers', icon: <PrayerBookIcon /> },
-  { label: 'Apps', icon: <AppsIcon /> },
   { label: 'Articles', icon: <ArticleIcon /> },
   { label: 'Podcasts', icon: <MicIcon /> },
 ];
@@ -43,31 +41,11 @@ function PinIcon() {
   );
 }
 
-function CourseIcon() {
-  return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <polygon points="10,8 16,12 10,16" fill="white" stroke="none" />
-    </svg>
-  );
-}
-
 function PrayerBookIcon() {
   return (
     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
       <path d="M4 4h4a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H4V4z" />
       <path d="M20 4h-4a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h5V4z" />
-    </svg>
-  );
-}
-
-function AppsIcon() {
-  return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
     </svg>
   );
 }

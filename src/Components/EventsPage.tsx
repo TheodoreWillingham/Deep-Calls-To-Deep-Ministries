@@ -144,21 +144,21 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24">
       {/* Header */}
-      <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center gap-4 shrink-0">
         <button
           onClick={onBack}
           className="text-white bg-transparent border-none cursor-pointer p-0"
           aria-label="Go back"
         >
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <h1 className="font-bold text-2xl text-white tracking-wide">Events</h1>
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide">Events</h1>
         {isAdmin && (
           <button
             onClick={openAddForm}
-            className="ml-auto flex items-center gap-1 bg-accent hover:bg-accent-hover text-white border-none rounded-full px-3 py-1.5 text-sm cursor-pointer transition-colors"
+            className="ml-auto flex items-center gap-1 bg-accent hover:bg-accent-hover text-white border-none rounded-full px-3 md:px-4 py-1.5 md:py-2 text-sm md:text-base cursor-pointer transition-colors"
             aria-label="Add event"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -171,9 +171,9 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
       </div>
 
       {/* Description */}
-      <div className="w-full max-w-md px-6 shrink-0">
-        <div className="bg-accent/20 rounded-xl px-5 py-4 mb-5">
-          <p className="text-white text-sm leading-relaxed m-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 shrink-0">
+        <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+          <p className="text-white text-sm md:text-base leading-relaxed m-0">
             Join us for worship, fellowship, and community. Browse upcoming events from Deep Calls To Deep Ministries below.
           </p>
         </div>
@@ -181,7 +181,7 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
  
 
       {/* Scrollable content */}
-      <div className="w-full max-w-md px-6 pb-28">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pb-28">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-8 h-8 border-2 border-gray-600 border-t-white rounded-full animate-spin" />
@@ -191,12 +191,12 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
             No upcoming events scheduled. Check back soon!
           </p>
         ) : (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6 md:items-start">
             {events.map((event) => (
               <div key={event.id} className="bg-slate-800 rounded-xl overflow-hidden">
                 {/* Event header */}
-                <div className="bg-accent px-5 py-4 flex items-center gap-2">
-                  <h3 className="text-white font-bold text-lg m-0 flex-1">{event.name}</h3>
+                <div className="bg-accent px-5 md:px-6 py-4 md:py-5 flex items-center gap-2">
+                  <h3 className="text-white font-bold text-lg md:text-xl m-0 flex-1">{event.name}</h3>
                   {isAdmin && (
                     <>
                       <button
@@ -218,7 +218,7 @@ export default function EventsPage({ onBack, isAdmin }: EventsPageProps) {
                   )}
                 </div>
 
-                <div className="px-5 py-4 flex flex-col gap-3">
+                <div className="px-5 md:px-6 py-4 md:py-5 flex flex-col gap-3">
                   {/* Date & time */}
                   <div className="flex items-center gap-3 text-gray-300 text-sm">
                     <CalendarIcon />

@@ -7,7 +7,6 @@ import HeroSection from './Components/HeroSection'
 import ResourcesSection from './Components/ResourcesSection'
 import MediaSection from './Components/MediaSection'
 import BottomNav from './Components/BottomNav'
-import SearchOverlay from './Components/SearchOverlay'
 import LoginPage from './Components/LoginPage'
 import SignupPage from './Components/SignupPage'
 import MoreMenu from './Components/MoreMenu'
@@ -31,7 +30,6 @@ export type Page =
   | 'give';
 
 function App() {
-  const [searchOpen, setSearchOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const [page, setPage] = useState<Page>('home')
   const [isAdmin, setIsAdmin] = useState(false)
@@ -130,14 +128,12 @@ function App() {
   return (
     <>
       <TopBar
-        onSearchClick={() => setSearchOpen(true)}
         onLoginClick={() => setPage('login')}
         onLogoutClick={handleLogout}
         isLoggedIn={isLoggedIn}
         onNavClick={setPage}
       />
       {renderPage()}
-      {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
     </>
   )
 }

@@ -21,6 +21,15 @@ body {
   background-color: #0f172a;
 }
 
+/* Hide the scrollbar while keeping horizontal scroll/swipe behavior. */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* ── 3D Book Effect ── */
 
 .book-container {
@@ -77,4 +86,13 @@ body {
   background-color: #ffdd00;
   border-radius: 0 2px 2px 0;
   box-shadow: -10px 0 50px 10px #666;
+}
+
+/* Touch / mobile devices can't hover, so show the covers facing forward
+   instead of the angled rest pose, and skip the turn-in animation. */
+@media (hover: none), (max-width: 767.98px) {
+  .book {
+    transform: rotateY(0deg);
+    animation: none;
+  }
 }

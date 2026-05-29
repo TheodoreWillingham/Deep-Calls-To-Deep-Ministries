@@ -71,6 +71,14 @@ function HeadphonesIcon() {
   );
 }
 
+function PrayingHandsIcon({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L8 12l4 10M12 2l4 10-4 10" />
+    </svg>
+  );
+}
+
 /* ── Main Component ── */
 
 export default function PrayerPage({ onBack }: PrayerPageProps) {
@@ -250,7 +258,7 @@ function PrayerRequestsTab() {
 
       {/* Success banner */}
       {submitSuccess && (
-        <div className="bg-[#3d4f3e] rounded-xl px-5 py-4 mb-5 flex items-center justify-between gap-4">
+        <div className="bg-accent rounded-xl px-5 py-4 mb-5 flex items-center justify-between gap-4">
           <p className="text-white text-sm m-0">Your prayer request has been received. We'll be lifting you up!</p>
           <button
             onClick={() => setSubmitSuccess(false)}
@@ -310,17 +318,18 @@ function PrayerRequestsTab() {
 
           <div className="flex gap-3">
             <button
-              onClick={() => { setShowForm(false); setName(''); setRequest(''); setConsent(false); }}
-              className="flex-1 py-3 rounded-xl bg-[#2a2a2a] text-gray-300 text-base font-semibold border-none cursor-pointer"
+              onClick={resetForm}
+              className="flex-1 py-3 rounded-xl bg-slate-800 text-gray-300 text-base font-semibold border-none cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
+              disabled={!requestText.trim() || submitting}
               className={`flex-1 py-3 rounded-xl text-base font-semibold border-none cursor-pointer ${
-                name.trim() && request.trim()
+                requestText.trim() && !submitting
                   ? 'bg-white text-black'
-                  : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'
+                  : 'bg-slate-700 text-gray-500 cursor-not-allowed'
               }`}
             >
               {submitting ? 'Sending…' : 'Submit'}
@@ -330,33 +339,42 @@ function PrayerRequestsTab() {
       )}
 
       {/* Prayer request cards */}
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
-        {sampleRequests.map(pr => {
-          const hasPrayed = prayedIds.has(pr.id);
-          return (
-            <div key={pr.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex flex-col">
-              <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1">{pr.request}</p>
-              <div className="flex items-center justify-between">
-                <p className="text-gray-400 text-xs m-0 italic">{pr.name}</p>
-                <button
-                  onClick={() => handlePray(pr.id)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-none cursor-pointer text-sm font-medium transition-colors ${
-                    hasPrayed
-                      ? 'bg-[#3d4f3e] text-white'
-                      : 'bg-[#2a2a2a] text-gray-300 hover:bg-[#3a3a3a]'
-                  }`}
-                >
-                  <PrayingHandsIcon className="w-4 h-4" />
-                  <span>{hasPrayed ? 'Praying' : 'Pray'}</span>
-                  <span className="text-gray-400 text-xs">
-                    {pr.prayerCount + (hasPrayed ? 1 : 0)}
-                  </span>
-                </button>
+      {loading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-2 border-gray-600 border-t-white rounded-full animate-spin" />
+        </div>
+      ) : requests.length === 0 ? (
+        <p className="text-gray-400 text-center text-sm py-12">
+          No prayer requests have been shared yet. Be the first to submit one.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6 md:items-start">
+          {requests.map(pr => {
+            const hasPrayed = prayedIds.has(pr.id);
+            const displayName = pr.is_anonymous ? 'Anonymous' : (pr.name?.trim() || 'Anonymous');
+            return (
+              <div key={pr.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex flex-col">
+                <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1">{pr.request_text}</p>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-gray-400 text-xs m-0 italic">{displayName}</p>
+                  <button
+                    onClick={() => handlePray(pr.id)}
+                    disabled={hasPrayed}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-none cursor-pointer text-sm font-medium transition-colors shrink-0 ${
+                      hasPrayed
+                        ? 'bg-accent text-white cursor-default'
+                        : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                    }`}
+                  >
+                    <PrayingHandsIcon className="w-4 h-4" />
+                    <span>{hasPrayed ? 'Praying' : 'Pray'}</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }
@@ -369,7 +387,7 @@ function BeStillTab() {
   return (
     <>
       {/* Description */}
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+      <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
           Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." — Psalm 46:10
         </p>
@@ -377,7 +395,7 @@ function BeStillTab() {
 
       <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
         {sampleMoments.map(moment => (
-          <div key={moment.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex gap-4 items-start">
+          <div key={moment.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex gap-4 items-start">
             {/* Play/Listen icon */}
             <button className="shrink-0 bg-transparent border-none cursor-pointer p-0 mt-1">
               {moment.type === 'video' ? <PlayCircleIcon /> : <HeadphonesIcon />}
@@ -414,14 +432,14 @@ function GospelTab() {
     <>
       <div className="md:max-w-3xl md:mx-auto">
       {/* Description */}
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+      <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
           The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us — and can change everything for you too.
         </p>
       </div>
 
       {/* Gospel content */}
-      <div className="bg-[#252525] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+      <div className="bg-slate-800 rounded-xl p-6 md:p-8 mb-5 md:mb-8">
         <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-4 md:mb-6 text-center">The Good News</h3>
 
           <div className="flex flex-col gap-5">
@@ -462,7 +480,7 @@ function GospelTab() {
         </div>
 
       {/* Prayer of salvation */}
-      <div className="bg-[#3d4f3e] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+      <div className="bg-accent rounded-xl p-6 md:p-8 mb-5 md:mb-8">
         <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3 text-center">A Prayer to Begin</h3>
         <p className="text-white text-sm md:text-base leading-relaxed m-0 italic text-center">
           "Lord Jesus, I believe You are the Son of God. I believe You died for my sins and rose again. I ask You to forgive me and come into my heart. I surrender my life to You. Thank You for saving me. In Jesus' name, Amen."
@@ -470,7 +488,7 @@ function GospelTab() {
       </div>
 
       {/* Next steps */}
-      <div className="bg-[#252525] rounded-xl p-6 md:p-8">
+      <div className="bg-slate-800 rounded-xl p-6 md:p-8">
         <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3">What's Next?</h3>
         <p className="text-gray-300 text-sm md:text-base leading-relaxed m-0 mb-4">
           If you've made the decision to follow Jesus — welcome to the family! Here are some important next steps:
@@ -482,7 +500,7 @@ function GospelTab() {
           <li><span className="text-white font-medium">Get baptized</span> — Baptism is an outward expression of your inward decision to follow Jesus.</li>
         </ul>
 
-        <div className="mt-5 p-4 md:p-5 bg-[#1a1a1a] rounded-xl">
+        <div className="mt-5 p-4 md:p-5 bg-slate-900 rounded-xl">
           <p className="text-gray-300 text-sm md:text-base m-0 mb-2">
             Need help finding a church or want to talk to someone?
           </p>
