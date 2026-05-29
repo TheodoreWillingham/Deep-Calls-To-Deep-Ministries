@@ -174,9 +174,11 @@ function MediaRow({ section }: { section: MediaSection }) {
 export default function MediaPage(_props: MediaPageProps) {
   return (
     <div className="relative min-h-screen bg-slate-900 flex flex-col items-stretch pt-20 md:pt-24 pb-28 gap-12 md:gap-16 stagger-rise">
-      <h1 className="font-bold text-3xl md:text-5xl text-white tracking-wide m-0 text-center">
-        Media
-      </h1>
+      <div className="w-full px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center justify-center">
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">
+          Media
+        </h1>
+      </div>
 
       {sections.map((section) => (
         <MediaRow key={section.title} section={section} />

@@ -1,5 +1,6 @@
 interface ResourcesSectionProps {
   onPrayersClick: () => void;
+  onMediaClick: () => void;
   onEventsClick: () => void;
 }
 
@@ -14,7 +15,7 @@ function LocationPinIcon() {
   );
 }
 
-export default function ResourcesSection({ onPrayersClick, onEventsClick }: ResourcesSectionProps) {
+export default function ResourcesSection({ onPrayersClick, onMediaClick, onEventsClick }: ResourcesSectionProps) {
   return (
     <section className="bg-slate-900 flex flex-col items-center gap-12 md:gap-16 px-4 py-16 md:px-10 lg:px-20 md:py-24">
       {/* Intro */}
@@ -34,7 +35,7 @@ export default function ResourcesSection({ onPrayersClick, onEventsClick }: Reso
           className="relative w-full aspect-[676/379] rounded-3xl overflow-hidden flex flex-col justify-end p-6 md:p-10 md:aspect-[16/10] cursor-pointer group ring-1 ring-white/10"
         >
           <img
-            src="/assets/prayers-bg.jpg"
+            src="/assets/hands-folded-in-prayer-praying.jpeg"
             alt="Prayers"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
@@ -46,9 +47,12 @@ export default function ResourcesSection({ onPrayersClick, onEventsClick }: Reso
         </div>
 
         {/* Media Card */}
-        <div className="relative w-full aspect-[358/200] rounded-3xl overflow-hidden flex flex-col justify-end p-6 md:p-10 md:aspect-[16/10] cursor-pointer group ring-1 ring-white/10">
+        <div
+          onClick={onMediaClick}
+          className="relative w-full aspect-[358/200] rounded-3xl overflow-hidden flex flex-col justify-end p-6 md:p-10 md:aspect-[16/10] cursor-pointer group ring-1 ring-white/10"
+        >
           <img
-            src="/assets/media-bg.jpg"
+            src="/assets/start-a-podcast.jpg"
             alt="Media"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />

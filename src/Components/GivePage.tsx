@@ -20,11 +20,8 @@ export default function GivePage() {
 
       {/* Intro */}
       <section className="w-full max-w-2xl px-6 flex flex-col items-center text-center gap-4 mb-8 md:mb-10">
-        <span className="font-open-sans font-bold uppercase tracking-[0.25em] text-xs text-link">
-          Partner With Us
-        </span>
         <h2 className="font-condensed italic text-4xl md:text-6xl text-white leading-[0.9]">
-          GIVE INTO THE DEEP
+          PARTNER WITH US
         </h2>
         <p className="text-gray-300 text-base md:text-lg leading-relaxed">
           Your generosity helps Deep Calls to Deep Ministries carry the light of God's kingdom into the deepest places—reaching hearts that are longing in the deep.
