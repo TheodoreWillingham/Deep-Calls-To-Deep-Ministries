@@ -16,6 +16,7 @@ import MediaPage from './Components/MediaPage'
 import AboutPage from './Components/AboutPage'
 import ConnectPage from './Components/ConnectPage'
 import TopBar from './Components/TopBar'
+import Footer from './Components/Footer'
 
 export type Page =
   | 'home'
@@ -85,7 +86,7 @@ function App() {
     if (page === 'prayer') return <PrayerPage isAdmin={isAdmin} />
     if (page === 'encouragement') return <EncouragementPage />
     if (page === 'events') return <EventsPage isAdmin={isAdmin} />
-    if (page === 'media') return <MediaPage />
+    if (page === 'media') return <MediaPage isAdmin={isAdmin} />
     if (page === 'about') return <AboutPage />
     if (page === 'give') return <GivePage />
     if (page === 'connect') return <ConnectPage />
@@ -108,6 +109,7 @@ function App() {
         onGiveClick={() => setPage('give')}
       />
       {renderPage()}
+      <Footer onNavClick={setPage} onLoginClick={() => setPage('login')} onLogoutClick={handleLogout} isLoggedIn={isLoggedIn} />
       <BottomNav
         onMoreClick={() => setMoreOpen(true)}
         onMediaClick={() => setPage('media')}
