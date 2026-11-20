@@ -101,6 +101,13 @@ function App() {
 
   return (
     <>
+      {/* Site-wide background: the underwater scene, dimmed so text stays readable */}
+      <div
+        className="fixed inset-0 -z-10 bg-cover bg-center"
+        style={{ backgroundImage: "url('/oceandepths.jpg')" }}
+        aria-hidden
+      />
+      <div className="fixed inset-0 -z-10 bg-slate-950/70" aria-hidden />
       <TopBar
         onLoginClick={() => setPage('login')}
         onLogoutClick={handleLogout}

@@ -17,15 +17,7 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
   return (
     <>
       {/* Hero + mission */}
-      <section className="relative bg-slate-900 flex flex-col items-center justify-center min-h-[75svh] px-6 pt-28 pb-24 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/oceandepths.jpg')" }}
-          aria-hidden
-        />
-        <div className="absolute inset-0 bg-slate-950/65" aria-hidden />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-slate-900" aria-hidden />
-
+      <section className="relative flex flex-col items-center justify-center min-h-[75svh] px-6 pt-28 pb-24 overflow-hidden">
         <div className="relative z-10 flex flex-col items-center text-center gap-8 max-w-3xl">
           <h1 className="font-bold text-[40px] leading-[1.02] text-white md:text-7xl md:leading-[0.95] md:tracking-tight m-0">
             DEEP CALLS TO DEEP MINISTRIES
@@ -44,7 +36,7 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
       </section>
 
       {/* Resources */}
-      <section className="bg-slate-900 flex flex-col items-center gap-8 md:gap-10 px-4 pb-28 md:px-10 lg:px-20">
+      <section className="flex flex-col items-center gap-8 md:gap-10 px-4 pb-28 md:px-10 lg:px-20">
         <h2 className="font-inter text-3xl md:text-4xl text-white text-center m-0">
           Explore Our Resources
         </h2>

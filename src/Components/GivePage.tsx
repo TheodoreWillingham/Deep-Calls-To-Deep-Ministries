@@ -12,7 +12,7 @@ export default function GivePage() {
   const canGive = amount > 0;
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24 stagger-rise">
+    <div className="min-h-screen flex flex-col items-center pt-20 md:pt-24 stagger-rise">
       {/* Header */}
       <div className="w-full max-w-2xl px-6 pt-6 md:pt-10 pb-4 flex items-center justify-center">
         <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">Give</h1>

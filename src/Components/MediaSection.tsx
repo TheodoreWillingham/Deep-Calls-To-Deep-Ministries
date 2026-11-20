@@ -13,7 +13,7 @@ export default function MediaSection({ onGiveClick, onEventsClick }: MediaSectio
   const episodes = items.slice(0, 3);
 
   return (
-    <section className="bg-slate-900 flex flex-col items-center gap-10 md:gap-12 px-4 pb-24 md:px-10 lg:px-20 md:pb-28">
+    <section className="flex flex-col items-center gap-10 md:gap-12 px-4 pb-24 md:px-10 lg:px-20 md:pb-28">
       {/* Heading */}
       <div className="w-full md:max-w-7xl md:mx-auto flex flex-col gap-2">
         <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">

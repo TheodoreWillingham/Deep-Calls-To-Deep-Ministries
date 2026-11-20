@@ -106,7 +106,7 @@ export default function MediaPage({ isAdmin = false }: MediaPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen bg-slate-900 flex flex-col items-stretch pt-20 md:pt-24 pb-28 gap-12 md:gap-16 stagger-rise">
+    <div className="relative min-h-screen flex flex-col items-stretch pt-20 md:pt-24 pb-28 gap-12 md:gap-16 stagger-rise">
       <div className="w-full px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 grid grid-cols-[1fr_auto_1fr] items-center">
         <span aria-hidden />
         <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center m-0">Media</h1>
