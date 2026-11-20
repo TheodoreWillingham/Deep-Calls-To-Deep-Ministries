@@ -2,7 +2,7 @@ const episodes = [
   {
     id: 1,
     title: 'Lies That Sabotage Our Walk',
-    description: 'Uncovering the subtle lies that keep us from the abundant life God offers—and the truth that sets us free.',
+    description: 'Uncovering the subtle lies that keep us from the abundant life God offers, and the truth that sets us free.',
   },
   {
     id: 2,
@@ -12,7 +12,7 @@ const episodes = [
   {
     id: 3,
     title: 'Hearing God in the Deep',
-    description: 'How to recognize the voice of God in the quiet—and how to respond when He calls.',
+    description: 'How to recognize the voice of God in the quiet, and how to respond when He calls.',
   },
 ];
 
@@ -26,7 +26,7 @@ export default function MediaSection({ onGiveClick, onEventsClick }: MediaSectio
     <section className="bg-slate-900 flex flex-col items-center gap-10 md:gap-12 px-4 pb-24 md:px-10 lg:px-20 md:pb-28">
       {/* Heading */}
       <div className="w-full md:max-w-7xl md:mx-auto flex flex-col gap-2">
-        <span className="font-open-sans font-bold uppercase tracking-[0.25em] text-xs text-link">
+        <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">
           Watch &amp; Listen
         </span>
         <h2 className="font-inter text-3xl md:text-4xl text-white leading-tight">

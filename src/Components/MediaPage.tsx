@@ -30,7 +30,7 @@ const sections: MediaSection[] = [
         id: 2,
         imageUrl: placeholderImg,
         title: 'E121 | Fueling Intimacy: When You Dra…',
-        description: "Intimacy with Jesus isn't reserved for the spiritually polished—it's an open invitation.",
+        description: "Intimacy with Jesus isn't reserved for the spiritually polished, it's an open invitation.",
       },
       {
         id: 3,
@@ -88,7 +88,7 @@ const sections: MediaSection[] = [
         id: 21,
         imageUrl: placeholderImg,
         title: 'E872 | When Prayer Feels Dry',
-        description: 'Walking through the seasons when God seems quiet — and what He\'s up to in them.',
+        description: 'Walking through the seasons when God seems quiet, and what He\'s up to in them.',
       },
       {
         id: 22,

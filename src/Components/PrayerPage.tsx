@@ -21,7 +21,7 @@ interface BeStillMoment {
 }
 
 const sampleMoments: BeStillMoment[] = [
-  { id: 1, title: 'Rest in His Presence', description: 'A guided moment of stillness focusing on Psalm 46:10 — "Be still, and know that I am God."', type: 'audio', duration: '5 min' },
+  { id: 1, title: 'Rest in His Presence', description: 'A guided moment of stillness focusing on Psalm 46:10, "Be still, and know that I am God."', type: 'audio', duration: '5 min' },
   { id: 2, title: 'Peace That Surpasses Understanding', description: 'Let the Lord quiet your heart as we meditate on Philippians 4:6-7.', type: 'audio', duration: '8 min' },
 ];
 
@@ -119,7 +119,7 @@ export default function PrayerPage() {
 }
 
 /* ════════════════════════════════════════════════════════
-   Tab 1 — Prayer Requests
+   Tab 1: Prayer Requests
    ════════════════════════════════════════════════════════ */
 
 function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
@@ -239,7 +239,7 @@ function PrayerRequestsTab() {
       {/* Description */}
       <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
-          Need prayer? We've got you covered. Submit your prayer request below and our ministry will lift you up. You can also pray for others — tap the prayer hands to let them know someone is praying.
+          Need prayer? We've got you covered. Submit your prayer request below and our ministry will lift you up. You can also pray for others, tap the prayer hands to let them know someone is praying.
         </p>
       </div>
 
@@ -286,7 +286,7 @@ function PrayerRequestsTab() {
           <Checkbox
             checked={isAnonymous}
             onChange={() => setIsAnonymous(v => !v)}
-            label="Post anonymously — your name won't appear publicly, but the ministry will still see it"
+            label="Post anonymously, your name won't appear publicly, but the ministry will still see it"
           />
 
           <textarea
@@ -367,7 +367,7 @@ function PrayerRequestsTab() {
 }
 
 /* ════════════════════════════════════════════════════════
-   Tab 2 — Be Still Moments
+   Tab 2: Be Still Moments
    ════════════════════════════════════════════════════════ */
 
 function BeStillTab() {
@@ -376,7 +376,7 @@ function BeStillTab() {
       {/* Description */}
       <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
-          Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." — Psalm 46:10
+          Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." (Psalm 46:10)
         </p>
       </div>
 
@@ -411,7 +411,7 @@ function BeStillTab() {
 }
 
 /* ════════════════════════════════════════════════════════
-   Tab 3 — Do You Know Jesus?
+   Tab 3: Do You Know Jesus?
    ════════════════════════════════════════════════════════ */
 
 function GospelTab() {
@@ -421,7 +421,7 @@ function GospelTab() {
       {/* Description */}
       <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
-          The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us — and can change everything for you too.
+          The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us, and can change everything for you too.
         </p>
       </div>
 
@@ -433,7 +433,7 @@ function GospelTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">God Loves You</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "For God so loved the world that He gave His one and only Son, that whoever believes in Him shall not perish but have eternal life." — John 3:16
+                "For God so loved the world that He gave His one and only Son, that whoever believes in Him shall not perish but have eternal life." (John 3:16)
               </p>
             </div>
 
@@ -442,7 +442,7 @@ function GospelTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">We All Need a Savior</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "For all have sinned and fall short of the glory of God." — Romans 3:23. Every one of us has fallen short, but God made a way for us through Jesus.
+                "For all have sinned and fall short of the glory of God." (Romans 3:23). Every one of us has fallen short, but God made a way for us through Jesus.
               </p>
             </div>
 
@@ -451,7 +451,7 @@ function GospelTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">Jesus Paid the Price</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "But God demonstrates His own love for us in this: While we were still sinners, Christ died for us." — Romans 5:8. Jesus took our place on the cross so we could be forgiven and made right with God.
+                "But God demonstrates His own love for us in this: While we were still sinners, Christ died for us." (Romans 5:8). Jesus took our place on the cross so we could be forgiven and made right with God.
               </p>
             </div>
 
@@ -460,7 +460,7 @@ function GospelTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">Receive the Gift</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised Him from the dead, you will be saved." — Romans 10:9. Salvation is a free gift — all you have to do is believe and receive.
+                "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised Him from the dead, you will be saved." (Romans 10:9). Salvation is a free gift, all you have to do is believe and receive.
               </p>
             </div>
           </div>
@@ -478,13 +478,13 @@ function GospelTab() {
       <div className="bg-slate-800 rounded-xl p-6 md:p-8">
         <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3">What's Next?</h3>
         <p className="text-gray-300 text-sm md:text-base leading-relaxed m-0 mb-4">
-          If you've made the decision to follow Jesus — welcome to the family! Here are some important next steps:
+          If you've made the decision to follow Jesus, welcome to the family! Here are some important next steps:
         </p>
         <ul className="text-gray-300 text-sm md:text-base leading-relaxed m-0 pl-5 flex flex-col gap-3">
-          <li><span className="text-white font-medium">Find a local church</span> — Surround yourself with other believers who can encourage you and help you grow in your faith.</li>
-          <li><span className="text-white font-medium">Read the Bible</span> — Start with the book of John to learn more about who Jesus is.</li>
-          <li><span className="text-white font-medium">Pray daily</span> — Talk to God like you would a friend. He wants to hear from you.</li>
-          <li><span className="text-white font-medium">Get baptized</span> — Baptism is an outward expression of your inward decision to follow Jesus.</li>
+          <li><span className="text-white font-medium">Find a local church</span>: Surround yourself with other believers who can encourage you and help you grow in your faith.</li>
+          <li><span className="text-white font-medium">Read the Bible</span>: Start with the book of John to learn more about who Jesus is.</li>
+          <li><span className="text-white font-medium">Pray daily</span>: Talk to God like you would a friend. He wants to hear from you.</li>
+          <li><span className="text-white font-medium">Get baptized</span>: Baptism is an outward expression of your inward decision to follow Jesus.</li>
         </ul>
 
         <div className="mt-5 p-4 md:p-5 bg-slate-900 rounded-xl">
@@ -492,7 +492,7 @@ function GospelTab() {
             Need help finding a church or want to talk to someone?
           </p>
           <p className="text-white text-sm md:text-base font-medium m-0">
-            Reach out to us — we'd love to help you on your journey.
+            Reach out to us, we'd love to help you on your journey.
           </p>
         </div>
       </div>

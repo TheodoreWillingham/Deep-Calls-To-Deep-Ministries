@@ -239,7 +239,7 @@ export default function EventsPage({ isAdmin }: EventsPageProps) {
                   {/* Contact info */}
                   {(event.contact_name || event.contact_email || event.contact_phone) && (
                     <div className="bg-slate-900 rounded-xl p-4 mt-1 flex flex-col gap-2">
-                      <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Contact</span>
+                      <span className="text-gray-400 text-sm font-semibold">Contact</span>
                       {event.contact_name && (
                         <div className="flex items-center gap-3 text-white text-sm">
                           <PersonIcon />

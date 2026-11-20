@@ -18,7 +18,7 @@ export default function AboutPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-900/70 to-slate-900" />
           <div className="relative z-10 px-6 py-20 md:py-28 flex flex-col items-center text-center gap-5">
-            <span className="font-open-sans font-bold uppercase tracking-[0.35em] text-[11px] md:text-xs text-link">
+            <span className="font-open-sans font-semibold italic tracking-wide text-base md:text-lg text-link">
               Deep Calls to Deep Ministries
             </span>
             <h2 className="font-condensed italic text-5xl md:text-7xl lg:text-8xl text-white leading-[0.88]">
@@ -29,7 +29,7 @@ export default function AboutPage() {
 
         {/* Our Story */}
         <section className="about-rise w-full max-w-3xl mx-auto flex flex-col gap-6" style={{ animationDelay: '0.1s' }}>
-          <span className="font-open-sans font-bold uppercase tracking-[0.25em] text-xs text-link">
+          <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">
             Our Story
           </span>
           <p className="text-gray-200 text-base md:text-lg leading-relaxed first-letter:font-condensed first-letter:italic first-letter:text-6xl md:first-letter:text-7xl first-letter:text-link first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-[0.75]">
@@ -49,7 +49,7 @@ export default function AboutPage() {
         {/* Mission */}
         <section className="about-rise w-full max-w-4xl mx-auto" style={{ animationDelay: '0.2s' }}>
           <div className="relative rounded-2xl bg-accent/15 border-l-4 border-accent px-6 py-8 md:px-12 md:py-12">
-            <span className="font-open-sans font-bold uppercase tracking-[0.25em] text-xs text-link">
+            <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">
               Our Mission
             </span>
             <p className="mt-4 font-inter text-white text-xl md:text-3xl leading-snug md:leading-relaxed">
@@ -72,7 +72,7 @@ export default function AboutPage() {
 
             {/* Bio */}
             <div className="flex flex-col gap-4">
-              <span className="font-open-sans font-bold uppercase tracking-[0.25em] text-xs text-link">
+              <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">
                 Founder
               </span>
               <h2 className="font-bold text-3xl md:text-4xl text-white tracking-wide">Deana Bringolf</h2>

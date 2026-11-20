@@ -24,7 +24,7 @@ export default function GivePage() {
           PARTNER WITH US
         </h2>
         <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-          Your generosity helps Deep Calls to Deep Ministries carry the light of God's kingdom into the deepest places—reaching hearts that are longing in the deep.
+          Your generosity helps Deep Calls to Deep Ministries carry the light of God's kingdom into the deepest places, reaching hearts that are longing in the deep.
         </p>
       </section>
 
@@ -93,7 +93,7 @@ export default function GivePage() {
           {submitted ? (
             <div className="rounded-xl bg-accent/15 border border-accent/40 px-5 py-4 text-center">
               <p className="text-white text-sm md:text-base leading-relaxed m-0">
-                Thank you for your heart to give! Secure online giving is on its way—please check back soon, or reach out to the ministry to give today.
+                Thank you for your heart to give! Secure online giving is on its way, please check back soon, or reach out to the ministry to give today.
               </p>
             </div>
           ) : (

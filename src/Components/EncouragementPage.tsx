@@ -11,7 +11,7 @@ interface TestimonyEntry {
   topic: string;
 }
 
-// Placeholder data — will be replaced with Supabase queries
+// Placeholder data, will be replaced with Supabase queries
 const sampleTestimonies: TestimonyEntry[] = [
   { name: 'Sarah M.', body: 'God healed me from a condition doctors said was permanent. I am forever grateful for His mercy and the prayers of this ministry.', topic: 'Healing' },
   { name: 'James T.', body: 'After months of seeking, the Lord opened a door I never expected. He is faithful!', topic: 'Breakthrough' },

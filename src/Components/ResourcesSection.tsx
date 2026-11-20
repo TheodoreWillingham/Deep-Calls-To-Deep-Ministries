@@ -20,7 +20,7 @@ export default function ResourcesSection({ onPrayersClick, onMediaClick, onEvent
     <section className="bg-slate-900 flex flex-col items-center gap-12 md:gap-16 px-4 py-16 md:px-10 lg:px-20 md:py-24">
       {/* Intro */}
       <div className="flex flex-col items-center text-center gap-4 max-w-3xl">
-        <span className="font-open-sans font-bold uppercase tracking-[0.25em] text-xs text-link">
+        <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">
           Grow With Us
         </span>
         <h2 className="font-inter text-3xl md:text-5xl text-white leading-tight">
@@ -63,7 +63,7 @@ export default function ResourcesSection({ onPrayersClick, onMediaClick, onEvent
           </div>
         </div>
 
-        {/* Events CTA — spans both columns on desktop */}
+        {/* Events CTA, spans both columns on desktop */}
         <div className="bg-accent flex flex-col items-center gap-6 py-10 px-8 w-full md:col-span-2 md:flex-row md:justify-between md:gap-10 md:px-14 md:py-12 rounded-3xl">
           <div className="flex items-center gap-4 md:flex-1">
             <LocationPinIcon />

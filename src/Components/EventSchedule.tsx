@@ -77,7 +77,7 @@ function EventSchedule() {
             </p>
 
             <small style={{ display: "block", fontWeight: "bold", color: "#007bff", marginBottom: "10px" }}>
-              🕒 {event.event_time} — {event.event_date}
+              🕒 {event.event_time}, {event.event_date}
             </small>
 
             <div
