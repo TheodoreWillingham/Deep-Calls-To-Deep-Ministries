@@ -113,7 +113,6 @@ function App() {
         onLogoutClick={handleLogout}
         isLoggedIn={isLoggedIn}
         onNavClick={setPage}
-        onGiveClick={() => setPage('give')}
       />
       {renderPage()}
       <Footer onNavClick={setPage} onLoginClick={() => setPage('login')} onLogoutClick={handleLogout} isLoggedIn={isLoggedIn} />
@@ -123,15 +122,14 @@ function App() {
         onBooksClick={() => setPage('books')}
         onPrayerClick={() => setPage('prayer')}
         onEventsClick={() => setPage('events')}
+        onEncouragementClick={() => setPage('encouragement')}
       />
       <MoreMenu
         open={moreOpen}
         onClose={() => setMoreOpen(false)}
-        onEncouragementClick={() => setPage('encouragement')}
-        onPrayersClick={() => setPage('prayer')}
-        onEventsClick={() => setPage('events')}
         onAboutClick={() => setPage('about')}
         onGiveClick={() => setPage('give')}
+        onConnectClick={() => setPage('connect')}
       />
     </>
   )
