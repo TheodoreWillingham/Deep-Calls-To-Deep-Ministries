@@ -89,12 +89,14 @@ export default function Footer({ onNavClick, onLoginClick, onLogoutClick, isLogg
             transformed through Jesus and the Holy Spirit.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 mt-1">
+            {/* Hidden for now:
             <button
               onClick={() => go('give')}
               className="px-6 py-3 rounded-lg bg-white text-slate-900 font-bold text-base border-none cursor-pointer hover:bg-gray-200 transition-colors"
             >
               Support DCTDM
             </button>
+            */}
             <button
               onClick={() => go('about')}
               className="px-6 py-3 rounded-lg bg-white/10 text-white font-bold text-base border border-white/40 cursor-pointer hover:bg-white/20 transition-colors"
@@ -120,7 +122,7 @@ export default function Footer({ onNavClick, onLoginClick, onLogoutClick, isLogg
             <span className="block w-12 h-px bg-accent mb-1" aria-hidden />
             <h3 className="text-link font-bold text-xl m-0 mb-1">Info</h3>
             <button onClick={() => go('about')} className={linkClass}>About</button>
-            <button onClick={() => go('give')} className={linkClass}>Give</button>
+            {/* Hidden for now: <button onClick={() => go('give')} className={linkClass}>Give</button> */}
             <button
               onClick={() => {
                 if (isLoggedIn) onLogoutClick();

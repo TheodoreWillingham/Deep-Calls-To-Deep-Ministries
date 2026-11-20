@@ -81,7 +81,7 @@ export default function PrayerPage({ isAdmin = false }: { isAdmin?: boolean }) {
 
       {/* Content */}
       <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-4 md:pt-8 pb-28">
-        {tab === 'requests' && <PrayerRequestsTab />}
+        {tab === 'requests' && <PrayerRequestsTab isAdmin={isAdmin} />}
         {tab === 'bestill' && <BeStillTab isAdmin={isAdmin} />}
       </div>
     </div>
@@ -107,8 +107,17 @@ function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: ()
   );
 }
 
-function PrayerRequestsTab() {
+function PrayerRequestsTab({ isAdmin }: { isAdmin: boolean }) {
   const [showForm, setShowForm] = useState(false);
+
+  // Admin editing state
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editText, setEditText] = useState('');
+  const [editAnonymous, setEditAnonymous] = useState(false);
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [adminError, setAdminError] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [requestText, setRequestText] = useState('');
@@ -203,6 +212,61 @@ function PrayerRequestsTab() {
       console.error("Failed to update prayer status in Supabase:", error);
       // If you want, you could revert the UI state here, but for now let's just log the error.
     }
+  };
+
+  const startEdit = (pr: PrayerRequestRow) => {
+    setAdminError(null);
+    setEditingId(pr.id);
+    setEditName(pr.name ?? '');
+    setEditText(pr.request_text);
+    setEditAnonymous(pr.is_anonymous);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setAdminError(null);
+  };
+
+  const saveEdit = async (id: string) => {
+    if (!editText.trim() || savingEdit) return;
+    setSavingEdit(true);
+    setAdminError(null);
+    const updates = {
+      name: editName.trim() || null,
+      request_text: editText.trim(),
+      is_anonymous: editAnonymous,
+    };
+    const { data, error } = await supabase
+      .from('prayer_requests')
+      .update(updates)
+      .eq('id', id)
+      .select('id');
+    setSavingEdit(false);
+    if (error || !data || data.length === 0) {
+      console.error('Error updating prayer request:', error);
+      setAdminError(error?.message || 'Could not save. You may not have permission to edit prayer requests.');
+      return;
+    }
+    setRequests(prev => prev.map(r => (r.id === id ? { ...r, ...updates } : r)));
+    setEditingId(null);
+  };
+
+  const handleDelete = async (pr: PrayerRequestRow) => {
+    if (!window.confirm('Delete this prayer request? This cannot be undone.')) return;
+    setDeletingId(pr.id);
+    setAdminError(null);
+    const { data, error } = await supabase
+      .from('prayer_requests')
+      .delete()
+      .eq('id', pr.id)
+      .select('id');
+    setDeletingId(null);
+    if (error || !data || data.length === 0) {
+      console.error('Error deleting prayer request:', error);
+      setAdminError(error?.message || 'Could not delete. You may not have permission to delete prayer requests.');
+      return;
+    }
+    setRequests(prev => prev.filter(r => r.id !== pr.id));
   };
 
   return (
@@ -306,13 +370,78 @@ function PrayerRequestsTab() {
           No prayer requests have been shared yet. Be the first to submit one.
         </p>
       ) : (
+        <>
+        {adminError && (
+          <div className="bg-red-900/40 rounded-xl px-5 py-4 mb-5">
+            <p className="text-red-300 text-sm m-0">{adminError}</p>
+          </div>
+        )}
         <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6 md:items-start">
           {requests.map(pr => {
             const hasPrayed = prayedIds.has(pr.id);
             const displayName = pr.is_anonymous ? 'Anonymous' : (pr.name?.trim() || 'Anonymous');
+
+            if (isAdmin && editingId === pr.id) {
+              return (
+                <div key={pr.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex flex-col gap-3">
+                  <textarea
+                    value={editText}
+                    onChange={e => setEditText(e.target.value)}
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 resize-none box-border"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Name (optional)"
+                    value={editName}
+                    onChange={e => setEditName(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 box-border"
+                  />
+                  <Checkbox
+                    checked={editAnonymous}
+                    onChange={() => setEditAnonymous(v => !v)}
+                    label="Show as Anonymous"
+                  />
+                  <div className="flex gap-3">
+                    <button
+                      onClick={cancelEdit}
+                      disabled={savingEdit}
+                      className="flex-1 py-2.5 rounded-xl bg-slate-700 text-gray-300 text-sm font-semibold border-none cursor-pointer disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => saveEdit(pr.id)}
+                      disabled={!editText.trim() || savingEdit}
+                      className="flex-1 py-2.5 rounded-xl bg-white text-black text-sm font-semibold border-none cursor-pointer disabled:opacity-50"
+                    >
+                      {savingEdit ? 'Saving…' : 'Save'}
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <div key={pr.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex flex-col">
-                <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1">{pr.request_text}</p>
+                <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1 whitespace-pre-wrap">{pr.request_text}</p>
+                {isAdmin && (
+                  <div className="flex gap-2 mb-3">
+                    <button
+                      onClick={() => startEdit(pr)}
+                      className="text-white bg-transparent border border-white/40 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-white/10"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(pr)}
+                      disabled={deletingId === pr.id}
+                      className="text-red-300 bg-transparent border border-red-300/40 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-red-300/10 disabled:opacity-50"
+                    >
+                      {deletingId === pr.id ? '...' : 'Delete'}
+                    </button>
+                  </div>
+                )}
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-gray-400 text-xs m-0 italic">{displayName}</p>
                   <button
@@ -332,6 +461,7 @@ function PrayerRequestsTab() {
             );
           })}
         </div>
+        </>
       )}
     </>
   );

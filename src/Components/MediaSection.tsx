@@ -7,7 +7,7 @@ interface MediaSectionProps {
   onEventsClick: () => void;
 }
 
-export default function MediaSection({ onGiveClick, onEventsClick }: MediaSectionProps) {
+export default function MediaSection({ onEventsClick }: MediaSectionProps) {
   const { items } = useMediaItems();
   const [playing, setPlaying] = useState<MediaItem | null>(null);
   const episodes = items.slice(0, 3);
@@ -53,12 +53,14 @@ export default function MediaSection({ onGiveClick, onEventsClick }: MediaSectio
 
       {/* CTAs */}
       <div className="flex flex-col gap-3 w-full max-w-md mt-2 md:flex-row md:max-w-2xl md:mx-auto md:gap-4">
+        {/* Hidden for now:
         <button
           onClick={onGiveClick}
           className="flex-1 py-4 rounded-full bg-accent hover:bg-accent-hover text-white font-semibold text-base md:text-lg border-none cursor-pointer transition-colors"
         >
           Support DCTDM
         </button>
+        */}
         <button
           onClick={onEventsClick}
           className="flex-1 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-base md:text-lg border border-white/40 cursor-pointer transition-colors"

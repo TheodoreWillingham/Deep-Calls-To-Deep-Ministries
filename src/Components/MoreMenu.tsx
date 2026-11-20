@@ -6,10 +6,10 @@ interface MoreMenuProps {
   onConnectClick?: () => void;
 }
 
-export default function MoreMenu({ open, onClose, onAboutClick, onGiveClick, onConnectClick }: MoreMenuProps) {
+export default function MoreMenu({ open, onClose, onAboutClick, onConnectClick }: MoreMenuProps) {
   const items = [
     { label: 'About', onClick: onAboutClick },
-    { label: 'Donate', onClick: onGiveClick },
+    // Hidden for now: { label: 'Donate', onClick: onGiveClick },
     { label: 'Connect', onClick: onConnectClick },
   ];
 

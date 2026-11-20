@@ -19,7 +19,7 @@ const NAV_ITEMS: { label: string; page: Page }[] = [
 
 const MENU_ITEMS: { label: string; page: Page }[] = [
   { label: 'About', page: 'about' },
-  { label: 'Donate', page: 'give' },
+  // Hidden for now: { label: 'Donate', page: 'give' },
   { label: 'Connect', page: 'connect' },
 ];
 
