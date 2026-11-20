@@ -17,7 +17,7 @@ function LocationPinIcon() {
 
 export default function ResourcesSection({ onPrayersClick, onMediaClick, onEventsClick }: ResourcesSectionProps) {
   return (
-    <section className="bg-slate-900 flex flex-col items-center gap-12 md:gap-16 px-4 py-16 md:px-10 lg:px-20 md:py-24">
+    <section className="flex flex-col items-center gap-12 md:gap-16 px-4 py-16 md:px-10 lg:px-20 md:py-24">
       {/* Intro */}
       <div className="flex flex-col items-center text-center gap-4 max-w-3xl">
         <span className="font-open-sans font-semibold tracking-wide text-base md:text-lg text-link">
