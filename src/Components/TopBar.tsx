@@ -23,7 +23,7 @@ const NAV_ITEMS: { label: string; page: Page }[] = [
   { label: 'Events', page: 'events' },
   { label: 'Prayer', page: 'prayer' },
   { label: 'Books', page: 'books' },
-  { label: 'Encouragement Corner', page: 'encouragement' },
+  { label: 'Encouragement', page: 'encouragement' },
   { label: 'About', page: 'about' },
 ];
 
