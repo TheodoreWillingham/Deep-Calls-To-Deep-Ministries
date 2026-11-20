@@ -418,6 +418,18 @@ entrypoint = "./functions/notify-prayer-request/index.ts"
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/notify-prayer-request/*.html" ]
 
+[functions.notify-encouragement-post]
+enabled = true
+verify_jwt = false
+import_map = "./functions/notify-encouragement-post/deno.json"
+entrypoint = "./functions/notify-encouragement-post/index.ts"
+
+[functions.approve-encouragement-post]
+enabled = true
+verify_jwt = false
+import_map = "./functions/approve-encouragement-post/deno.json"
+entrypoint = "./functions/approve-encouragement-post/index.ts"
+
 [functions.approve-prayer-request]
 enabled = true
 verify_jwt = false
