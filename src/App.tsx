@@ -82,7 +82,7 @@ function App() {
 
   const renderPage = () => {
     if (page === 'books') return <BooksPage />
-    if (page === 'prayer') return <PrayerPage />
+    if (page === 'prayer') return <PrayerPage isAdmin={isAdmin} />
     if (page === 'encouragement') return <EncouragementPage />
     if (page === 'events') return <EventsPage isAdmin={isAdmin} />
     if (page === 'media') return <MediaPage />

@@ -99,7 +99,7 @@ export default {
           "Content-Type": "application/json",
           Prefer: "return=representation",
         },
-        body: JSON.stringify({ is_approved: true }),
+        body: JSON.stringify({ is_approved: true, show_on_website: true }),
       },
     );
 

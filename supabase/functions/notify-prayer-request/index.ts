@@ -34,15 +34,16 @@ export default {
     const APPROVAL_SECRET = Deno.env.get("APPROVAL_SECRET");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 
-    if (!RESEND_API_KEY || !CLIENT_EMAIL || !APPROVAL_SECRET || !SUPABASE_URL) {
+    const body = await req.json();
+    const { id, name, request_text, is_anonymous, show_on_website, admin_email } = body;
+    const recipient = admin_email || CLIENT_EMAIL;
+
+    if (!RESEND_API_KEY || !recipient || !APPROVAL_SECRET || !SUPABASE_URL) {
       return Response.json(
         { error: "Missing environment variables" },
         { status: 500, headers: corsHeaders },
       );
     }
-
-    const { id, name, request_text, is_anonymous, show_on_website } =
-      await req.json();
 
     const token = await hmacToken(id, APPROVAL_SECRET);
     const approvalUrl =
@@ -52,16 +53,18 @@ export default {
       ? `Anonymous${name ? ` (privately submitted as: ${name})` : ""}`
       : name || "No name given";
 
-    const approvalSection = show_on_website
-      ? `<p style="margin:16px 0 8px">This person requested to share publicly. Click to approve:</p>
+    const approvalSection = `<p style="margin:16px 0 8px">${
+      show_on_website
+        ? "This person asked to share publicly."
+        : "This person did not ask to share publicly, only show it if you are sure."
+    }</p>
          <a href="${approvalUrl}"
             style="display:inline-block;background:#3d4f3e;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:15px">
-           ✓ Approve for Website
+           Show on Website
          </a>
          <p style="font-size:11px;color:#888;margin-top:10px;word-break:break-all">
            Link: ${approvalUrl}
-         </p>`
-      : `<p style="color:#888;font-style:italic">This person did not request public sharing — no approval needed.</p>`;
+         </p>`;
 
     const html = `<!DOCTYPE html>
 <html>
@@ -84,7 +87,7 @@ export default {
       },
       body: JSON.stringify({
         from: "onboarding@resend.dev",
-        to: CLIENT_EMAIL,
+        to: recipient,
         subject: show_on_website
           ? "New Prayer Request — Awaiting Your Approval"
           : "New Prayer Request Received",
