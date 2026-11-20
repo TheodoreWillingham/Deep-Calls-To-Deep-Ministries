@@ -1,9 +1,5 @@
 import { useState } from 'react';
 
-interface EncouragementPageProps {
-  onBack: () => void;
-}
-
 type Tab = 'testimonies' | 'praise';
 
 const testimonyTopics = ['All', 'Healing', 'Faith', 'Provision', 'Family', 'Breakthrough'];
@@ -15,7 +11,7 @@ interface TestimonyEntry {
   topic: string;
 }
 
-// Placeholder data — will be replaced with Supabase queries
+// Placeholder data, will be replaced with Supabase queries
 const sampleTestimonies: TestimonyEntry[] = [
   { name: 'Sarah M.', body: 'God healed me from a condition doctors said was permanent. I am forever grateful for His mercy and the prayers of this ministry.', topic: 'Healing' },
   { name: 'James T.', body: 'After months of seeking, the Lord opened a door I never expected. He is faithful!', topic: 'Breakthrough' },
@@ -26,7 +22,7 @@ const samplePraises: TestimonyEntry[] = [
   { name: 'David K.', body: 'I just want to praise God for the peace He has given me in the middle of the storm.', topic: 'Peace' },
 ];
 
-export default function EncouragementPage({ onBack }: EncouragementPageProps) {
+export default function EncouragementPage() {
   const [tab, setTab] = useState<Tab>('testimonies');
   const [selectedTestimonyTopic, setSelectedTestimonyTopic] = useState('All');
   const [selectedPraiseTopic, setSelectedPraiseTopic] = useState('All');
@@ -68,41 +64,32 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24 stagger-rise">
       {/* Header */}
-      <div className="w-full max-w-md px-6 pt-6 pb-4 flex items-center gap-4 shrink-0">
-        <button
-          onClick={onBack}
-          className="text-white bg-transparent border-none cursor-pointer p-0"
-          aria-label="Go back"
-        >
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <h1 className="font-bold text-2xl text-white tracking-wide">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center justify-center shrink-0">
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">
           Encouragement Center
         </h1>
       </div>
 
       {/* Tab switcher */}
-      <div className="w-full max-w-md px-6 flex gap-3 shrink-0">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 flex gap-3 md:gap-4 md:justify-center shrink-0">
         <button
           onClick={() => resetFormAndSwitch('testimonies')}
-          className={`flex-1 py-3 rounded-xl font-semibold text-base border-none cursor-pointer transition-colors ${
+          className={`flex-1 md:flex-none md:min-w-[200px] py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg border-none cursor-pointer transition-colors ${
             tab === 'testimonies'
               ? 'bg-white text-black'
-              : 'bg-[#2a2a2a] text-gray-400'
+              : 'bg-slate-800 text-gray-400'
           }`}
         >
           Testimonies
         </button>
         <button
           onClick={() => resetFormAndSwitch('praise')}
-          className={`flex-1 py-3 rounded-xl font-semibold text-base border-none cursor-pointer transition-colors ${
+          className={`flex-1 md:flex-none md:min-w-[200px] py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg border-none cursor-pointer transition-colors ${
             tab === 'praise'
               ? 'bg-white text-black'
-              : 'bg-[#2a2a2a] text-gray-400'
+              : 'bg-slate-800 text-gray-400'
           }`}
         >
           Praise
@@ -110,14 +97,14 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
       </div>
 
       {/* Scrollable content area */}
-      <div className="w-full max-w-md px-6 pt-4 pb-28">
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-4 md:pt-8 pb-28">
         {/* Description box */}
-        <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 mb-5">
-          <p className="text-white text-sm leading-relaxed m-0">{description}</p>
+        <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+          <p className="text-white text-sm md:text-base leading-relaxed m-0">{description}</p>
         </div>
 
         {/* Topic filters */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="flex flex-wrap gap-2 md:gap-3 mb-5 md:mb-8">
           {topics.map(topic => (
             <button
               key={topic}
@@ -125,7 +112,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
               className={`px-4 py-2 rounded-full text-sm font-medium border-none cursor-pointer transition-colors ${
                 selectedTopic === topic
                   ? 'bg-white text-black'
-                  : 'bg-[#2a2a2a] text-gray-300 hover:bg-[#3a3a3a]'
+                  : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
               }`}
             >
               {topic}
@@ -134,15 +121,15 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
         </div>
 
         {/* Entries */}
-        <div className="flex flex-col gap-4 mb-6">
+        <div className="flex flex-col gap-4 mb-6 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:mb-8 md:items-start">
           {filtered.length === 0 ? (
-            <p className="text-gray-400 text-center text-sm py-8">
+            <p className="text-gray-400 text-center text-sm py-8 md:col-span-full">
               No {tab === 'testimonies' ? 'testimonies' : 'praises'} in this topic yet.
             </p>
           ) : (
             filtered.map((entry, i) => (
-              <div key={i} className="bg-[#252525] rounded-xl p-5">
-                <span className="inline-block bg-[#3d4f3e] text-white text-xs font-medium px-3 py-1 rounded-full mb-3">
+              <div key={i} className="bg-slate-800 rounded-xl p-5 md:p-6">
+                <span className="inline-block bg-accent text-white text-xs font-medium px-3 py-1 rounded-full mb-3">
                   {entry.topic}
                 </span>
                 <p className="text-white text-sm leading-relaxed m-0 mb-3">{entry.body}</p>
@@ -156,12 +143,12 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
         {!showForm ? (
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-4 rounded-xl bg-[#3d4f3e] text-white text-base font-semibold border-none cursor-pointer"
+            className="w-full md:max-w-md md:mx-auto md:block py-4 md:py-5 rounded-xl bg-accent hover:bg-accent-hover text-white text-base md:text-lg font-semibold border-none cursor-pointer transition-colors"
           >
             Share Your {tab === 'testimonies' ? 'Testimony' : 'Praise'}
           </button>
         ) : (
-          <div className="bg-[#252525] rounded-xl p-5 flex flex-col gap-4">
+          <div className="bg-slate-800 rounded-xl p-5 md:p-7 flex flex-col gap-4 md:max-w-2xl md:mx-auto">
             <h3 className="text-white font-semibold text-lg m-0">
               Submit Your {tab === 'testimonies' ? 'Testimony' : 'Praise'}
             </h3>
@@ -171,7 +158,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
               placeholder="Name *"
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+              className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 box-border"
             />
 
             <textarea
@@ -179,7 +166,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
               value={formBody}
               onChange={(e) => setFormBody(e.target.value)}
               rows={4}
-              className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 resize-none box-border"
+              className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 resize-none box-border"
             />
 
             {/* Consent checkbox */}
@@ -209,7 +196,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
                   setFormBody('');
                   setFormConsent(false);
                 }}
-                className="flex-1 py-3 rounded-xl bg-[#2a2a2a] text-gray-300 text-base font-semibold border-none cursor-pointer"
+                className="flex-1 py-3 rounded-xl bg-slate-800 text-gray-300 text-base font-semibold border-none cursor-pointer"
               >
                 Cancel
               </button>
@@ -218,7 +205,7 @@ export default function EncouragementPage({ onBack }: EncouragementPageProps) {
                 className={`flex-1 py-3 rounded-xl text-base font-semibold border-none cursor-pointer ${
                   formName.trim() && formBody.trim()
                     ? 'bg-white text-black'
-                    : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'
+                    : 'bg-slate-700 text-gray-500 cursor-not-allowed'
                 }`}
                 disabled={!formName.trim() || !formBody.trim()}
               >

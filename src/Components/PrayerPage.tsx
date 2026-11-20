@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 
-interface PrayerPageProps {
-  onBack: () => void;
-}
-
 type Tab = 'requests' | 'bestill' | 'gospel';
 
 interface PrayerRequestRow {
@@ -25,7 +21,7 @@ interface BeStillMoment {
 }
 
 const sampleMoments: BeStillMoment[] = [
-  { id: 1, title: 'Rest in His Presence', description: 'A guided moment of stillness focusing on Psalm 46:10 — "Be still, and know that I am God."', type: 'audio', duration: '5 min' },
+  { id: 1, title: 'Rest in His Presence', description: 'A guided moment of stillness focusing on Psalm 46:10, "Be still, and know that I am God."', type: 'audio', duration: '5 min' },
   { id: 2, title: 'Peace That Surpasses Understanding', description: 'Let the Lord quiet your heart as we meditate on Philippians 4:6-7.', type: 'audio', duration: '8 min' },
 ];
 
@@ -71,25 +67,24 @@ function HeadphonesIcon() {
   );
 }
 
+function PrayingHandsIcon({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L8 12l4 10M12 2l4 10-4 10" />
+    </svg>
+  );
+}
+
 /* ── Main Component ── */
 
-export default function PrayerPage({ onBack }: PrayerPageProps) {
+export default function PrayerPage() {
   const [tab, setTab] = useState<Tab>('requests');
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex flex-col items-center pt-20 md:pt-24">
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center pt-20 md:pt-24 stagger-rise">
       {/* Header */}
-      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center gap-4 shrink-0">
-        <button
-          onClick={onBack}
-          className="text-white bg-transparent border-none cursor-pointer p-0"
-          aria-label="Go back"
-        >
-          <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide">Prayer</h1>
+      <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-6 md:pt-10 pb-4 flex items-center justify-center shrink-0">
+        <h1 className="font-bold text-2xl md:text-4xl text-white tracking-wide text-center">Prayer</h1>
       </div>
 
       {/* Tab switcher */}
@@ -105,7 +100,7 @@ export default function PrayerPage({ onBack }: PrayerPageProps) {
             className={`flex-1 py-3 md:py-4 rounded-xl font-semibold text-sm md:text-base border-none cursor-pointer transition-colors ${
               tab === key
                 ? 'bg-white text-black'
-                : 'bg-[#2a2a2a] text-gray-400 hover:bg-[#333]'
+                : 'bg-slate-800 text-gray-400 hover:bg-slate-700'
             }`}
           >
             {label}
@@ -124,7 +119,7 @@ export default function PrayerPage({ onBack }: PrayerPageProps) {
 }
 
 /* ════════════════════════════════════════════════════════
-   Tab 1 — Prayer Requests
+   Tab 1: Prayer Requests
    ════════════════════════════════════════════════════════ */
 
 function Checkbox({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
@@ -242,15 +237,15 @@ function PrayerRequestsTab() {
   return (
     <>
       {/* Description */}
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+      <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
-          Need prayer? We've got you covered. Submit your prayer request below and our ministry will lift you up. You can also pray for others — tap the prayer hands to let them know someone is praying.
+          Need prayer? We've got you covered. Submit your prayer request below and our ministry will lift you up. You can also pray for others, tap the prayer hands to let them know someone is praying.
         </p>
       </div>
 
       {/* Success banner */}
       {submitSuccess && (
-        <div className="bg-[#3d4f3e] rounded-xl px-5 py-4 mb-5 flex items-center justify-between gap-4">
+        <div className="bg-accent rounded-xl px-5 py-4 mb-5 flex items-center justify-between gap-4">
           <p className="text-white text-sm m-0">Your prayer request has been received. We'll be lifting you up!</p>
           <button
             onClick={() => setSubmitSuccess(false)}
@@ -272,12 +267,12 @@ function PrayerRequestsTab() {
       {!showForm ? (
         <button
           onClick={() => setShowForm(true)}
-          className="w-full md:max-w-md md:mx-auto md:block py-4 md:py-5 rounded-xl bg-[#3d4f3e] hover:bg-[#4a5f4b] text-white text-base md:text-lg font-semibold border-none cursor-pointer mb-5 md:mb-8 transition-colors"
+          className="w-full md:max-w-md md:mx-auto md:block py-4 md:py-5 rounded-xl bg-accent hover:bg-accent-hover text-white text-base md:text-lg font-semibold border-none cursor-pointer mb-5 md:mb-8 transition-colors"
         >
           Submit a Prayer Request
         </button>
       ) : (
-        <div className="bg-[#252525] rounded-xl p-5 md:p-7 flex flex-col gap-4 mb-5 md:mb-8 md:max-w-3xl md:mx-auto">
+        <div className="bg-slate-800 rounded-xl p-5 md:p-7 flex flex-col gap-4 mb-5 md:mb-8 md:max-w-3xl md:mx-auto">
           <h3 className="text-white font-semibold text-lg m-0">Your Prayer Request</h3>
 
           <input
@@ -285,13 +280,13 @@ function PrayerRequestsTab() {
             placeholder="Your name (optional)"
             value={name}
             onChange={e => setName(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
+            className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 box-border"
           />
 
           <Checkbox
             checked={isAnonymous}
             onChange={() => setIsAnonymous(v => !v)}
-            label="Post anonymously — your name won't appear publicly, but the ministry will still see it"
+            label="Post anonymously, your name won't appear publicly, but the ministry will still see it"
           />
 
           <textarea
@@ -299,7 +294,7 @@ function PrayerRequestsTab() {
             value={requestText}
             onChange={e => setRequestText(e.target.value)}
             rows={4}
-            className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 resize-none box-border"
+            className="w-full px-4 py-3 rounded-xl bg-slate-900 text-white text-base outline-none border border-gray-700 resize-none box-border"
           />
 
           <Checkbox
@@ -311,17 +306,17 @@ function PrayerRequestsTab() {
           <div className="flex gap-3">
             <button
               onClick={resetForm}
-              className="flex-1 py-3 rounded-xl bg-[#2a2a2a] text-gray-300 text-base font-semibold border-none cursor-pointer"
+              className="flex-1 py-3 rounded-xl bg-slate-800 text-gray-300 text-base font-semibold border-none cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
               disabled={!requestText.trim() || submitting}
-              className={`flex-1 py-3 rounded-xl text-base font-semibold border-none transition-colors ${
+              className={`flex-1 py-3 rounded-xl text-base font-semibold border-none cursor-pointer ${
                 requestText.trim() && !submitting
-                  ? 'bg-white text-black cursor-pointer'
-                  : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'
+                  ? 'bg-white text-black'
+                  : 'bg-slate-700 text-gray-500 cursor-not-allowed'
               }`}
             >
               {submitting ? 'Sending…' : 'Submit'}
@@ -332,42 +327,35 @@ function PrayerRequestsTab() {
 
       {/* Prayer request cards */}
       {loading ? (
-        <p className="text-gray-500 text-sm text-center py-8">Loading prayer requests…</p>
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-2 border-gray-600 border-t-white rounded-full animate-spin" />
+        </div>
       ) : requests.length === 0 ? (
-        <p className="text-gray-500 text-sm text-center py-8">
-          No public prayer requests yet. Be the first to submit one.
+        <p className="text-gray-400 text-center text-sm py-12">
+          No prayer requests have been shared yet. Be the first to submit one.
         </p>
       ) : (
-        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
-          {requests.map(r => {
-            const userPrayed = prayedIds.has(r.id);
-            const someonePrayed = r.has_been_prayed_for || userPrayed;
-            const displayName = r.is_anonymous ? 'Anonymous' : (r.name || 'Anonymous');
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6 md:items-start">
+          {requests.map(pr => {
+            const hasPrayed = prayedIds.has(pr.id);
+            const displayName = pr.is_anonymous ? 'Anonymous' : (pr.name?.trim() || 'Anonymous');
             return (
-              <div key={r.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex flex-col gap-3">
-                <p className="text-white text-sm md:text-base leading-relaxed m-0 flex-1">
-                  {r.request_text}
-                </p>
+              <div key={pr.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex flex-col">
+                <p className="text-white text-sm md:text-base leading-relaxed m-0 mb-3 flex-1">{pr.request_text}</p>
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-gray-500 text-xs m-0 italic">{displayName}</p>
-                  <div className="flex items-center gap-2 shrink-0">
-                    {someonePrayed && (
-                      <span className={`text-xs ${userPrayed ? 'text-[#a8d4a8]' : 'text-gray-500'}`}>
-                        {userPrayed ? 'You prayed' : 'Someone is praying'}
-                      </span>
-                    )}
-                    <button
-                      onClick={() => handlePray(r.id)}
-                      disabled={userPrayed}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border-none text-sm font-medium transition-colors ${
-                        userPrayed
-                          ? 'bg-[#3d4f3e] text-[#a8d4a8] cursor-default'
-                          : 'bg-[#2a2a2a] text-gray-300 hover:bg-[#3a3a3a] cursor-pointer'
-                      }`}
-                    >
-                      🙏 {userPrayed ? 'Praying' : 'Pray'}
-                    </button>
-                  </div>
+                  <p className="text-gray-400 text-xs m-0 italic">{displayName}</p>
+                  <button
+                    onClick={() => handlePray(pr.id)}
+                    disabled={hasPrayed}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-none cursor-pointer text-sm font-medium transition-colors shrink-0 ${
+                      hasPrayed
+                        ? 'bg-accent text-white cursor-default'
+                        : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                    }`}
+                  >
+                    <PrayingHandsIcon className="w-4 h-4" />
+                    <span>{hasPrayed ? 'Praying' : 'Pray'}</span>
+                  </button>
                 </div>
               </div>
             );
@@ -379,27 +367,29 @@ function PrayerRequestsTab() {
 }
 
 /* ════════════════════════════════════════════════════════
-   Tab 2 — Be Still Moments
+   Tab 2: Be Still Moments
    ════════════════════════════════════════════════════════ */
 
 function BeStillTab() {
   return (
     <>
-      <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+      {/* Description */}
+      <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
-          Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." — Psalm 46:10
+          Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." (Psalm 46:10)
         </p>
       </div>
 
       <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
         {sampleMoments.map(moment => (
-          <div key={moment.id} className="bg-[#252525] rounded-xl p-5 md:p-6 flex gap-4 items-start">
+          <div key={moment.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex gap-4 items-start">
+            {/* Play/Listen icon */}
             <button className="shrink-0 bg-transparent border-none cursor-pointer p-0 mt-1">
               {moment.type === 'video' ? <PlayCircleIcon /> : <HeadphonesIcon />}
             </button>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="inline-block bg-[#3d4f3e] text-white text-xs font-medium px-3 py-1 rounded-full">
+                <span className="inline-block bg-accent text-white text-xs font-medium px-3 py-1 rounded-full">
                   {moment.type === 'video' ? 'Video' : 'Audio'}
                 </span>
                 <span className="text-gray-500 text-xs">{moment.duration}</span>
@@ -421,124 +411,29 @@ function BeStillTab() {
 }
 
 /* ════════════════════════════════════════════════════════
-   Tab 3 — Do You Know Jesus?
+   Tab 3: Do You Know Jesus?
    ════════════════════════════════════════════════════════ */
 
-   function GospelTab() {
-    const [name, setName] = useState('');
-    const [knowsJesus, setKnowsJesus] = useState<'yes' | 'no' | null>(null);
-    const [contact, setContact] = useState('');
-    const [submitting, setSubmitting] = useState(false);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
-    const [submitError, setSubmitError] = useState(false);
-  
-    const handleSubmit = async () => {
-      if (!name.trim() || !contact.trim() || !knowsJesus || submitting) return;
-      setSubmitting(true);
-      setSubmitError(false);
-  
-      const { error: invokeError } = await supabase.functions.invoke('notify-gospel-contact', {
-        body: {
-          name: name.trim(),
-          knowsJesus,
-          contact: contact.trim()
-        },
-      });
-  
-      if (invokeError) {
-        console.error("Error sending connection request:", invokeError);
-        setSubmitError(true);
-        setSubmitting(false);
-        return;
-      }
-  
-      setSubmitSuccess(true);
-      setSubmitting(false);
-      setName('');
-      setContact('');
-      setKnowsJesus(null);
-    };
-  
-    return (
-      <>
-        <div className="md:max-w-3xl md:mx-auto">
-          <div className="bg-[#2a3a2c] rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
-            <p className="text-white text-sm md:text-base leading-relaxed m-0">
-              The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us — and can change everything for you too.
-            </p>
-          </div>
-  
-          {/* --- NEW FORM SECTION --- */}
-          <div className="bg-[#252525] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
-            <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-2">Let's Connect</h3>
-            <p className="text-gray-300 text-sm leading-relaxed m-0 mb-5">
-              Whether you have questions about faith or just made a decision to follow Jesus, we'd love to hear from you and support you on your journey.
-            </p>
-  
-            {submitSuccess ? (
-              <div className="bg-[#3d4f3e] rounded-xl px-5 py-4 flex items-center justify-between">
-                <p className="text-white text-sm m-0">Message sent! We'll be in touch soon.</p>
-                <button onClick={() => setSubmitSuccess(false)} className="text-white bg-transparent border-none cursor-pointer text-xl p-0">×</button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                {submitError && (
-                  <div className="bg-red-900/40 rounded-xl px-5 py-4"><p className="text-red-300 text-sm m-0">Something went wrong. Please try again.</p></div>
-                )}
-                
-                <input
-                  type="text"
-                  placeholder="Your Name *"
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
-                />
-  
-                <div className="flex flex-col gap-2">
-                  <span className="text-gray-300 text-sm ml-1">Do you know Jesus? *</span>
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => setKnowsJesus('yes')}
-                      className={`flex-1 py-3 rounded-xl text-sm font-semibold border-none cursor-pointer transition-colors ${knowsJesus === 'yes' ? 'bg-[#3d4f3e] text-white' : 'bg-[#1a1a1a] text-gray-400 border border-gray-700'}`}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      onClick={() => setKnowsJesus('no')}
-                      className={`flex-1 py-3 rounded-xl text-sm font-semibold border-none cursor-pointer transition-colors ${knowsJesus === 'no' ? 'bg-[#3d4f3e] text-white' : 'bg-[#1a1a1a] text-gray-400 border border-gray-700'}`}
-                    >
-                      No
-                    </button>
-                  </div>
-                </div>
-  
-                <input
-                  type="text"
-                  placeholder="Email or Phone Number *"
-                  value={contact}
-                  onChange={e => setContact(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-white text-base outline-none border border-gray-700 box-border"
-                />
-  
-                <button
-                  onClick={handleSubmit}
-                  disabled={!name.trim() || !contact.trim() || !knowsJesus || submitting}
-                  className={`w-full mt-2 py-3 rounded-xl text-base font-semibold border-none transition-colors ${name.trim() && contact.trim() && knowsJesus && !submitting ? 'bg-white text-black cursor-pointer' : 'bg-[#3a3a3a] text-gray-500 cursor-not-allowed'}`}
-                >
-                  {submitting ? 'Sending…' : 'Send Message'}
-                </button>
-              </div>
-            )}
-          </div>
+function GospelTab() {
+  return (
+    <>
+      <div className="md:max-w-3xl md:mx-auto">
+      {/* Description */}
+      <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
+        <p className="text-white text-sm md:text-base leading-relaxed m-0">
+          The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us, and can change everything for you too.
+        </p>
+      </div>
 
-        <div className="bg-[#252525] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
-          <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-4 md:mb-6 text-center">The Good News</h3>
+      {/* Gospel content */}
+      <div className="bg-slate-800 rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+        <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-4 md:mb-6 text-center">The Good News</h3>
 
           <div className="flex flex-col gap-5">
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">God Loves You</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "For God so loved the world that He gave His one and only Son, that whoever believes in Him shall not perish but have eternal life." — John 3:16
+                "For God so loved the world that He gave His one and only Son, that whoever believes in Him shall not perish but have eternal life." (John 3:16)
               </p>
             </div>
 
@@ -547,7 +442,7 @@ function BeStillTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">We All Need a Savior</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "For all have sinned and fall short of the glory of God." — Romans 3:23. Every one of us has fallen short, but God made a way for us through Jesus.
+                "For all have sinned and fall short of the glory of God." (Romans 3:23). Every one of us has fallen short, but God made a way for us through Jesus.
               </p>
             </div>
 
@@ -556,7 +451,7 @@ function BeStillTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">Jesus Paid the Price</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "But God demonstrates His own love for us in this: While we were still sinners, Christ died for us." — Romans 5:8. Jesus took our place on the cross so we could be forgiven and made right with God.
+                "But God demonstrates His own love for us in this: While we were still sinners, Christ died for us." (Romans 5:8). Jesus took our place on the cross so we could be forgiven and made right with God.
               </p>
             </div>
 
@@ -565,40 +460,42 @@ function BeStillTab() {
             <div>
               <h4 className="text-white font-semibold text-base m-0 mb-1">Receive the Gift</h4>
               <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised Him from the dead, you will be saved." — Romans 10:9. Salvation is a free gift — all you have to do is believe and receive.
+                "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised Him from the dead, you will be saved." (Romans 10:9). Salvation is a free gift, all you have to do is believe and receive.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#3d4f3e] rounded-xl p-6 md:p-8 mb-5 md:mb-8">
-          <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3 text-center">A Prayer to Begin</h3>
-          <p className="text-white text-sm md:text-base leading-relaxed m-0 italic text-center">
-            "Lord Jesus, I believe You are the Son of God. I believe You died for my sins and rose again. I ask You to forgive me and come into my heart. I surrender my life to You. Thank You for saving me. In Jesus' name, Amen."
+      {/* Prayer of salvation */}
+      <div className="bg-accent rounded-xl p-6 md:p-8 mb-5 md:mb-8">
+        <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3 text-center">A Prayer to Begin</h3>
+        <p className="text-white text-sm md:text-base leading-relaxed m-0 italic text-center">
+          "Lord Jesus, I believe You are the Son of God. I believe You died for my sins and rose again. I ask You to forgive me and come into my heart. I surrender my life to You. Thank You for saving me. In Jesus' name, Amen."
+        </p>
+      </div>
+
+      {/* Next steps */}
+      <div className="bg-slate-800 rounded-xl p-6 md:p-8">
+        <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3">What's Next?</h3>
+        <p className="text-gray-300 text-sm md:text-base leading-relaxed m-0 mb-4">
+          If you've made the decision to follow Jesus, welcome to the family! Here are some important next steps:
+        </p>
+        <ul className="text-gray-300 text-sm md:text-base leading-relaxed m-0 pl-5 flex flex-col gap-3">
+          <li><span className="text-white font-medium">Find a local church</span>: Surround yourself with other believers who can encourage you and help you grow in your faith.</li>
+          <li><span className="text-white font-medium">Read the Bible</span>: Start with the book of John to learn more about who Jesus is.</li>
+          <li><span className="text-white font-medium">Pray daily</span>: Talk to God like you would a friend. He wants to hear from you.</li>
+          <li><span className="text-white font-medium">Get baptized</span>: Baptism is an outward expression of your inward decision to follow Jesus.</li>
+        </ul>
+
+        <div className="mt-5 p-4 md:p-5 bg-slate-900 rounded-xl">
+          <p className="text-gray-300 text-sm md:text-base m-0 mb-2">
+            Need help finding a church or want to talk to someone?
+          </p>
+          <p className="text-white text-sm md:text-base font-medium m-0">
+            Reach out to us, we'd love to help you on your journey.
           </p>
         </div>
-
-        <div className="bg-[#252525] rounded-xl p-6 md:p-8">
-          <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3">What's Next?</h3>
-          <p className="text-gray-300 text-sm md:text-base leading-relaxed m-0 mb-4">
-            If you've made the decision to follow Jesus — welcome to the family! Here are some important next steps:
-          </p>
-          <ul className="text-gray-300 text-sm md:text-base leading-relaxed m-0 pl-5 flex flex-col gap-3">
-            <li><span className="text-white font-medium">Find a local church</span> — Surround yourself with other believers who can encourage you and help you grow in your faith.</li>
-            <li><span className="text-white font-medium">Read the Bible</span> — Start with the book of John to learn more about who Jesus is.</li>
-            <li><span className="text-white font-medium">Pray daily</span> — Talk to God like you would a friend. He wants to hear from you.</li>
-            <li><span className="text-white font-medium">Get baptized</span> — Baptism is an outward expression of your inward decision to follow Jesus.</li>
-          </ul>
-
-          <div className="mt-5 p-4 md:p-5 bg-[#1a1a1a] rounded-xl">
-            <p className="text-gray-300 text-sm md:text-base m-0 mb-2">
-              Need help finding a church or want to talk to someone?
-            </p>
-            <p className="text-white text-sm md:text-base font-medium m-0">
-              Reach out to us — we'd love to help you on your journey.
-            </p>
-          </div>
-        </div>
+      </div>
       </div>
     </>
   );

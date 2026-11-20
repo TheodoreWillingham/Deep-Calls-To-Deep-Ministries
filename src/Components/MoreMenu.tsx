@@ -4,6 +4,8 @@ interface MoreMenuProps {
   onEncouragementClick?: () => void;
   onPrayersClick?: () => void;
   onEventsClick?: () => void;
+  onAboutClick?: () => void;
+  onGiveClick?: () => void;
 }
 
 function EncouragementIcon() {
@@ -15,24 +17,12 @@ function EncouragementIcon() {
 }
 
 const menuItems = [
-  { label: 'Daily Readings', icon: <BookOpenIcon /> },
   { label: 'Events', icon: <PinIcon /> },
-  { label: 'Courses', icon: <CourseIcon /> },
   { label: 'Encouragement', icon: <EncouragementIcon /> },
   { label: 'Prayers', icon: <PrayerBookIcon /> },
-  { label: 'Apps', icon: <AppsIcon /> },
   { label: 'Articles', icon: <ArticleIcon /> },
   { label: 'Podcasts', icon: <MicIcon /> },
 ];
-
-function BookOpenIcon() {
-  return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-      <path d="M2 4h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2V4z" />
-      <path d="M22 4h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7V4z" />
-    </svg>
-  );
-}
 
 function PinIcon() {
   return (
@@ -43,31 +33,11 @@ function PinIcon() {
   );
 }
 
-function CourseIcon() {
-  return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <polygon points="10,8 16,12 10,16" fill="white" stroke="none" />
-    </svg>
-  );
-}
-
 function PrayerBookIcon() {
   return (
     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
       <path d="M4 4h4a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H4V4z" />
       <path d="M20 4h-4a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h5V4z" />
-    </svg>
-  );
-}
-
-function AppsIcon() {
-  return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
     </svg>
   );
 }
@@ -101,7 +71,7 @@ function HeartIcon() {
   );
 }
 
-export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick }: MoreMenuProps) {
+export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayersClick, onEventsClick, onAboutClick, onGiveClick }: MoreMenuProps) {
   return (
     <>
       {/* Backdrop */}
@@ -112,7 +82,7 @@ export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayer
 
       {/* Sliding panel */}
       <div
-        className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-[#1a1a1a] rounded-t-2xl z-[160] transition-transform duration-300 ease-out ${open ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-slate-900 rounded-t-2xl z-[160] transition-transform duration-300 ease-out ${open ? 'translate-y-0' : 'translate-y-full'}`}
       >
         <div className="px-6 pt-8 pb-6">
           {/* Menu items */}
@@ -140,12 +110,20 @@ export default function MoreMenu({ open, onClose, onEncouragementClick, onPrayer
 
           {/* Secondary links */}
           <div className="mt-6 flex flex-col gap-4">
-            <span className="text-gray-300 text-base cursor-pointer">About Us</span>
+            <span
+              className="text-gray-300 text-base cursor-pointer"
+              onClick={() => { onClose(); onAboutClick?.(); }}
+            >
+              About Us
+            </span>
             <span className="text-gray-300 text-base cursor-pointer">Help</span>
           </div>
 
           {/* Give button */}
-          <button className="mt-8 w-full bg-gray-100 rounded-xl py-4 flex items-center justify-center gap-3 cursor-pointer border-none">
+          <button
+            onClick={() => { onClose(); onGiveClick?.(); }}
+            className="mt-8 w-full bg-gray-100 rounded-xl py-4 flex items-center justify-center gap-3 cursor-pointer border-none"
+          >
             <HeartIcon />
             <span className="font-bold text-lg text-black">Give to DCTDM</span>
           </button>

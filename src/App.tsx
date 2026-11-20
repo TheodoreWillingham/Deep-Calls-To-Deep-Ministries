@@ -7,15 +7,15 @@ import HeroSection from './Components/HeroSection'
 import ResourcesSection from './Components/ResourcesSection'
 import MediaSection from './Components/MediaSection'
 import BottomNav from './Components/BottomNav'
-import SearchOverlay from './Components/SearchOverlay'
 import LoginPage from './Components/LoginPage'
 import MoreMenu from './Components/MoreMenu'
 import BooksPage from './Components/BooksPage'
 import PrayerPage from './Components/PrayerPage'
 import EncouragementPage from './Components/EncouragementPage'
 import EventsPage from './Components/EventsPage'
-import ComingSoonPage from './Components/ComingSoonPage'
+import GivePage from './Components/GivePage'
 import MediaPage from './Components/MediaPage'
+import AboutPage from './Components/AboutPage'
 import TopBar from './Components/TopBar'
 
 export type Page =
@@ -26,10 +26,10 @@ export type Page =
   | 'encouragement'
   | 'events'
   | 'media'
+  | 'about'
   | 'give';
 
 function App() {
-  const [searchOpen, setSearchOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const [page, setPage] = useState<Page>('home')
   const [isAdmin, setIsAdmin] = useState(false)
@@ -81,47 +81,50 @@ function App() {
   }
 
   const renderPage = () => {
-    if (page === 'books') return <BooksPage onBack={() => setPage('home')} />
-    if (page === 'prayer') return <PrayerPage onBack={() => setPage('home')} />
-    if (page === 'encouragement') return <EncouragementPage onBack={() => setPage('home')} />
-    if (page === 'events') return <EventsPage onBack={() => setPage('home')} isAdmin={isAdmin} />
-    if (page === 'media') return <MediaPage onBack={() => setPage('home')} />
-    if (page === 'give') return <ComingSoonPage title="Give" onBack={() => setPage('home')} />
+    if (page === 'books') return <BooksPage />
+    if (page === 'prayer') return <PrayerPage />
+    if (page === 'encouragement') return <EncouragementPage />
+    if (page === 'events') return <EventsPage isAdmin={isAdmin} />
+    if (page === 'media') return <MediaPage />
+    if (page === 'about') return <AboutPage />
+    if (page === 'give') return <GivePage />
 
     // Home
     return (
-      <>
-        <HeroSection />
-        <ResourcesSection onPrayersClick={() => setPage('prayer')} />
-        <MediaSection />
-        <BottomNav
-          onMoreClick={() => setMoreOpen(true)}
-          onBooksClick={() => setPage('books')}
-          onPrayerClick={() => setPage('prayer')}
-          onEventsClick={() => setPage('events')}
-        />
-        <MoreMenu
-          open={moreOpen}
-          onClose={() => setMoreOpen(false)}
-          onEncouragementClick={() => setPage('encouragement')}
-          onPrayersClick={() => setPage('prayer')}
-          onEventsClick={() => setPage('events')}
-        />
-      </>
+      <div className="stagger-rise">
+        <HeroSection onGiveClick={() => setPage('give')} onMediaClick={() => setPage('media')} />
+        <ResourcesSection onPrayersClick={() => setPage('prayer')} onMediaClick={() => setPage('media')} onEventsClick={() => setPage('events')} />
+        <MediaSection onGiveClick={() => setPage('give')} onEventsClick={() => setPage('events')} />
+      </div>
     )
   }
 
   return (
     <>
       <TopBar
-        onSearchClick={() => setSearchOpen(true)}
         onLoginClick={() => setPage('login')}
         onLogoutClick={handleLogout}
         isLoggedIn={isLoggedIn}
         onNavClick={setPage}
+        onGiveClick={() => setPage('give')}
       />
       {renderPage()}
-      {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
+      <BottomNav
+        onMoreClick={() => setMoreOpen(true)}
+        onMediaClick={() => setPage('media')}
+        onBooksClick={() => setPage('books')}
+        onPrayerClick={() => setPage('prayer')}
+        onEventsClick={() => setPage('events')}
+      />
+      <MoreMenu
+        open={moreOpen}
+        onClose={() => setMoreOpen(false)}
+        onEncouragementClick={() => setPage('encouragement')}
+        onPrayersClick={() => setPage('prayer')}
+        onEventsClick={() => setPage('events')}
+        onAboutClick={() => setPage('about')}
+        onGiveClick={() => setPage('give')}
+      />
     </>
   )
 }

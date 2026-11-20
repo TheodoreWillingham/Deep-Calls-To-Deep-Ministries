@@ -50,7 +50,7 @@ export default function LoginPage({ onBack, onLoggedIn }: LoginPageProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#1a1d2e] flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
+    <div className="fixed inset-0 bg-slate-900 flex flex-col items-center px-6 pt-20 pb-10 gap-8 overflow-y-auto z-[300]">
       <button
         type="button"
         onClick={onBack}
@@ -62,7 +62,7 @@ export default function LoginPage({ onBack, onLoggedIn }: LoginPageProps) {
         </svg>
       </button>
 
-      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl stagger-rise">
         <div
           className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
           onClick={onBack}
@@ -77,7 +77,7 @@ export default function LoginPage({ onBack, onLoggedIn }: LoginPageProps) {
         <div className="flex flex-col gap-2 w-full">
           <label className="font-semibold text-sm text-gray-300">Admin password</label>
           <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
+            className="w-full p-4 rounded-lg border border-gray-600 bg-slate-800 text-white text-base outline-none"
             type="password"
             placeholder="••••••••"
             value={password}
