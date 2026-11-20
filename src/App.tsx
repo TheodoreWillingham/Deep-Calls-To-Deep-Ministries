@@ -9,7 +9,6 @@ import MediaSection from './Components/MediaSection'
 import BottomNav from './Components/BottomNav'
 import SearchOverlay from './Components/SearchOverlay'
 import LoginPage from './Components/LoginPage'
-import SignupPage from './Components/SignupPage'
 import MoreMenu from './Components/MoreMenu'
 import BooksPage from './Components/BooksPage'
 import PrayerPage from './Components/PrayerPage'
@@ -22,7 +21,6 @@ import TopBar from './Components/TopBar'
 export type Page =
   | 'home'
   | 'login'
-  | 'signup'
   | 'books'
   | 'prayer'
   | 'encouragement'
@@ -74,20 +72,6 @@ function App() {
     return (
       <LoginPage
         onBack={() => setPage('home')}
-        onGoToSignup={() => setPage('signup')}
-        onLoggedIn={(admin) => {
-          setIsAdmin(admin)
-          setPage('home')
-        }}
-      />
-    )
-  }
-
-  if (page === 'signup') {
-    return (
-      <SignupPage
-        onBack={() => setPage('home')}
-        onGoToLogin={() => setPage('login')}
         onLoggedIn={(admin) => {
           setIsAdmin(admin)
           setPage('home')

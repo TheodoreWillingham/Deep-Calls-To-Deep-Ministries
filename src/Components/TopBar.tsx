@@ -71,7 +71,7 @@ export default function TopBar({ onSearchClick, onLoginClick, onLogoutClick, isL
           className="font-medium text-base leading-[0.8] text-white whitespace-nowrap cursor-pointer hover:text-white/70 transition-colors"
           onClick={isLoggedIn ? onLogoutClick : onLoginClick}
         >
-          {isLoggedIn ? 'Logout' : 'Login'}
+          {isLoggedIn ? 'Admin Logout' : 'Admin Login'}
         </span>
       </div>
     </header>

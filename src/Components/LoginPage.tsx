@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { supabase } from './supabaseClient';
 
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL as string;
+
 interface LoginPageProps {
   onBack: () => void;
-  onGoToSignup: () => void;
   onLoggedIn: (isAdmin: boolean) => void;
 }
 
-export default function LoginPage({ onBack, onGoToSignup, onLoggedIn }: LoginPageProps) {
-  const [email, setEmail] = useState('');
+export default function LoginPage({ onBack, onLoggedIn }: LoginPageProps) {
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,25 +17,30 @@ export default function LoginPage({ onBack, onGoToSignup, onLoggedIn }: LoginPag
     e.preventDefault();
     setError(null);
 
-    if (!email || !password) {
-      setError('Please enter your email and password.');
+    if (!password) {
+      setError('Please enter the admin password.');
       return;
     }
 
     setSubmitting(true);
     try {
       const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
+        email: ADMIN_EMAIL,
         password,
       });
-      if (signInError) throw signInError;
+      if (signInError) throw new Error('Incorrect admin password.');
 
       const { data: profile } = await supabase
         .from('profiles')
         .select('is_admin')
         .single();
 
-      onLoggedIn(Boolean(profile?.is_admin));
+      if (!profile?.is_admin) {
+        await supabase.auth.signOut();
+        throw new Error('This account does not have admin access.');
+      }
+
+      onLoggedIn(true);
     } catch (err: any) {
       console.error('Login error:', err.message);
       setError(err.message || 'Failed to log in.');
@@ -66,24 +71,11 @@ export default function LoginPage({ onBack, onGoToSignup, onLoggedIn }: LoginPag
         </div>
 
         <h1 className="font-bold text-[28px] text-white self-start w-full mt-4">
-          Log in to your account
+          Admin Log In
         </h1>
 
         <div className="flex flex-col gap-2 w-full">
-          <label className="font-semibold text-sm text-gray-300">Email address</label>
-          <input
-            className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
-            type="email"
-            placeholder="name@gmail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-            required
-          />
-        </div>
-
-        <div className="flex flex-col gap-2 w-full">
-          <label className="font-semibold text-sm text-gray-300">Password</label>
+          <label className="font-semibold text-sm text-gray-300">Admin password</label>
           <input
             className="w-full p-4 rounded-lg border border-gray-600 bg-[#2a2d3e] text-white text-base outline-none"
             type="password"
@@ -107,12 +99,6 @@ export default function LoginPage({ onBack, onGoToSignup, onLoggedIn }: LoginPag
           {submitting ? 'Logging in...' : 'Log in'}
         </button>
 
-        <p className="text-sm text-gray-400 text-center mt-2">
-          Need an account?{' '}
-          <a className="text-[#e88a4a] cursor-pointer no-underline font-semibold" onClick={onGoToSignup}>
-            Create an account
-          </a>
-        </p>
       </form>
     </div>
   );
