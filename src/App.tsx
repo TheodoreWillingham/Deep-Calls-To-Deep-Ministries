@@ -4,8 +4,6 @@ import { supabase } from './Components/supabaseClient'
 
 //Components
 import HeroSection from './Components/HeroSection'
-import ResourcesSection from './Components/ResourcesSection'
-import MediaSection from './Components/MediaSection'
 import BottomNav from './Components/BottomNav'
 import LoginPage from './Components/LoginPage'
 import MoreMenu from './Components/MoreMenu'
@@ -16,6 +14,7 @@ import EventsPage from './Components/EventsPage'
 import GivePage from './Components/GivePage'
 import MediaPage from './Components/MediaPage'
 import AboutPage from './Components/AboutPage'
+import ConnectPage from './Components/ConnectPage'
 import TopBar from './Components/TopBar'
 
 export type Page =
@@ -27,7 +26,8 @@ export type Page =
   | 'events'
   | 'media'
   | 'about'
-  | 'give';
+  | 'give'
+  | 'connect';
 
 function App() {
   const [moreOpen, setMoreOpen] = useState(false)
@@ -88,13 +88,12 @@ function App() {
     if (page === 'media') return <MediaPage />
     if (page === 'about') return <AboutPage />
     if (page === 'give') return <GivePage />
+    if (page === 'connect') return <ConnectPage />
 
     // Home
     return (
       <div className="stagger-rise">
-        <HeroSection onGiveClick={() => setPage('give')} onMediaClick={() => setPage('media')} />
-        <ResourcesSection onPrayersClick={() => setPage('prayer')} onMediaClick={() => setPage('media')} onEventsClick={() => setPage('events')} />
-        <MediaSection onGiveClick={() => setPage('give')} onEventsClick={() => setPage('events')} />
+        <HeroSection onNavigate={setPage} />
       </div>
     )
   }
