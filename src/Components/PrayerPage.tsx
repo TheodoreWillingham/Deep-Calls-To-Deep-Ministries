@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
+import BeStillFormModal, { type BeStillMoment } from './BeStillFormModal';
 
-type Tab = 'requests' | 'bestill' | 'gospel';
+type Tab = 'requests' | 'bestill';
 
 interface PrayerRequestRow {
   id: string;
@@ -11,19 +12,6 @@ interface PrayerRequestRow {
   has_been_prayed_for: boolean;
   created_at: string;
 }
-
-interface BeStillMoment {
-  id: number;
-  title: string;
-  description: string;
-  type: 'audio' | 'video';
-  duration: string;
-}
-
-const sampleMoments: BeStillMoment[] = [
-  { id: 1, title: 'Rest in His Presence', description: 'A guided moment of stillness focusing on Psalm 46:10, "Be still, and know that I am God."', type: 'audio', duration: '5 min' },
-  { id: 2, title: 'Peace That Surpasses Understanding', description: 'Let the Lord quiet your heart as we meditate on Philippians 4:6-7.', type: 'audio', duration: '8 min' },
-];
 
 /* ── localStorage helpers ── */
 
@@ -48,36 +36,20 @@ function savePrayedId(id: string) {
 
 /* ── Icons ── */
 
-function PlayCircleIcon() {
-  return (
-    <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none">
-      <circle cx="20" cy="20" r="18" stroke="white" strokeWidth="1.5" />
-      <polygon points="16,12 28,20 16,28" fill="white" />
-    </svg>
-  );
-}
-
-function HeadphonesIcon() {
-  return (
-    <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="white" strokeWidth="1.5">
-      <path d="M8 24v-4a12 12 0 0 1 24 0v4" />
-      <rect x="4" y="24" width="6" height="8" rx="2" />
-      <rect x="30" y="24" width="6" height="8" rx="2" />
-    </svg>
-  );
-}
-
 function PrayingHandsIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2L8 12l4 10M12 2l4 10-4 10" />
+      {/* two palms pressed together, fingertips up, with sleeves flaring at the wrists */}
+      <path d="M12 2.5C9.8 5 8.5 7.8 8.5 10.5V15l-4 3.5 3 3H12" />
+      <path d="M12 2.5C14.2 5 15.5 7.8 15.5 10.5V15l4 3.5-3 3H12" />
+      <path d="M12 2.5v19" />
     </svg>
   );
 }
 
 /* ── Main Component ── */
 
-export default function PrayerPage() {
+export default function PrayerPage({ isAdmin = false }: { isAdmin?: boolean }) {
   const [tab, setTab] = useState<Tab>('requests');
 
   return (
@@ -92,7 +64,6 @@ export default function PrayerPage() {
         {([
           ['requests', 'Requests'],
           ['bestill', 'Be Still'],
-          ['gospel', 'Know Jesus'],
         ] as [Tab, string][]).map(([key, label]) => (
           <button
             key={key}
@@ -111,8 +82,7 @@ export default function PrayerPage() {
       {/* Content */}
       <div className="w-full max-w-md md:max-w-6xl px-6 md:px-10 lg:px-16 pt-4 md:pt-8 pb-28">
         {tab === 'requests' && <PrayerRequestsTab />}
-        {tab === 'bestill' && <BeStillTab />}
-        {tab === 'gospel' && <GospelTab />}
+        {tab === 'bestill' && <BeStillTab isAdmin={isAdmin} />}
       </div>
     </div>
   );
@@ -207,6 +177,7 @@ function PrayerRequestsTab() {
         request_text: requestText.trim(),
         is_anonymous: isAnonymous,
         show_on_website: showOnWebsite,
+        admin_email: import.meta.env.VITE_ADMIN_EMAIL as string | undefined,
       },
     }).catch(() => {});
 
@@ -354,7 +325,7 @@ function PrayerRequestsTab() {
                     }`}
                   >
                     <PrayingHandsIcon className="w-4 h-4" />
-                    <span>{hasPrayed ? 'Praying' : 'Pray'}</span>
+                    <span>{hasPrayed ? 'Prayed For' : 'Pray For'}</span>
                   </button>
                 </div>
               </div>
@@ -370,133 +341,125 @@ function PrayerRequestsTab() {
    Tab 2: Be Still Moments
    ════════════════════════════════════════════════════════ */
 
-function BeStillTab() {
+function BeStillTab({ isAdmin }: { isAdmin: boolean }) {
+  const [moments, setMoments] = useState<BeStillMoment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editing, setEditing] = useState<BeStillMoment | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+
+  async function fetchMoments() {
+    const { data, error } = await supabase
+      .from('be_still_moments')
+      .select('id, title, pray, rest, action, yield_text')
+      .order('created_at', { ascending: false });
+    if (error) console.error('Error fetching be still moments:', error.message);
+    setMoments((data as BeStillMoment[]) ?? []);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchMoments();
+  }, []);
+
+  function closeForm() {
+    setShowForm(false);
+    setEditing(null);
+  }
+
+  async function handleDelete(m: BeStillMoment) {
+    if (!window.confirm(`Delete "${m.title || 'this Be Still moment'}"? This cannot be undone.`)) return;
+    setDeletingId(m.id);
+    const { error } = await supabase.from('be_still_moments').delete().eq('id', m.id);
+    setDeletingId(null);
+    if (error) {
+      console.error('Error deleting be still moment:', error.message);
+      window.alert('Failed to delete.');
+      return;
+    }
+    setMoments(prev => prev.filter(x => x.id !== m.id));
+  }
+
   return (
     <>
-      {/* Description */}
       <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
         <p className="text-white text-sm md:text-base leading-relaxed m-0">
           Take a moment to pause, breathe, and be still with God. These devotional moments are designed to quiet your heart and draw you into His presence. "Be still, and know that I am God." (Psalm 46:10)
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6">
-        {sampleMoments.map(moment => (
-          <div key={moment.id} className="bg-slate-800 rounded-xl p-5 md:p-6 flex gap-4 items-start">
-            {/* Play/Listen icon */}
-            <button className="shrink-0 bg-transparent border-none cursor-pointer p-0 mt-1">
-              {moment.type === 'video' ? <PlayCircleIcon /> : <HeadphonesIcon />}
-            </button>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="inline-block bg-accent text-white text-xs font-medium px-3 py-1 rounded-full">
-                  {moment.type === 'video' ? 'Video' : 'Audio'}
-                </span>
-                <span className="text-gray-500 text-xs">{moment.duration}</span>
+      {isAdmin && (
+        <button
+          onClick={() => { setEditing(null); setShowForm(true); }}
+          className="w-full md:max-w-md md:mx-auto md:block py-3 rounded-xl bg-accent hover:bg-accent-hover text-white text-base font-semibold border-none cursor-pointer mb-5 md:mb-8 transition-colors"
+        >
+          + Add Be Still Moment
+        </button>
+      )}
+
+      {loading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-2 border-gray-600 border-t-white rounded-full animate-spin" />
+        </div>
+      ) : moments.length === 0 ? (
+        <p className="text-gray-400 text-center text-sm py-8">
+          New Be Still moments coming soon. Check back!
+        </p>
+      ) : (
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6 md:items-start">
+          {moments.map(m => (
+            <div key={m.id} className="bg-slate-800 rounded-xl overflow-hidden">
+              <div className="bg-accent px-5 md:px-6 py-4 flex items-center gap-2">
+                <div className="flex-1 min-w-0">
+                  <p className="text-white/80 text-xs font-semibold tracking-widest uppercase m-0">Be Still Moment</p>
+                  {m.title && <h3 className="text-white font-bold text-lg m-0 mt-1">{m.title}</h3>}
+                </div>
+                {isAdmin && (
+                  <>
+                    <button
+                      onClick={() => { setEditing(m); setShowForm(true); }}
+                      className="text-white bg-transparent border border-white/40 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-white/10"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(m)}
+                      disabled={deletingId === m.id}
+                      className="text-white bg-transparent border border-red-400/60 rounded-md px-2 py-1 text-xs cursor-pointer hover:bg-red-500/20 disabled:opacity-50"
+                    >
+                      {deletingId === m.id ? '...' : 'Delete'}
+                    </button>
+                  </>
+                )}
               </div>
-              <h3 className="text-white font-semibold text-base m-0 mb-1">{moment.title}</h3>
-              <p className="text-gray-300 text-sm leading-relaxed m-0">{moment.description}</p>
+              <div className="px-5 md:px-6 py-4 md:py-5 flex flex-col gap-4">
+                {([
+                  ['Pray', m.pray],
+                  ['Rest', m.rest],
+                  ['Action', m.action],
+                  ['Yield', m.yield_text],
+                ] as [string, string][]).filter(([, text]) => text).map(([label, text]) => (
+                  <p key={label} className="text-gray-300 text-sm leading-relaxed m-0 whitespace-pre-wrap">
+                    <span className="text-white font-bold tracking-wide">{label.toUpperCase()}:</span> {text}
+                  </p>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-
-        {sampleMoments.length === 0 && (
-          <p className="text-gray-400 text-center text-sm py-8">
-            New Be Still moments coming soon. Check back!
-          </p>
-        )}
-      </div>
-    </>
-  );
-}
-
-/* ════════════════════════════════════════════════════════
-   Tab 3: Do You Know Jesus?
-   ════════════════════════════════════════════════════════ */
-
-function GospelTab() {
-  return (
-    <>
-      <div className="md:max-w-3xl md:mx-auto">
-      {/* Description */}
-      <div className="bg-accent/20 rounded-xl px-5 py-4 md:px-7 md:py-6 mb-5 md:mb-8">
-        <p className="text-white text-sm md:text-base leading-relaxed m-0">
-          The most important decision you will ever make is about your relationship with Jesus Christ. We want to share with you the good news that has changed everything for us, and can change everything for you too.
-        </p>
-      </div>
-
-      {/* Gospel content */}
-      <div className="bg-slate-800 rounded-xl p-6 md:p-8 mb-5 md:mb-8">
-        <h3 className="text-white font-bold text-xl md:text-2xl m-0 mb-4 md:mb-6 text-center">The Good News</h3>
-
-          <div className="flex flex-col gap-5">
-            <div>
-              <h4 className="text-white font-semibold text-base m-0 mb-1">God Loves You</h4>
-              <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "For God so loved the world that He gave His one and only Son, that whoever believes in Him shall not perish but have eternal life." (John 3:16)
-              </p>
-            </div>
-
-            <div className="border-t border-gray-700" />
-
-            <div>
-              <h4 className="text-white font-semibold text-base m-0 mb-1">We All Need a Savior</h4>
-              <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "For all have sinned and fall short of the glory of God." (Romans 3:23). Every one of us has fallen short, but God made a way for us through Jesus.
-              </p>
-            </div>
-
-            <div className="border-t border-gray-700" />
-
-            <div>
-              <h4 className="text-white font-semibold text-base m-0 mb-1">Jesus Paid the Price</h4>
-              <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "But God demonstrates His own love for us in this: While we were still sinners, Christ died for us." (Romans 5:8). Jesus took our place on the cross so we could be forgiven and made right with God.
-              </p>
-            </div>
-
-            <div className="border-t border-gray-700" />
-
-            <div>
-              <h4 className="text-white font-semibold text-base m-0 mb-1">Receive the Gift</h4>
-              <p className="text-gray-300 text-sm leading-relaxed m-0">
-                "If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised Him from the dead, you will be saved." (Romans 10:9). Salvation is a free gift, all you have to do is believe and receive.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
+      )}
 
-      {/* Prayer of salvation */}
-      <div className="bg-accent rounded-xl p-6 md:p-8 mb-5 md:mb-8">
-        <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3 text-center">A Prayer to Begin</h3>
-        <p className="text-white text-sm md:text-base leading-relaxed m-0 italic text-center">
-          "Lord Jesus, I believe You are the Son of God. I believe You died for my sins and rose again. I ask You to forgive me and come into my heart. I surrender my life to You. Thank You for saving me. In Jesus' name, Amen."
-        </p>
-      </div>
-
-      {/* Next steps */}
-      <div className="bg-slate-800 rounded-xl p-6 md:p-8">
-        <h3 className="text-white font-bold text-lg md:text-xl m-0 mb-3">What's Next?</h3>
-        <p className="text-gray-300 text-sm md:text-base leading-relaxed m-0 mb-4">
-          If you've made the decision to follow Jesus, welcome to the family! Here are some important next steps:
-        </p>
-        <ul className="text-gray-300 text-sm md:text-base leading-relaxed m-0 pl-5 flex flex-col gap-3">
-          <li><span className="text-white font-medium">Find a local church</span>: Surround yourself with other believers who can encourage you and help you grow in your faith.</li>
-          <li><span className="text-white font-medium">Read the Bible</span>: Start with the book of John to learn more about who Jesus is.</li>
-          <li><span className="text-white font-medium">Pray daily</span>: Talk to God like you would a friend. He wants to hear from you.</li>
-          <li><span className="text-white font-medium">Get baptized</span>: Baptism is an outward expression of your inward decision to follow Jesus.</li>
-        </ul>
-
-        <div className="mt-5 p-4 md:p-5 bg-slate-900 rounded-xl">
-          <p className="text-gray-300 text-sm md:text-base m-0 mb-2">
-            Need help finding a church or want to talk to someone?
-          </p>
-          <p className="text-white text-sm md:text-base font-medium m-0">
-            Reach out to us, we'd love to help you on your journey.
-          </p>
-        </div>
-      </div>
-      </div>
+      {showForm && (
+        <BeStillFormModal
+          moment={editing}
+          onClose={closeForm}
+          onSaved={() => {
+            closeForm();
+            setLoading(true);
+            fetchMoments();
+          }}
+        />
+      )}
     </>
   );
 }
