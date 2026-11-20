@@ -445,3 +445,9 @@ enabled = true
 verify_jwt = true
 import_map = "./functions/fetch-media-metadata/deno.json"
 entrypoint = "./functions/fetch-media-metadata/index.ts"
+
+[functions.fetch-book-metadata]
+enabled = true
+verify_jwt = true
+import_map = "./functions/fetch-book-metadata/deno.json"
+entrypoint = "./functions/fetch-book-metadata/index.ts"
