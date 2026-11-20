@@ -1,3 +1,4 @@
+import Logo from './Logo';
 import type { Page } from '../App';
 
 interface TopBarProps {
@@ -29,12 +30,10 @@ const NAV_ITEMS: { label: string; page: Page }[] = [
 export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavClick, onGiveClick }: TopBarProps) {
   return (
     <header className="absolute top-0 left-0 right-0 z-[400] flex items-center justify-between w-full overflow-hidden px-2.5 py-4 md:px-10 md:py-6 bg-transparent">
-      <span
+      <Logo
         onClick={() => onNavClick('home')}
-        className="font-condensed font-black italic text-3xl leading-[0.8] text-white w-40 md:text-4xl md:shrink-0 cursor-pointer hover:text-white/80 transition-colors"
-      >
-        DEANA<br />BRINGOLF
-      </span>
+        className="w-20 md:w-24 shrink-0 text-white cursor-pointer hover:text-white/80 transition-colors"
+      />
 
       <nav className="hidden md:flex items-center gap-8 lg:gap-10">
         {NAV_ITEMS.map((item) => (
