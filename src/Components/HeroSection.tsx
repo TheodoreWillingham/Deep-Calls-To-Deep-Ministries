@@ -5,7 +5,7 @@ interface HeroSectionProps {
 }
 
 const resources: { page: Page; title: string; description: string; image: string }[] = [
-  { page: 'media', title: 'Media', description: 'Messages, podcasts, videos, and teachings.', image: '/assets/Media.jpeg' },
+  { page: 'media', title: 'Media', description: 'Podcasts, videos, and teachings.', image: '/assets/Media.jpeg' },
   { page: 'books', title: 'Books', description: 'Resources to deepen your understanding of scripture.', image: '/assets/Books.jpeg' },
   { page: 'events', title: 'Events', description: 'Gatherings, worship, and opportunities to connect.', image: '/assets/Events.jpeg' },
   { page: 'prayer', title: 'Prayer Requests', description: 'Share your burdens and let us pray with you.', image: '/assets/Prayer%20Requests.jpeg' },
