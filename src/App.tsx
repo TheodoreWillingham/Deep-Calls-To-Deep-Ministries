@@ -17,6 +17,7 @@ import GivePage from './Components/GivePage'
 import MediaPage from './Components/MediaPage'
 import AboutPage from './Components/AboutPage'
 import TopBar from './Components/TopBar'
+import Footer from './Components/Footer'
 
 export type Page =
   | 'home'
@@ -109,6 +110,7 @@ function App() {
         onGiveClick={() => setPage('give')}
       />
       {renderPage()}
+      <Footer onNavClick={setPage} onLoginClick={() => setPage('login')} onLogoutClick={handleLogout} isLoggedIn={isLoggedIn} />
       <BottomNav
         onMoreClick={() => setMoreOpen(true)}
         onMediaClick={() => setPage('media')}

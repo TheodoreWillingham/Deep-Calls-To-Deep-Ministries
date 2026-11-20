@@ -43,9 +43,9 @@ function MediaCard({
         >
           {item.title}
         </h3>
-        {item.description && (
-          <p className="text-gray-400 text-xs md:text-sm m-0 leading-relaxed line-clamp-2">{item.description}</p>
-        )}
+        <p className="text-gray-400 text-xs md:text-sm m-0 leading-relaxed truncate">
+          {item.description || ' '}
+        </p>
         {isAdmin && (
           <div className="flex gap-2 pt-1">
             <button

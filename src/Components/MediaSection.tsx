@@ -41,10 +41,10 @@ export default function MediaSection({ onGiveClick, onEventsClick }: MediaSectio
                 />
               </div>
               <div className="bg-slate-800 flex flex-col gap-2 p-5 flex-1">
-                <h3 className="font-bold text-lg leading-snug text-white md:text-xl">{ep.title}</h3>
-                {ep.description && (
-                  <p className="text-sm leading-relaxed text-gray-400 line-clamp-3">{ep.description}</p>
-                )}
+                <h3 className="font-bold text-lg leading-snug text-white md:text-xl truncate" title={ep.title}>{ep.title}</h3>
+                <p className="text-sm leading-relaxed text-gray-400 truncate">
+                  {ep.description || ' '}
+                </p>
               </div>
             </div>
           ))}
