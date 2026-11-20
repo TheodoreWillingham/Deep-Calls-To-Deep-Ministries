@@ -96,7 +96,7 @@ openai_api_key = "env(OPENAI_API_KEY)"
 
 # Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
 # are monitored, and you can view the emails that would have been sent from the web interface.
-[inbucket]
+[local_smtp]
 enabled = true
 # Port to use for the email testing server web interface.
 port = 54324
@@ -439,3 +439,9 @@ entrypoint = "./functions/notify-gospel-contact/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/notify-gospel-contact/*.html" ]
+
+[functions.fetch-media-metadata]
+enabled = true
+verify_jwt = true
+import_map = "./functions/fetch-media-metadata/deno.json"
+entrypoint = "./functions/fetch-media-metadata/index.ts"

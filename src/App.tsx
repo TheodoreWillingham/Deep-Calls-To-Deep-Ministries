@@ -85,7 +85,7 @@ function App() {
     if (page === 'prayer') return <PrayerPage />
     if (page === 'encouragement') return <EncouragementPage />
     if (page === 'events') return <EventsPage isAdmin={isAdmin} />
-    if (page === 'media') return <MediaPage />
+    if (page === 'media') return <MediaPage isAdmin={isAdmin} />
     if (page === 'about') return <AboutPage />
     if (page === 'give') return <GivePage />
 
