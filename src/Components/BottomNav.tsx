@@ -33,6 +33,14 @@ function PrayerIcon() {
   );
 }
 
+function EncouragementIcon() {
+  return (
+    <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+      <path d="M14 3l3.6 7.3 8 1.2-5.8 5.7 1.4 8L14 21.4 6.8 25.2l1.4-8L2.4 11.5l8-1.2L14 3z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
+    </svg>
+  );
+}
+
 function MenuIcon() {
   return (
     <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
@@ -48,13 +56,14 @@ interface BottomNavProps {
   onPrayerClick?: () => void;
   onBooksClick?: () => void;
   onEventsClick?: () => void;
+  onEncouragementClick?: () => void;
   onMediaClick?: () => void;
 }
 
-export default function BottomNav({ onMoreClick, onPrayerClick, onBooksClick, onEventsClick, onMediaClick }: BottomNavProps) {
+export default function BottomNav({ onMoreClick, onPrayerClick, onBooksClick, onEventsClick, onEncouragementClick, onMediaClick }: BottomNavProps) {
   return (
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm p-2 z-50 md:hidden">
-      <nav className="bg-slate-800 flex h-16 items-center justify-between px-4 py-2 rounded-2xl w-full">
+      <nav className="bg-slate-800 flex h-16 items-center justify-between px-3 py-2 rounded-2xl w-full">
         <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onMediaClick}>
           <PlayIcon />
           <span className="text-xs text-white text-center">Media</span>
@@ -70,6 +79,10 @@ export default function BottomNav({ onMoreClick, onPrayerClick, onBooksClick, on
         <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onPrayerClick}>
           <PrayerIcon />
           <span className="text-xs text-white text-center">Prayer</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onEncouragementClick}>
+          <EncouragementIcon />
+          <span className="text-xs text-white text-center">Encourage</span>
         </div>
         <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={onMoreClick}>
           <MenuIcon />
