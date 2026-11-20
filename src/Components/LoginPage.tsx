@@ -1,3 +1,4 @@
+import Logo from './Logo';
 import { useState } from 'react';
 import { supabase } from './supabaseClient';
 
@@ -63,12 +64,7 @@ export default function LoginPage({ onBack, onLoggedIn }: LoginPageProps) {
       </button>
 
       <form onSubmit={handleSubmit} className="flex flex-col items-center gap-6 w-full max-w-xl stagger-rise">
-        <div
-          className="font-condensed font-black italic text-4xl leading-[0.85] text-white text-center w-40 cursor-pointer"
-          onClick={onBack}
-        >
-          DEANA BRINGOLF
-        </div>
+        <Logo className="w-28 text-white cursor-pointer" onClick={onBack} />
 
         <h1 className="font-bold text-[28px] text-white self-start w-full mt-4">
           Admin Log In

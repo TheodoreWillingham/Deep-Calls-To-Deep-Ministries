@@ -1,3 +1,4 @@
+import Logo from './Logo';
 import type { Page } from '../App';
 
 interface FooterProps {
@@ -155,12 +156,10 @@ export default function Footer({ onNavClick, onLoginClick, onLogoutClick, isLogg
           &copy; {new Date().getFullYear()} Deep Calls to Deep Ministries. All rights reserved.
         </p>
 
-        <span
+        <Logo
           onClick={() => go('home')}
-          className="font-condensed font-black italic text-3xl leading-[0.8] text-white/40 cursor-pointer hover:text-white/70 transition-colors md:text-right"
-        >
-          DEANA<br />BRINGOLF
-        </span>
+          className="w-24 text-white/40 cursor-pointer hover:text-white/70 transition-colors"
+        />
       </div>
     </footer>
   );
