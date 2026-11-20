@@ -52,25 +52,30 @@ export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavC
   }, [menuOpen]);
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-[400] flex items-center justify-between w-full px-2.5 py-4 md:px-10 md:py-6 bg-transparent">
-      <Logo
-        onClick={() => onNavClick('home')}
-        className="w-20 md:w-24 shrink-0 text-white cursor-pointer hover:text-white/80 transition-colors"
-      />
+    <header className="absolute top-0 left-0 right-0 z-[400] flex items-center justify-between gap-4 w-full px-4 py-4 md:px-8 lg:px-12 md:py-6 bg-transparent">
+      {/* Left: Logo */}
+      <div className="flex items-center shrink-0">
+        <Logo
+          onClick={() => onNavClick('home')}
+          className="w-20 md:w-24 text-white cursor-pointer hover:text-white/80 transition-colors"
+        />
+      </div>
 
-      <div className="flex items-center gap-6 lg:gap-10">
-        <nav className="hidden md:flex items-center gap-6 lg:gap-10">
-          {NAV_ITEMS.map((item) => (
-            <span
-              key={item.page}
-              onClick={() => onNavClick(item.page)}
-              className="font-medium text-base lg:text-lg text-white whitespace-nowrap cursor-pointer hover:text-white/70 transition-colors"
-            >
-              {item.label}
-            </span>
-          ))}
-        </nav>
+      {/* Center: Primary navigation */}
+      <nav className="hidden md:flex items-center justify-center flex-1 gap-5 lg:gap-9">
+        {NAV_ITEMS.map((item) => (
+          <span
+            key={item.page}
+            onClick={() => onNavClick(item.page)}
+            className="font-medium text-sm lg:text-lg text-white whitespace-nowrap cursor-pointer hover:text-white/70 transition-colors"
+          >
+            {item.label}
+          </span>
+        ))}
+      </nav>
 
+      {/* Right: More menu + Admin Login */}
+      <div className="flex items-center gap-4 lg:gap-6 shrink-0">
         {/* Hamburger dropdown (desktop; mobile uses the bottom bar's More menu) */}
         <div ref={menuRef} className="relative hidden md:block">
           <button
@@ -99,7 +104,7 @@ export default function TopBar({ onLoginClick, onLogoutClick, isLoggedIn, onNavC
         </div>
 
         <span
-          className="font-medium text-base leading-[0.8] text-white whitespace-nowrap cursor-pointer hover:text-white/70 transition-colors"
+          className="font-medium text-sm lg:text-base leading-none text-white whitespace-nowrap cursor-pointer hover:text-white/70 transition-colors"
           onClick={isLoggedIn ? onLogoutClick : onLoginClick}
         >
           {isLoggedIn ? 'Admin Logout' : 'Admin Login'}
