@@ -9,13 +9,7 @@ export default function AboutPage() {
       {/* Content */}
       <div className="w-full max-w-5xl px-6 md:px-10 lg:px-16 pb-28 flex flex-col gap-14 md:gap-20">
         {/* Hero */}
-        <section className="about-rise relative w-full rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-accent/40 via-slate-800/80 to-slate-900/90">
-          {/* Soft glow, like light reaching down from the surface */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(122,162,214,0.35), transparent 65%)' }}
-            aria-hidden
-          />
+        <section className="about-rise relative w-full">
           <div className="relative z-10 px-6 py-20 md:py-28 flex flex-col items-center text-center gap-5">
             <span className="font-open-sans font-semibold italic tracking-wide text-base md:text-lg text-link">
               Deep Calls to Deep Ministries
