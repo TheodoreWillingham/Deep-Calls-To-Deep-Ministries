@@ -34,6 +34,14 @@ function savePrayedId(id: string) {
   } catch { /* storage unavailable */ }
 }
 
+function removePrayedId(id: string) {
+  try {
+    const ids = getPrayedIds();
+    ids.delete(id);
+    localStorage.setItem(PRAYED_KEY, JSON.stringify([...ids]));
+  } catch { /* storage unavailable */ }
+}
+
 /* ── Icons ── */
 
 function PrayingHandsIcon({ className = 'w-5 h-5' }: { className?: string }) {
@@ -196,21 +204,32 @@ function PrayerRequestsTab({ isAdmin }: { isAdmin: boolean }) {
   };
 
   const handlePray = async (id: string) => {
-    if (prayedIds.has(id)) return;
-    
+    const current = requests.find(r => r.id === id);
+    if (prayedIds.has(id) || current?.has_been_prayed_for) return;
+
     // 1. Optimistically update the UI so it feels snappy
     savePrayedId(id);
     setPrayedIds(prev => new Set([...prev, id]));
     setRequests(prev =>
       prev.map(r => r.id === id ? { ...r, has_been_prayed_for: true } : r),
     );
-    
-    // 2. Wait for the database response and catch any errors
+
+    // 2. Save to Supabase. If that fails, undo the change so the page never shows
+    //    "Prayed For" for something that was not actually saved.
     const { error } = await supabase.rpc('mark_prayer_prayed_for', { request_id: id });
-    
+
     if (error) {
-      console.error("Failed to update prayer status in Supabase:", error);
-      // If you want, you could revert the UI state here, but for now let's just log the error.
+      console.error('Failed to update prayer status in Supabase:', error);
+      removePrayedId(id);
+      setPrayedIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      setRequests(prev =>
+        prev.map(r => r.id === id ? { ...r, has_been_prayed_for: false } : r),
+      );
+      setAdminError('Could not save that prayer. Please try again in a moment.');
     }
   };
 
@@ -378,7 +397,9 @@ function PrayerRequestsTab({ isAdmin }: { isAdmin: boolean }) {
         )}
         <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-6 md:items-start">
           {requests.map(pr => {
-            const hasPrayed = prayedIds.has(pr.id);
+            // The saved value in Supabase is the source of truth. This browser's own record
+            // only covers the moment between clicking and the page reloading.
+            const hasPrayed = pr.has_been_prayed_for || prayedIds.has(pr.id);
             const displayName = pr.is_anonymous ? 'Anonymous' : (pr.name?.trim() || 'Anonymous');
 
             if (isAdmin && editingId === pr.id) {
